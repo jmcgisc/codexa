@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definir animaciones de Tailwind */
+@layer utilities {
+  .animate-fadeIn {
+    animation: fadeIn 0.7s ease-in-out forwards;
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+body {
+  @apply bg-gray-50 text-gray-900;
+}
