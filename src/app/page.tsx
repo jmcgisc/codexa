@@ -1,7 +1,19 @@
 'use client' 
-
+{/* Header */}
 import Navbar from "../components/sections/Navbar"
 import Hero from "../components/sections/Hero"
+
+{/* Moléculas   Secciones */}
+{/* Organismos  Secciones */}
+{/* Plantillas  Secciones */}
+{/* Paginas     Secciones */}
+import PortafolioSection from "../components/sections/PortafolioSection";
+
+{/* Atomos      Secciones */}
+
+{/* Atomos Secciones */}
+import PortfolioGrid from "../components/sections/atoms/PortfolioGrid";
+
 import Services from "../components/sections/Services"
 import Portfolio from "../components/sections/Portfolio"
 import Testimonials from "../components/sections/Testimonials"
@@ -22,6 +34,9 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Services />
+      <PortfolioGrid
+/>  
+      <PortafolioSection/>
       <Portfolio />
       <Testimonials />
       <Contact />
