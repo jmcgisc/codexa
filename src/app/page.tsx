@@ -1,7 +1,7 @@
 'use client' 
 {/* Header */}
-import Navbar from "../components/sections/Navbar"
-import Hero from "../components/sections/Hero"
+import Navbar from "../components/sections/Navbar";
+import Hero from "../components/sections/Hero";
 
 {/* Moléculas   Secciones */}
 {/* Organismos  Secciones */}
@@ -14,19 +14,17 @@ import PortafolioSection from "../components/sections/PortafolioSection";
 {/* Atomos Secciones */}
 import PortfolioGrid from "../components/sections/atoms/PortfolioGrid";
 
-import Services from "../components/sections/Services"
-import Portfolio from "../components/sections/Portfolio"
-import Testimonials from "../components/sections/Testimonials"
-import Contact from "../components/sections/Contact"
-import ClientCarousel from '../components/sections/ClientCarousel'
-import ClientLogos from '../components/sections/ClientLogos'
-import FAQ from '../components/FAQ'
-import WhatsAppFloat from "../components/WhatsAppFloat"
-import Footer from "../components/layout/Footer"
-import FadeInSection from '../components/FadeInSection'
-import Productos from "../components/sections/Productos"
-import ScrollToTop from '../components/ScrollToTop'  
-import InteractiveMap from "../components/InteractiveMap"
+import Services from "../components/sections/Services";
+import Testimonials from "../components/sections/Testimonials";
+import Contact from "../components/sections/Contact";
+import ClientCarousel from '../components/sections/ClientCarousel';
+import FAQ from '../components/FAQ';
+import WhatsAppFloat from "../components/WhatsAppFloat";
+import Footer from "../components/layout/Footer";
+import FadeInSection from '../components/FadeInSection';
+import Productos from "../components/sections/Productos";
+import ScrollToTop from '../components/ScrollToTop';
+import InteractiveMap from "../components/InteractiveMap";
 
 export default function Home() {
   return (
@@ -34,14 +32,12 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Services />
-      <PortfolioGrid
-/>  
+      <PortfolioGrid    
+      />  
       <PortafolioSection/>
-      <Portfolio />
       <Testimonials />
       <Contact />
       <ClientCarousel />
-      <ClientLogos/>
       <InteractiveMap />
       <FAQ/> 
       <Productos/>
