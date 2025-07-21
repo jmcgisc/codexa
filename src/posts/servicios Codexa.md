@@ -1,4 +1,4 @@
-# 🧩 Plan de Negocio CODEXA – Servicios 2025
+# 🧩 Plan de Negocio Stratik – Servicios 2025
 
 Una agencia enfocada en diseño, tecnología y soluciones digitales integrales para empresas que quieren destacar.
 

@@ -46,7 +46,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-neutral-200 dark:border-neutral-700 mt-10 pt-6 text-center text-sm text-neutral-400">
-        © {new Date().getFullYear()} CODEXA. Todos los derechos reservados.
+        © {new Date().getFullYear()} Stratik. Todos los derechos reservados.
       </div>
     </footer>
   )

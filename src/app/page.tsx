@@ -25,13 +25,19 @@ import FadeInSection from '../components/FadeInSection';
 import Productos from "../components/sections/Productos";
 import ScrollToTop from '../components/ScrollToTop';
 import InteractiveMap from "../components/InteractiveMap";
+import ThreeDCarousel from "../components/ThreeDCarousel";
+import MemoryCarousel from "../components/MemoryCarousel";
 
 export default function Home() {
   return (
     <main className="flex flex-col">
       <Navbar />
       <Hero />
-      <Services />
+      <ThreeDCarousel />
+    <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+      <MemoryCarousel />
+    </div> 
+      <Services /> 
       <PortfolioGrid    
       />  
       <PortafolioSection/>
@@ -43,6 +49,7 @@ export default function Home() {
       <Productos/>
       <ScrollToTop />
       <WhatsAppFloat />
+      
         <span className="text-white">WhatsApp</span>
 
       <Footer/>

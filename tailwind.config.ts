@@ -19,10 +19,18 @@ module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+
+
+      perspective: {
+        DEFAULT: '1000px',
+      },
+      rotate: {
+        180: '180deg',
+      },
       animation: {
         'spin-gradient': 'spinGradient 4s linear infinite',
         'spin-slow': 'spin 10s linear infinite',
- 
+        spinY: "spinY 20s linear infinite",
       },
        keyframes: {
         spinGradient: {
@@ -34,7 +42,14 @@ module.exports = {
           '0%': { transform: 'translateX(0%)' },
           '100%': { transform: 'translateX(-50%)' },
         },
+
+        spinY: {
+          "0%": { transform: "rotateY(0deg)" },
+          "100%": { transform: "rotateY(360deg)" },
+        },
+        
       }, 
+      
       colors: {
         background: {
           light: '#ffffff',
