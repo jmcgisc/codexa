@@ -1,9 +1,6 @@
 'use client'
 
 import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLink, faDollarSign } from '@fortawesome/free-solid-svg-icons';
-import { faYoutube } from '@fortawesome/free-brands-svg-icons';
 
 export default function Footer() {
   const [cardsToggled, setCardsToggled] = useState(false);
@@ -122,7 +119,7 @@ export default function Footer() {
         © {new Date().getFullYear()} STATRIK. Todos los derechos reservados.
       </div>
 
-      <style jsx>{`
+      <style>{`
         .main {
           display: flex;
           flex-direction: column;
