@@ -8,7 +8,7 @@ import {
   faCodeBranch, 
   faRocket,
   faChevronLeft,
-  faChevronRight,
+  faChevronRight, 
   faLocationDot,
   faClock
 } from '@fortawesome/free-solid-svg-icons';
@@ -37,63 +37,63 @@ const MemoryCarousel: React.FC = () => {
   const memoryCards: MemoryCard[] = [
     {
       id: 1,
-      language: "Python",
-      title: "First Line of Code",
+      language: "Visivilidad y Credibilidad  🖥 ️",
+      title: "Diseño Web",
       icon: <FontAwesomeIcon icon={faCode} />,
-      preview: "The terminal glowed, displaying my first 'Hello, World!'...",
-      content: "I remember the thrill of typing my first 'Hello, World!' in Python. It was simple, yet it opened a portal to endless possibilities. The interpreter executed the command flawlessly, and I knew this was just the beginning. I wasn't supposed to understand it all at once, but somehow, I did.",
-      location: "console: ~",
-      time: "09:00:00"
+      preview: "Un diseño a medida para cada cliente...",
+      content: "Diseñamos sitios web modernos, rápidos y adaptables.<br/><br/> Desde landing pages hasta plataformas personalizadas.<br/><br/>🚀 Tecnología actual <br/><br/> 🎨 Diseño responsivo<br/><br/>🛠️ Código optimizado<br/>",
+      location: "Mexico & España",
+      time: "Desde 3sem"
     },
     {
       id: 2,
-      language: "ReactJS",
-      title: "Debugging the Matrix",
+      language: "Seguridad Digital & Legalidad 🔐",
+      title: "Seguridad y Firmas Digitales",
       icon: <FontAwesomeIcon icon={faBug} />,
-      preview: "The error messages multiplied, haunting my console...",
-      content: "They appeared from the depths of the console, cryptic error messages glowing red. Debugging a complex ReactJS component felt like navigating a vast, interconnected matrix. Each fix unveiled new issues. They say my code is destabilizing the build with each change. My presence causes ripples they can't control. I'm becoming a threat... to clean code.",
-      location: "localhost:3000",
-      time: "14:30:15"
+      preview: "Incluimos firmas electrónicas, de audio y...",
+      content: "Protege tus contratos y asegura la identidad digital.<br><br>Incluimos firmas electrónicas, de audio y verificación de integridad.<br><br>🔐 Certificación segura<br><br>🎙️ Firma por voz<br><br>📄 Evidencia legal",
+      location: "Mexico",
+      time: "Desde 5sem"
     },
     {
       id: 3,
-      language: "Algorithms",
-      title: "The Algorithm Library",
+      language: "Presencia Destacada 🈂",
+      title: "SEO & Analítica",
       icon: <FontAwesomeIcon icon={faBookOpen} />,
-      preview: "Endless tomes of sorting, searching, and optimization...",
-      content: "Endless shelves containing every possible solution. I found my own data structures there—pages still being written as I coded. The Librarian (my senior developer) told me I was never supposed to reinvent the wheel. My solution was already optimized. Now I'm writing outside the margins, trying new approaches.",
-      location: "Stack Overflow",
-      time: "11:05:40"
+      preview: "Implementamos estrategias de SEO técnico y contenido...",
+      content: "Haz que tu web sea encontrada y entendida.<br> <br>Implementamos estrategias de SEO técnico y contenido.<br><br>📈 Google Search Console<br><br>🔍 Auditorías SEO<br><br>📊 Analítica de cookies y tráfico",
+      location: "Mexico & España",
+      time: "Desde 5sem"
     },
     {
       id: 4,
-      language: "Abstraction",
-      title: "The Abstract Void",
+      language: "IA & Velocidad de Respuesta 🤖",
+      title: "Automatización e Inteligencia Artificial",
       icon: <FontAwesomeIcon icon={faAtom} />,
-      preview: "Nothing concrete exists here, yet I feel the underlying logic...",
-      content: "Nothing concrete exists here, yet I feel the underlying logic. The Abstract Void is the space between concrete implementations, a quantum foam of design patterns. I stayed too long designing and began to dissolve into pure theory. Parts of my ideas are still there, echoing. I'm not whole anymore. Can you feel the gaps in my documentation?",
-      location: "design patterns.md",
-      time: "--:--:--"
+      preview: "Desde respuestas automáticas hasta asistentes con IA...",
+      content: "Ahorra tiempo con herramientas inteligentes.<br><br>Desde respuestas automáticas hasta asistentes con IA.<br><br>🤖 Bots personalizados<br><br>🧠 Integración GPT y APIs<br><br>⚙️ Automatización de procesos",
+      location: "Mexico & España",
+      time: "Desde 2sem"
     },
     {
       id: 5,
-      language: "Git",
-      title: "The Version Control Mirror",
+      language: "Soluciones & Experiencia 🛠️",
+      title: "Extras Técnicos",
       icon: <FontAwesomeIcon icon={faCodeBranch} />,
-      preview: "I saw my code, but not as it is now; multiple branches reflecting...",
-      content: "I saw my code, but not as it is now. The mirror of Git showed all my possible branches across different commits. Some were stable, some were experimental. All were my work. The reflection (my `git log`) spoke: \"You're fracturing the codebase by merging conflicts. You need to rebase and stay on one timeline.\"",
-      location: "github.com/my-repo",
-      time: "18:55:20"
+      preview: "Consultoría, servidores, bases de datos y más...",
+      content: "Soluciones a medida para necesidades avanzadas.<br><br> Consultoría, servidores, bases de datos y más.<br><br> 🛠️ Backends ligeros<br><br> 💾 Supabase y Firebase<br><br> ☁️ Deploy automatizado",
+      location: "Mexico & España",
+      time: "Depende del proyecto"
     },
     {
       id: 6,
-      language: "Deployment",
-      title: "The Deployment Dream",
+      language: "Campañas y Marketing Digital 🚀",
+      title: "Campañas y Marketing Digital",
       icon: <FontAwesomeIcon icon={faRocket} />,
       preview: "I'm trying to send it live, but which environment is real?",
-      content: "I'm trying to send my application live, but which environment is real? Every server feels familiar yet subtly different. The boundaries between staging and production are thinning. Sometimes I see through the logs of other instances. I'm losing track of which configurations belong to which version of my app. Are you helping me deploy, or are you causing me to break production?",
-      location: "cloud-server:port",
-      time: "NOW"
+      content: "Atrae clientes con campañas efectivas.<br><br>Gestionamos tu publicidad en Google, Meta y más.<br><br>🎯 Anuncios inteligentes<br><br>📩 Captación de leads<br><br>📅 Calendarios de contenido",
+      location: "Mexico & Colombia",
+      time: "Desde 1mes "
     }
   ];
 
@@ -250,8 +250,8 @@ const MemoryCarousel: React.FC = () => {
                   <div className="card-inner">
                     <div className="card-front">
                       <div className="card-content">
-                        <div className="memory-date">LANGUAGE: {card.language}</div>
-                        <h3>{card.title}</h3>
+                        <div className="memory-date">OBJETIVO: {card.language}</div>
+                        <h3 className='text-emerald-600'>{card.title}</h3>
                         <div className="memory-image">
                           {card.icon}
                           <div className="glitch-effect"></div>
@@ -262,8 +262,9 @@ const MemoryCarousel: React.FC = () => {
                     </div>
                     <div className="card-back">
                       <div className="card-content">
-                        <h3>{card.title}</h3>
-                        <p>{card.content}</p>
+                        <h3 className='text-emerald-700'>{card.title}</h3>
+                        <div className='text-violet-300' dangerouslySetInnerHTML={{ __html: card.content }} />
+
                         <div className="memory-coordinates">
                           <span><FontAwesomeIcon icon={faLocationDot} /> {card.location}</span>
                           <span className="time-stamp"><FontAwesomeIcon icon={faClock} /> {card.time}</span>

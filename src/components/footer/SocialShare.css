@@ -1,0 +1,223 @@
+.social-share-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: rgb(0, 0, 0);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+
+.share-btn {
+  position: absolute;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border: 1px solid rgba(128, 128, 128, 0.705);
+  border-radius: 50%;
+  transition: .2s ease-in-out;
+  scale: .8;
+  padding: 10px;
+  width: 30px;
+  height: 30px;
+  z-index: 10;
+}
+
+.share-btn:hover {
+  background: #f1f1f1;
+  scale: .9;
+}
+
+.up {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+}
+
+.down {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+}
+
+.card1, .card2, .card3, .card4 {
+  width: 90px;
+  height: 90px;
+  outline: none;
+  border: none;
+  background: white;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.card1 {
+  border-radius: 90px 5px 5px 5px;
+  transition: 300ms cubic-bezier(0.73, -0.18, 0.02, 1.46);
+}
+
+.card1.toggled {
+  transform: translateY(50px) translateX(60px) scale(0);
+}
+
+.card2 {
+  border-radius: 5px 90px 5px 5px;
+  transition: 300ms cubic-bezier(0.76, -0.19, 0.15, 1.17);
+}
+
+.card2.toggled {
+  transform: translateY(50px) translateX(-60px) scale(0);
+}
+
+.card3 {
+  border-radius: 5px 5px 5px 90px;
+  transition: 300ms cubic-bezier(0.72, -0.26, 0.02, 1.46);
+}
+
+.card3.toggled {
+  transform: translateY(-50px) translateX(60px) scale(0);
+}
+
+.card4 {
+  border-radius: 5px 5px 90px 5px;
+  transition: 300ms cubic-bezier(1, -0.31, 0.02, 1.46);
+}
+
+.card4.toggled {
+  transform: translateY(-50px) translateX(-60px) scale(0);
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.instagram {
+  fill: #cc39a4;
+}
+
+.twitter {
+  fill: #03A9F4;
+}
+
+.github {
+  fill: #000000;
+}
+
+.discord {
+  fill: #8c9eff;
+}
+
+.card1:hover {
+  cursor: pointer;
+  scale: 1.1;
+  background-color: #cc39a4;
+}
+
+.card1:hover .instagram {
+  fill: white;
+}
+
+.card2:hover {
+  cursor: pointer;
+  scale: 1.1;
+  background-color: #03A9F4;
+}
+
+.card2:hover .twitter {
+  fill: white;
+}
+
+.card3:hover {
+  cursor: pointer;
+  scale: 1.1;
+  background-color: rgb(39, 39, 39);
+}
+
+.card3:hover .github {
+  fill: white;
+}
+
+.card4:hover {
+  cursor: pointer;
+  scale: 1.1;
+  background-color: #8c9eff;
+}
+
+.card4:hover .discord {
+  fill: white;
+}
+
+/* -- External Social Link CSS Styles -- */
+
+#source-link {
+  top: 120px;
+}
+
+#source-link > svg {
+  color: rgb(94, 106, 210);
+}
+
+#yt-link {
+  top: 65px;
+}
+
+#yt-link > svg {
+  color: rgb(219, 31, 106);
+}
+
+#Fund-link {
+  top: 10px;
+}
+
+#Fund-link > svg {
+  color: rgb(255, 251, 0);
+}
+
+.meta-link {
+  align-items: center;
+  backdrop-filter: blur(3px);
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  display: inline-flex;
+  gap: 5px;
+  left: 10px;
+  padding: 10px 20px;
+  position: fixed;
+  text-decoration: none;
+  transition: background-color 600ms, border-color 600ms;
+  z-index: 10000;
+}
+
+.meta-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.meta-link > svg,
+.meta-link > span {
+  height: 20px;
+  line-height: 20px;
+}
+
+.meta-link > span {
+  color: white;
+  font-family: "Rubik", sans-serif;
+  transition: color 600ms;
+}

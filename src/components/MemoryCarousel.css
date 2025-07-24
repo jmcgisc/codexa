@@ -5,7 +5,7 @@
   --accent: #ff00e5;
   --background: #050510;
   --card-bg: rgba(20, 20, 40, 0.7);
-  --text-primary: #ffffff;
+  --text-primary: rgba(0, 229, 255, 0.7);
   --text-secondary: #b8b8ff;
   --glow-primary: 0 0 10px rgba(157, 0, 255, 0.7),
     0 0 20px rgba(157, 0, 255, 0.5);

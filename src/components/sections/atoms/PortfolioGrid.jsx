@@ -24,9 +24,9 @@ const portfolioItems = [
 
 export default function PortfolioGrid() {
   return (
-    <section id="portafolio" className="py-24 px-6 bg-white">
+    <section id="portafolio" className="py-24 px-6 bg-background">
       <div className="text-center mb-16">
-        <h2 className="text-4xl font-bold text-gray-900 mb-4">Dejamos que nuestro trabaje hable por nosotros.</h2>
+        <h2 className="text-4xl font-bold text-gray-200 mb-4">Dejamos que nuestro trabaje hable por nosotros.</h2>
         <p className="text-gray-600 max-w-xl mx-auto">
           Algunos de los proyectos recientes que combinan diseño moderno, velocidad y funcionalidad.
         </p>
