@@ -19,8 +19,6 @@ module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-
-
       perspective: {
         DEFAULT: '1000px',
       },
@@ -49,7 +47,6 @@ module.exports = {
         },
         
       }, 
-      
       colors: {
         background: {
           light: '#ffffff',
@@ -62,7 +59,9 @@ module.exports = {
             light: '#4a4a4a',
             dark: '#b3b3b3',
           },
-        },
+        fontFamily: {
+          sans: ['Manrope', 'sans-serif'],
+        },},
         card: {
           light: '#f8f8f8',
           dark: '#1c1c1c',

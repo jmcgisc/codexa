@@ -21,10 +21,19 @@ export default function Hero() {
           Diseñamos tu futuro digital
         </h1>
         <p className="text-xl sm:text-2xl mb-6 text-white">
-          Creando experiencias web únicas para tu marca
+          Nuestros Productos y Servicios están diseñados para llevar tu negocio al siguiente nivel.
         </p>
         <a href="#services" className="bg-indigo-600 text-white px-8 py-3 text-lg font-medium rounded-lg hover:bg-indigo-700 transition">
-          Explorar nuestros servicios
+          
+          <html lang="en">
+          <head> 
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Document</title>
+          </head>
+          <body>
+            
+          </body>
+          </html>!
         </a>
       </div>
     </section>

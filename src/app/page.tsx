@@ -3,31 +3,30 @@
 import Navbar from "../components/sections/Navbar";
 import Hero from "../components/sections/Hero";
 
+
 {/* Moléculas   Secciones */}
 {/* Organismos  Secciones */}
 {/* Plantillas  Secciones */}
 {/* Paginas     Secciones */}
 import PortafolioSection from "../components/sections/PortafolioSection";
 import ServiciosInteractivos from "../components/sections/ServiciosInteractivos";
+import MembershipCards from "../components/sections/Testimonios/MembershipCards";
 
 {/* Atomos      Secciones */}
 import Secciones from "../components/sections/Secciones";
 
-import HeroUXUIDesarrollo from "../components/sections/HeroUXUIDesarrollo";
 
 {/* Atomos Secciones */}
 import PortfolioGrid from "../components/sections/atoms/PortfolioGrid";
 
 import Services from "../components/sections/Services";
 
-import Testimonials from "../components/sections/Testimonials";
+import Testimonials from "../components/sections/Testimonios/Testimonials";
 import Contact from "../components/sections/Contact";
-import ClientCarousel from '../components/sections/ClientCarousel';
 import FAQ from '../components/FAQ';
 import WhatsAppFloat from "../components/WhatsAppFloat";
 import Footer from "../components/layout/Footer";
 import FadeInSection from '../components/FadeInSection';
-import Productos from "../components/sections/Productos";
 import ScrollToTop from '../components/ScrollToTop';
 import InteractiveMap from "../components/InteractiveMap"; 
 import MemoryCarousel from "../components/MemoryCarousel";
@@ -37,21 +36,19 @@ export default function Home() {
     <main className="flex flex-col">
       <Navbar />
       <Hero /> 
-    <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
-      <MemoryCarousel />
-    </div> 
+      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+        <MemoryCarousel />
+      </div> 
       <Services /> 
-      <Secciones />
       <ServiciosInteractivos />
-      <HeroUXUIDesarrollo />
+      <Secciones />
       <PortfolioGrid />  
       <PortafolioSection/>
       <Testimonials />
+      <MembershipCards />
       <Contact />
-      <ClientCarousel />
       <InteractiveMap />
       <FAQ /> 
-      <Productos/>
       <ScrollToTop />
       <WhatsAppFloat />
       

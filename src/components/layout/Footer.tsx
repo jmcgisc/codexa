@@ -38,7 +38,7 @@ export default function Footer() {
         <div>
           <h3 className="text-lg font-semibold mb-2">Contacto</h3>
           <ul className="text-sm space-y-1">
-            <li>📧 hola@codexa.com</li>
+            <li>📧 hola@statrik.com</li>
             <li>📞 +52 55 75 63 05 76</li>
             <li>📍 México & España</li>
           </ul>

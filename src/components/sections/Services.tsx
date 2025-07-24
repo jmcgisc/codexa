@@ -84,7 +84,7 @@ export default function Services() {
                     <span className="absolute inset-0 bg-cyan-500 opacity-0 group-hover:opacity-10 group-hover:animate-[pulse_1.5s_ease-in-out_infinite] rounded-md"></span>
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-2xl rounded-2xl p-0 overflow-hidden border-0 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] animate-[fadeIn_0.3s_ease-out]">
+                  <DialogContent className="w-[90vw] max-w-[1200px] rounded-2xl p-0 overflow-hidden border-0 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] animate-[fadeIn_0.3s_ease-out]">
                   {/* Efecto de partículas flotantes */}
                   <div className="absolute inset-0 overflow-hidden pointer-events-none">
                     {[...Array(10)].map((_, i) => (
