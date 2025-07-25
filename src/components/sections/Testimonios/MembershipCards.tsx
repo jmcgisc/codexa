@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 
-// Estilos globales necesarios para el efecto
 const GlobalStyle = createGlobalStyle`
   :root {
     --backdrop: hsla(0, 0%, 0%, 0.12);
@@ -257,25 +256,24 @@ const SocialLink = styled.a`
 
 const MembershipCards: React.FC = () => {
   useEffect(() => {
-    const syncPointer = ({ x, y }: { x: number; y: number }) => {
-      document.documentElement.style.setProperty('--x', x.toFixed(2));
-      document.documentElement.style.setProperty(
-        '--xp',
-        (x / window.innerWidth).toFixed(2)
-      );
-      document.documentElement.style.setProperty('--y', y.toFixed(2));
-      document.documentElement.style.setProperty(
-        '--yp',
-        (y / window.innerHeight).toFixed(2)
-      );
-    };
+    const syncPointer = (e: PointerEvent) => {
+    const x = e.clientX;
+    const y = e.clientY;
+    document.documentElement.style.setProperty('--x', x.toFixed(2));
+    document.documentElement.style.setProperty('--xp', (x / window.innerWidth).toFixed(2));
+    document.documentElement.style.setProperty('--y', y.toFixed(2));
+    document.documentElement.style.setProperty('--yp', (y / window.innerHeight).toFixed(2));
+  };
+
+
+      
+      document.body.addEventListener('pointermove', syncPointer as EventListener);
+      
+      return () => {
+        document.body.removeEventListener('pointermove', syncPointer as EventListener);
+      };
+    }, []);
     
-    document.body.addEventListener('pointermove', syncPointer as EventListener);
-    
-    return () => {
-      document.body.removeEventListener('pointermove', syncPointer as EventListener);
-    };
-  }, []);
 
   return (
     <>

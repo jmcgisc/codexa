@@ -4,11 +4,6 @@ type Props = {
   imagen: string;
 };
 
-//<div className=" rounded-xl bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-[length:200%_200%] animate-spin-gradient blur-sm brightness-125 z-0">
-
-//<div className="group relative bg-neutral-900 p-[2px] rounded-xl hover:bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-[length:100%_100%]  animate-spin-gradient  z-0">
-     
-
 export default function TarjetaProducto({ titulo, descripcion, imagen }: Props) {
   return (
     <div className="group relative bg-neutral-900 p-[2px] rounded-xl hover:shadow-[0_0_20px_4px_#00fff7] transition-all duration-300">

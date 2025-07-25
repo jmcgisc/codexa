@@ -24,16 +24,6 @@ export default function Hero() {
           Nuestros Productos y Servicios están diseñados para llevar tu negocio al siguiente nivel.
         </p>
         <a href="#services" className="bg-indigo-600 text-white px-8 py-3 text-lg font-medium rounded-lg hover:bg-indigo-700 transition">
-          
-          <html lang="en">
-          <head> 
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <title>Document</title>
-          </head>
-          <body>
-            
-          </body>
-          </html>!
         </a>
       </div>
     </section>
