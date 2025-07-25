@@ -30,9 +30,14 @@ const MemoryCarousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [startX, setStartX] = useState<number>(0);
+  const [radius, setRadius] = useState<number>(400);
   
   const carouselRef = useRef<HTMLDivElement>(null);
-  const radius = window.innerWidth <= 768 ? 250 : 400;
+    useEffect(() => {
+      const newRadius = window.innerWidth <= 768 ? 250 : 400;
+      setRadius(newRadius);
+    }, []);
+
 
   const memoryCards: MemoryCard[] = [
     {
