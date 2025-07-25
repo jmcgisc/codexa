@@ -56,7 +56,6 @@ const NeonBorderCard = ({ children }: { children: React.ReactNode }) => {
       {/* Brillo adicional al hacer hover */}
       {isHovered && (
         <motion.div 
-          className="absolute inset-0 rounded-lg bg-white opacity-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.1 }}
           transition={{ duration: 0.3 }}
@@ -72,13 +71,11 @@ const NeonBorderCard = ({ children }: { children: React.ReactNode }) => {
       {isHovered && (
         <>
           <motion.span 
-            className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-purple-500 to-transparent"
             initial={{ width: 0 }}
             animate={{ width: '100%' }}
             transition={{ duration: 0.6, delay: 0.2 }}
           />
           <motion.span 
-            className="absolute bottom-0 right-0 h-full w-0.5 bg-gradient-to-t from-transparent via-cyan-500 to-transparent"
             initial={{ height: 0 }}
             animate={{ height: '100%' }}
             transition={{ duration: 0.6, delay: 0.2 }}
