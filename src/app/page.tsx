@@ -2,19 +2,13 @@
 {/* Header */}
 import Navbar from "../components/sections/Navbar";
 import Hero from "../components/sections/Hero";
-
-
-{/* Moléculas   Secciones */}
-{/* Organismos  Secciones */}
-{/* Plantillas  Secciones */}
-{/* Paginas     Secciones */}
 import PortafolioSection from "../components/sections/PortafolioSection";
 import ServiciosInteractivos from "../components/sections/ServiciosInteractivos";
-import MembershipCards from "../components/sections/Testimonios/MembershipCards";
+
+import MembershipCards from "../components/sections/Testimonios/MembershipCards"
 
 {/* Atomos      Secciones */}
 import Secciones from "../components/sections/Secciones";
-
 
 {/* Atomos Secciones */}
 import PortfolioGrid from "../components/sections/atoms/PortfolioGrid";

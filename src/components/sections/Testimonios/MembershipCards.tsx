@@ -1,6 +1,13 @@
+'use client';
 import React, { useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 
+// 1. Definición de tipos
+interface MembershipCardsProps {
+  className?: string;
+}
+
+// 2. Estilos globales
 const GlobalStyle = createGlobalStyle`
   :root {
     --backdrop: hsla(0, 0%, 0%, 0.12);
@@ -12,15 +19,18 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     background: #E5F8FF;
+    margin: 0;
+    padding: 0;
+    font-family: "Open Sans", sans-serif;
   }
 `;
 
+// 3. Componentes estilizados
 const Container = styled.div`
   display: grid;
   place-items: center;
   min-height: 100vh;
   width: 100%;
-  font-family: "Open Sans", sans-serif;
 `;
 
 const Main = styled.main`
@@ -129,7 +139,7 @@ const GlowEffect = styled.div`
 `;
 
 const CardContent = styled.div`
-  color: rgb(211,211,211); 
+  color: rgb(211, 211, 211);
   padding: 10px;
   height: 100%;
   display: flex;
@@ -139,13 +149,14 @@ const CardContent = styled.div`
 const Title = styled.h2`
   font-size: 24px;
   margin-bottom: 1rem;
+  color: #333;
 `;
 
 const Price = styled.h3`
   font-size: 18px;
   font-weight: 400;
   margin-bottom: 1.5rem;
-  color: rgb(131, 51, 108 );
+  color: rgb(131, 51, 108);
 
   span {
     font-size: 24px;
@@ -182,6 +193,7 @@ const Button = styled.button`
     &:hover {
       background-color: rgb(255, 111, 171);
       box-shadow: 0 0 10px rgb(255, 111, 171);
+      color: white;
     }
   }
 
@@ -190,6 +202,7 @@ const Button = styled.button`
     &:hover {
       background-color: rgb(22, 181, 250);
       box-shadow: 0 0 10px rgb(22, 181, 250);
+      color: white;
     }
   }
 
@@ -198,87 +211,34 @@ const Button = styled.button`
     &:hover {
       background-color: rgb(251, 192, 17);
       box-shadow: 0 0 10px rgb(251, 192, 17);
+      color: white;
     }
   }
 `;
 
-const SocialLink = styled.a`
-  align-items: center;
-  backdrop-filter: blur(3px);
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  display: inline-flex;
-  gap: 5px;
-  left: 10px;
-  padding: 10px 20px;
-  position: fixed;
-  text-decoration: none;
-  transition: background-color 0.6s, border-color 0.6s;
-  z-index: 10000;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  span {
-    color: rgb(211,211,211);
-    font-family: "Rubik", sans-serif;
-    transition: color 0.6s;
-    height: 20px;
-    line-height: 20px;
-  }
-
-  &#source-link {
-    top: 120px;
-    svg {
-      color: rgb(94, 106, 210);
-    }
-  }
-
-  &#yt-link {
-    top: 65px;
-    svg {
-      color: rgb(219, 31, 106);
-    }
-  }
-
-  &#Fund-link {
-    top: 10px;
-    svg {
-      color: rgb(255, 251, 0);
-    }
-  }
-`;
-
-const MembershipCards: React.FC = () => {
+// 4. Componente principal
+const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
   useEffect(() => {
     const syncPointer = (e: PointerEvent) => {
-    const x = e.clientX;
-    const y = e.clientY;
-    document.documentElement.style.setProperty('--x', x.toFixed(2));
-    document.documentElement.style.setProperty('--xp', (x / window.innerWidth).toFixed(2));
-    document.documentElement.style.setProperty('--y', y.toFixed(2));
-    document.documentElement.style.setProperty('--yp', (y / window.innerHeight).toFixed(2));
-  };
+      const x = e.clientX;
+      const y = e.clientY;
+      document.documentElement.style.setProperty('--x', x.toFixed(2));
+      document.documentElement.style.setProperty('--xp', (x / window.innerWidth).toFixed(2));
+      document.documentElement.style.setProperty('--y', y.toFixed(2));
+      document.documentElement.style.setProperty('--yp', (y / window.innerHeight).toFixed(2));
+    };
 
-
-      
-      document.body.addEventListener('pointermove', syncPointer as EventListener);
-      
-      return () => {
-        document.body.removeEventListener('pointermove', syncPointer as EventListener);
-      };
-    }, []);
+    document.body.addEventListener('pointermove', syncPointer);
     
+    return () => {
+      document.body.removeEventListener('pointermove', syncPointer);
+    };
+  }, []);
 
   return (
     <>
       <GlobalStyle />
-      <Container>
+      <Container className={className}>
         <Main>
           <Card data-glow>
             <CardContent>
@@ -325,7 +285,6 @@ const MembershipCards: React.FC = () => {
             <GlowEffect data-glow />
           </Card>
         </Main>
-
       </Container>
     </>
   );
