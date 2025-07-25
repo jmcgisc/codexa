@@ -1,122 +1,92 @@
 'use client';
-
-import { Card, CardBody, CardHeader } from '@/components/ui/card';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-// Update the import path if needed, or define a fallback utility function here if the file does not exist.
-import { cn } from '../lib/utils';
-// If the above path is incorrect, adjust it to the actual location of your utils file.
-// Alternatively, define a simple cn function as a fallback:
-// const cn = (...classes: string[]) => classes.filter(Boolean).join(' ');
 
-const cards = [
-  {
-    title: 'Diseño UX/UI',
-    description: `
-      Creamos experiencias digitales intuitivas, centradas en el usuario y orientadas a resultados.
-      Nuestro equipo combina estética, usabilidad y estrategia para diseñar interfaces atractivas que guían a tus usuarios hacia conversiones.
-      Desde wireframes hasta prototipos interactivos, cuidamos cada detalle.
-    `,
-  },
-  {
-    title: 'Desarrollo de apps',
-    description: `
-      Desarrollamos aplicaciones móviles y de escritorio nativas o híbridas, escalables y seguras.
-      Nuestro enfoque agile asegura entregas constantes y un producto alineado con tus necesidades.
-      Utilizamos tecnologías como React Native, Flutter y más.
-    `,
-  },
-  {
-    title: 'Desarrollo web',
-    description: `
-      Creamos sitios web rápidos, modernos y adaptativos.
-      Desde landing pages hasta sistemas complejos de gestión, nuestros desarrollos son escalables, accesibles y optimizados para SEO y conversión.
-    `,
-  },
-  {
-    title: 'Ecommerce',
-    description: `
-      Diseñamos y desarrollamos tiendas en línea que venden.
-      Integraciones con pasarelas de pago, gestión de inventario, automatización de procesos y experiencias de usuario que generan confianza.
-    `,
-  },
-  {
-    title: 'CRO',
-    description: `
-      Mejoramos tus tasas de conversión mediante análisis, pruebas A/B y optimización de experiencia de usuario.
-      Identificamos cuellos de botella y proponemos soluciones que generan impacto real en tus KPIs.
-    `,
-  },
-  {
-    title: 'Sitios web autoadministrables',
-    description: `
-      Desarrollamos sitios con panel de control personalizado para que tu equipo pueda actualizar contenido fácilmente.
-      Usamos CMS modernos (como Sanity o Headless WordPress) o soluciones 100% personalizadas según tu flujo.
-    `,
-  },
-  {
-    title: 'Diseño gráfico',
-    description: `
-      Creamos identidad visual, branding, piezas publicitarias y recursos visuales para todos tus canales.
-      El diseño es el primer contacto con tu cliente, y nos aseguramos de que comunique tu esencia.
-    `,
-  },
-  {
-    title: 'Reclutamiento IT y Staffing',
-    description: `
-      Conectamos a tu empresa con el talento tecnológico que necesitas.
-      Reclutamos desarrolladores, diseñadores, product managers y más, con procesos rápidos y perfiles verificados.
-    `,
-  },
-];
+const NeonBorderCard = ({ children }: { children: React.ReactNode }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
 
-export function MembershipCards() {
   useEffect(() => {
-    const syncPointer = (e: PointerEvent) => {
-      const x = e.clientX;
-      const y = e.clientY;
-      document.documentElement.style.setProperty('--x', x.toFixed(2));
-      document.documentElement.style.setProperty('--xp', (x / window.innerWidth).toFixed(2));
-      document.documentElement.style.setProperty('--y', y.toFixed(2));
-      document.documentElement.style.setProperty('--yp', (y / window.innerHeight).toFixed(2));
+    const handleMouseMove = (e: MouseEvent) => {
+      if (cardRef.current) {
+        const rect = cardRef.current.getBoundingClientRect();
+        setMousePosition({
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top
+        });
+      }
     };
 
-    document.body.addEventListener('pointermove', syncPointer);
+    const cardElement = cardRef.current;
+    if (cardElement) {
+      cardElement.addEventListener('mousemove', handleMouseMove);
+    }
+
     return () => {
-      document.body.removeEventListener('pointermove', syncPointer);
+      if (cardElement) {
+        cardElement.removeEventListener('mousemove', handleMouseMove);
+      }
     };
   }, []);
 
   return (
-    <section className="relative py-20">
-      <div className="mx-auto w-full max-w-7xl px-4">
-        <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {cards.map((card, idx) => (
-            <motion.div
-              key={idx}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              {...{ className: "relative group" }}
-            >
-              <Card
-                className={cn(
-                  'relative h-full cursor-pointer border border-white/20 bg-gradient-to-br from-white/5 to-white/10 p-4 backdrop-blur-sm transition duration-300 hover:border-white/30 hover:shadow-lg',
-                  'rounded-2xl'
-                )}
-              >
-                <CardHeader className="text-xl font-semibold text-white">
-                  {card.title}
-                </CardHeader>
-                <CardBody>
-                  <p className="text-sm text-white/80 whitespace-pre-line">
-                    {card.description}
-                  </p>
-                </CardBody>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
+    <div 
+      ref={cardRef}
+      className="relative p-0.5 rounded-lg group"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Efecto de gradiente animado */}
+      <div 
+        className={`
+          absolute inset-0 rounded-lg 
+          bg-gradient-to-r 
+          from-purple-600 via-pink-500 to-cyan-500 
+          opacity-70 group-hover:opacity-100
+          transition-all duration-500
+          ${isHovered ? 'blur-[2px]' : 'blur-[1px]'}
+        `}
+        style={{
+          backgroundPosition: `${mousePosition.x}px ${mousePosition.y}px`,
+          backgroundSize: '200% 200%'
+        }}
+      />
+      
+      {/* Brillo adicional al hacer hover */}
+      {isHovered && (
+        <motion.div 
+          className="absolute inset-0 rounded-lg bg-white opacity-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.1 }}
+          transition={{ duration: 0.3 }}
+        />
+      )}
+
+      {/* Contenido de la tarjeta */}
+      <div className="relative z-10 h-full bg-gray-900 rounded-lg p-6 backdrop-blur-sm border border-gray-800 group-hover:border-transparent transition-all duration-300">
+        {children}
       </div>
-    </section>
+
+      {/* Efecto de partículas neón */}
+      {isHovered && (
+        <>
+          <motion.span 
+            className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-purple-500 to-transparent"
+            initial={{ width: 0 }}
+            animate={{ width: '100%' }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          />
+          <motion.span 
+            className="absolute bottom-0 right-0 h-full w-0.5 bg-gradient-to-t from-transparent via-cyan-500 to-transparent"
+            initial={{ height: 0 }}
+            animate={{ height: '100%' }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          />
+        </>
+      )}
+    </div>
   );
-}
+};
+
+export default NeonBorderCard;
