@@ -1,5 +1,6 @@
 'use client';
-import React, { useEffect } from 'react';
+
+import React, { useEffect, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 
 // 1. Definición de tipos
@@ -8,7 +9,7 @@ interface MembershipCardsProps {
 }
 
 // 2. Estilos globales
-const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle`  
   :root {
     --backdrop: hsla(0, 0%, 0%, 0.12);
     --radius: 14;
@@ -216,24 +217,26 @@ const Button = styled.button`
   }
 `;
 
-// 4. Componente principal
 const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
-  useEffect(() => {
-    const syncPointer = (e: PointerEvent) => {
-      const x = e.clientX;
-      const y = e.clientY;
-      document.documentElement.style.setProperty('--x', x.toFixed(2));
-      document.documentElement.style.setProperty('--xp', (x / window.innerWidth).toFixed(2));
-      document.documentElement.style.setProperty('--y', y.toFixed(2));
-      document.documentElement.style.setProperty('--yp', (y / window.innerHeight).toFixed(2));
-    };
+  const [isMounted, setIsMounted] = useState(false);
+    useEffect(() => {
+      if (typeof window === 'undefined') return;
 
-    document.body.addEventListener('pointermove', syncPointer);
-    
-    return () => {
-      document.body.removeEventListener('pointermove', syncPointer);
-    };
-  }, []);
+      const syncPointer = (e: PointerEvent) => {
+        const x = e.clientX;
+        const y = e.clientY;
+        document.documentElement.style.setProperty('--x', x.toFixed(2));
+        document.documentElement.style.setProperty('--xp', (x / window.innerWidth).toFixed(2));
+        document.documentElement.style.setProperty('--y', y.toFixed(2));
+        document.documentElement.style.setProperty('--yp', (y / window.innerHeight).toFixed(2));
+      };
+
+      window.addEventListener('pointermove', syncPointer);
+      return () => {
+        window.removeEventListener('pointermove', syncPointer);
+      };
+    }, []);
+
 
   return (
     <>
