@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone', // Recomendado para despliegues
   reactStrictMode: true,
+  output: 'export', // Necesario para builds estáticos
   images: {
-    unoptimized: true, // Para evitar problemas en Netlify
+    unoptimized: true, // Requerido para export estático
   },
 };
 
