@@ -1,6 +1,6 @@
 import React from "react";
 import { Code, Bot, ShieldCheck } from "lucide-react";
-import { Button } from "@/components/ui/button"; 
+import { Button } from "../../components/ui/button"; 
 
 import {
   Dialog,
@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@/components/ui/dialog"
+} from "../../components/ui/dialog";
 
 const selectedService = [
   {
