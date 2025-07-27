@@ -242,52 +242,71 @@ const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
     <>
       <GlobalStyle />
       <Container className={className}>
-        <Main>
-          <Card data-glow>
-            <CardContent>
-              <Title>Gold Membership 👑</Title>
-              <Price><span>$4</span>/month</Price>
-              <FeaturesList>
-                <li>Some of the Extras are Free for Members Only</li>
-                <li>Unlock exclusive posts and messages</li>
-                <li>Grab every product without any pay</li>
-                <li>Access early releases and special promotions</li>
-              </FeaturesList>
-              <Button className="gold">Join Now</Button>
-            </CardContent>
-            <GlowEffect data-glow />
-          </Card>
+       <Main>
+  {/* Desarrollo Web */}
+  <Card data-glow>
+    <CardContent>
+      <Title>Desarrollo Web 💻</Title>
+      <Price><span>$500+</span> / proyecto</Price>
+      <FeaturesList>
+        <li>Sitios rápidos, modernos y responsivos</li>
+        <li>Diseño UI/UX optimizado para conversión</li>
+        <li>Integraciones con APIs y CMS (WordPress, Strapi...)</li>
+        <li>Soporte y mantenimiento personalizado</li>
+      </FeaturesList>
+      <Button className="gold">Solicitar cotización</Button>
+    </CardContent>
+    <GlowEffect data-glow />
+  </Card>
 
-          <Card data-glow>
-            <CardContent>
-              <Title>Diamond Membership 💎</Title>
-              <Price><span>$6</span>/month</Price>
-              <FeaturesList>
-                <li>Some of the Extras are Free for Members Only</li>
-                <li>Unlock exclusive posts and messages</li>
-                <li>Grab every product without any pay</li>
-                <li>Access early releases and special promotions</li>
-              </FeaturesList>
-              <Button className="diamond">Join Now</Button>
-            </CardContent>
-            <GlowEffect data-glow />
-          </Card>
+  {/* Firmas Criptográficas */}
+  <Card data-glow>
+    <CardContent>
+      <Title>Firmas Criptográficas 🔐</Title>
+      <Price><span>$120</span> / integración</Price>
+      <FeaturesList>
+        <li>Validación de identidad y documentos</li>
+        <li>Integración con certificados digitales</li>
+        <li>Soporte para Ethereum, Web3, wallets</li>
+        <li>Alta seguridad y cumplimiento normativo</li>
+      </FeaturesList>
+      <Button className="diamond">Contáctanos</Button>
+    </CardContent>
+    <GlowEffect data-glow />
+  </Card>
 
-          <Card data-glow>
-            <CardContent>
-              <Title>Platinum Membership 🏆</Title>
-              <Price><span>$10</span>/month</Price>
-              <FeaturesList>
-                <li>All Extras are Free for Members</li>
-                <li>Unlock premium posts and messages</li>
-                <li>Grab all products with no extra cost</li>
-                <li>Access early releases, promotions, and special VIP events</li>
-              </FeaturesList>
-              <Button className="platinum">Join Now</Button>
-            </CardContent>
-            <GlowEffect data-glow />
-          </Card>
-        </Main>
+  {/* Marketing Digital */}
+  <Card data-glow>
+    <CardContent>
+      <Title>Marketing Digital 📣</Title>
+      <Price><span>$300</span> / mes</Price>
+      <FeaturesList>
+        <li>Estrategias en redes sociales y email marketing</li>
+        <li>Publicidad paga en Meta & Google Ads</li>
+        <li>Creación de contenido visual y textual</li>
+        <li>Informes de desempeño mensuales</li>
+      </FeaturesList>
+      <Button className="platinum">Empezar ahora</Button>
+    </CardContent>
+    <GlowEffect data-glow />
+  </Card>
+
+  {/* SEO Avanzado */}
+  <Card data-glow>
+    <CardContent>
+      <Title>SEO Avanzado 🔍</Title>
+      <Price><span>$250</span> / mes</Price>
+      <FeaturesList>
+        <li>Optimización técnica (Core Web Vitals)</li>
+        <li>Auditoría de contenido y keywords</li>
+        <li>Backlinks y autoridad de dominio</li>
+        <li>Monitoreo de rankings y tráfico orgánico</li>
+      </FeaturesList>
+      <Button className="diamond">Mejorar visibilidad</Button>
+    </CardContent>
+    <GlowEffect data-glow />
+  </Card>
+</Main>
       </Container>
     </>
   );

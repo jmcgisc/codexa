@@ -24,6 +24,7 @@ import FadeInSection from '../components/FadeInSection';
 import ScrollToTop from '../components/ScrollToTop';
 import InteractiveMap from "../components/InteractiveMap"; 
 import MemoryCarousel from "../components/MemoryCarousel";
+import FormularioContacto from "../components/email/FormularioContacto";
 
 export default function Home() {
   return (
@@ -41,6 +42,7 @@ export default function Home() {
       <Testimonials />
       <MembershipCards />
       <Contact />
+      <FormularioContacto />
       <InteractiveMap />
       <FAQ /> 
       <ScrollToTop />
