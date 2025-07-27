@@ -62,12 +62,12 @@ const FormularioContacto = () => {
               }
                 }
 
-    const [captchaValido, cambiarCaptchaValido] = useState(null); 
+    const [captchaValido, cambiarCaptchaValido] = useState<boolean | null>(null); 
     
-    const captcha = useRef(null);
+    const captcha = useRef<ReCAPTCHA>(null);
     
     const onChangeCaptcha = () => {
-      if (captcha.current.getValue()) {
+      if (captcha.current && captcha.current.getValue()) {
         cambiarCaptchaValido(true)
       } else {
         cambiarCaptchaValido(false)
