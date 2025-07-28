@@ -247,7 +247,7 @@ const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
   <Card data-glow>
     <CardContent>
       <Title>Desarrollo Web 💻</Title>
-      <Price><span>$500+</span> / proyecto</Price>
+      <Price><span>$4500+</span> / proyecto</Price>
       <FeaturesList>
         <li>Sitios rápidos, modernos y responsivos</li>
         <li>Diseño UI/UX optimizado para conversión</li>
@@ -263,7 +263,7 @@ const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
   <Card data-glow>
     <CardContent>
       <Title>Firmas Criptográficas 🔐</Title>
-      <Price><span>$120</span> / integración</Price>
+      <Price><span>$180</span> / integración</Price>
       <FeaturesList>
         <li>Validación de identidad y documentos</li>
         <li>Integración con certificados digitales</li>
@@ -275,27 +275,11 @@ const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
     <GlowEffect data-glow />
   </Card>
 
-  {/* Marketing Digital */}
-  <Card data-glow>
-    <CardContent>
-      <Title>Marketing Digital 📣</Title>
-      <Price><span>$300</span> / mes</Price>
-      <FeaturesList>
-        <li>Estrategias en redes sociales y email marketing</li>
-        <li>Publicidad paga en Meta & Google Ads</li>
-        <li>Creación de contenido visual y textual</li>
-        <li>Informes de desempeño mensuales</li>
-      </FeaturesList>
-      <Button className="platinum">Empezar ahora</Button>
-    </CardContent>
-    <GlowEffect data-glow />
-  </Card>
-
   {/* SEO Avanzado */}
   <Card data-glow>
     <CardContent>
       <Title>SEO Avanzado 🔍</Title>
-      <Price><span>$250</span> / mes</Price>
+      <Price><span>$650</span> / mes</Price>
       <FeaturesList>
         <li>Optimización técnica (Core Web Vitals)</li>
         <li>Auditoría de contenido y keywords</li>

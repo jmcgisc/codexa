@@ -84,9 +84,8 @@ const FormularioContacto = () => {
     }, [status])
 
     return ( 
-        <div className ="antialiased bg-gray-100 overflow-hidden">
-            <div className="flex flex-col grid-cols-1 w-full justify-center items-center overflow-hidden">
-                <div className ="flex flex-col md:flex-row md:space-x-6 md:space-y-0 space-y-6 bg-cyan-700 p-8 rounded-xl shadow-lg text-white overflow-hidden">  
+            <div className="antialiased bg-cyan-900 min-h-screen w-full flex items-center justify-center ">
+                    <div className ="flex flex-col md:flex-row md:space-x-6 md:space-y-0 space-y-6 bg-cyan-800 p-8 rounded-xl shadow-lg text-white overflow-hidden">  
                         
                         <div className ="flex flex-col space-y-8 justify-berween">
                             <div>    
@@ -154,8 +153,7 @@ const FormularioContacto = () => {
                                 </div> 
                             ): <div></div>
                             }
-                        </div>
-                    </div>
+                        </div> 
                 </div>
         </div> 
         )
