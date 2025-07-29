@@ -281,10 +281,11 @@ const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
       <Title>SEO Avanzado 🔍</Title>
       <Price><span>$650</span> / mes</Price>
       <FeaturesList>
-        <li>Optimización técnica (Core Web Vitals)</li>
+        <li>Optimización técnica (CWV)</li>
         <li>Auditoría de contenido y keywords</li>
         <li>Backlinks y autoridad de dominio</li>
         <li>Monitoreo de rankings y tráfico orgánico</li>
+        <li>Análisis de competencia para resultado en campañas</li>
       </FeaturesList>
       <Button className="diamond">Mejorar visibilidad</Button>
     </CardContent>
