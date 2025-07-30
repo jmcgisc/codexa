@@ -16,7 +16,9 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "strict": true,
+    "types": ["framer-motion"],
+    "jsx": "react-jsx",
     "plugins": [
       {
         "name": "next"

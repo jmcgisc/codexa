@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { UilTimes, UilArrowRight, UilExternalLinkAlt } from '@iconscout/react-unicons';
 import { motion, AnimatePresence } from 'framer-motion';
+import type { HTMLMotionProps } from 'framer-motion';
+
 
 type Work = {
   id: number;
@@ -13,6 +15,11 @@ type Work = {
   role: string;
   viewLink: string;
 };
+
+const MotionSection: React.FC<
+  HTMLMotionProps<'section'> & React.HTMLAttributes<HTMLElement>
+> = motion.section;
+
 
 const Works = () => {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -180,19 +187,19 @@ const Works = () => {
         {/* Popup */}
         <AnimatePresence>
           {showPopup && selectedWork && (
-            <motion.div
-              // className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center p-4"
+            <MotionSection
+              className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center p-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              // onClick={closePopup}
+              onClick={closePopup}
             >
-              <motion.div
-                // className="bg-gray-800 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+              <MotionSection
+                className="bg-gray-800 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
                 initial={{ scale: 0.9 }}
                 animate={{ scale: 1 }}
                 exit={{ scale: 0.9 }}
-                // onClick={(e) => e.stopPropagation()}
+                onClick={(e) => e.stopPropagation()}
               >
                 <div className="relative p-6 md:p-8">
                   <button
@@ -249,8 +256,8 @@ const Works = () => {
                     </div>
                   </div>
                 </div>
-              </motion.div>
-            </motion.div>
+              </MotionSection>
+            </MotionSection>
           )}
         </AnimatePresence>
       </div>
