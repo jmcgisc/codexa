@@ -7,6 +7,7 @@ import { cn } from "../../lib/utils"
 const Dialog = DialogPrimitive.Root
 
 const DialogTrigger = DialogPrimitive.Trigger
+const DialogClose = DialogPrimitive.Close
 
 const DialogPortal = (props: DialogPrimitive.DialogPortalProps) => (
   <DialogPrimitive.Portal {...props} />
@@ -96,4 +97,5 @@ export {
   DialogFooter,
   DialogTitle,
   DialogDescription,
+  DialogClose
 }

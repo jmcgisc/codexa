@@ -19,6 +19,9 @@ module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      backgroundImage: {
+        'gradient-to-r': 'linear-gradient(to right, var(--tw-gradient-stops))',
+      },
       perspective: {
         DEFAULT: '1000px',
       },
