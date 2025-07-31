@@ -10,7 +10,7 @@ import TextAreaField from './TextAreaField';
 import ReCAPTCHA from "react-google-recaptcha";
 
 interface FormValues {
-  [key: string]: string;   
+  [key: string]: string;  
   nombreCompleto: string;
   telefonoMovil: string;
   email: string;
