@@ -24,12 +24,12 @@ const FormularioContacto = () => {
             mensaje:        ''
         });
 
-    const handleChange = (e) => {
-            setValues(values => ({
-            ...values, 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setValues(values => ({
+            ...values,
             [e.target.name]: e.target.value
-        })) 
-    }
+        }));
+        };
 
     const [status, setStatus] = useState('');
       
