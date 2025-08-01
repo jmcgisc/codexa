@@ -65,7 +65,7 @@ const FormularioContacto = () => {
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID        as string,
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID       as string,
         values,
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEYY       as string
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY       as string
       );
 
       console.log('Success!!', response);
