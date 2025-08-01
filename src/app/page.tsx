@@ -41,7 +41,7 @@ export default function Home() {
       
       {/* Additional sections can be added here */}
       <PortfolioGrid />  
-      <Testimonials />
+      {/* <Testimonials /> */}
       <MembershipCards />
       <FormularioContacto />
       <InteractiveMap />
