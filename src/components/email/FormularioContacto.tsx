@@ -109,7 +109,7 @@ const FormularioContacto = () => {
           </div>  
           <div className="inline-flex space-x-2 items-center">
             <RiMailFill className="text-teal-300 text-xl"/>
-            <span>stratik@gmail.com</span>  
+            <span>stratiksoftware@gmail.com</span>  
           </div> 
           <div className="inline-flex space-x-2 items-center"> 
             <ImLocation className="text-teal-300 text-xl"/>
