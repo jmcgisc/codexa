@@ -4,12 +4,17 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Code, Globe, ShoppingCart, TrendingUp, Edit, LayoutDashboard, ChevronDown } from "lucide-react";
 import { cn } from "../../lib/utils";
+import type { HTMLMotionProps } from 'framer-motion';
 
-type Service = {
-  label: string;
-  description: string;
-  icon: React.ComponentType<{ className?: string }>;
-};
+  type Service = {
+    label: string;
+    description: string;
+    icon: React.ComponentType<{ className?: string }>;
+  };
+
+  const MotionSection: React.FC<
+    HTMLMotionProps<'section'> & React.HTMLAttributes<HTMLElement>
+  > = motion.section;
 
 const services: Service[] = [
   {
@@ -71,7 +76,7 @@ export default function ServicesTabs() {
 
           <AnimatePresence>
             {isMobileMenuOpen && (
-              <motion.div
+              <MotionSection
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
@@ -101,7 +106,7 @@ export default function ServicesTabs() {
                     );
                   })}
                 </div>
-              </motion.div>
+              </MotionSection>
             )}
           </AnimatePresence>
         </div>
@@ -150,7 +155,7 @@ export default function ServicesTabs() {
         {/* Contenido del servicio seleccionado */}
         <div className="col-span-2">
           <AnimatePresence mode="wait">
-            <motion.div
+            <MotionSection
               key={activeIndex}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -170,7 +175,7 @@ export default function ServicesTabs() {
                 className="prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-400"
                 dangerouslySetInnerHTML={{ __html: services[activeIndex].description }}
               />
-            </motion.div>
+            </MotionSection>
           </AnimatePresence>
         </div>
       </div>
