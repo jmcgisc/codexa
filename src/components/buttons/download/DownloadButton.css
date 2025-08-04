@@ -1,0 +1,136 @@
+/* Estilos base */
+.download-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Botón principal */
+.download-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: 2px solid #5b5bf0;
+  border-radius: 50px;
+  padding: 5px;
+  width: 160px;
+  height: 60px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  overflow: hidden;
+}
+
+.download-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(91, 91, 240, 0.3);
+}
+
+/* Círculo del botón */
+.button-circle {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #5b5bf0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.4s ease;
+  flex-shrink: 0;
+}
+
+/* Icono de descarga */
+.download-icon {
+  width: 24px;
+  height: 24px;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+/* Checkmark */
+.checkmark {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border-radius: 2px;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease;
+}
+
+/* Texto del botón */
+.button-text {
+  position: absolute;
+  right: 20px;
+  color: black;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+/* Estados del botón */
+.download-button.downloading {
+  width: 60px;
+}
+
+.download-button.downloading .button-circle {
+  animation: pulse 1s infinite, rotate 0.5s ease forwards;
+}
+
+.download-button.downloading .download-icon {
+  opacity: 0;
+}
+
+.download-button.downloading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  animation: loading 2s infinite;
+}
+
+.download-button.complete {
+  width: 150px;
+  border-color: #23ae23;
+}
+
+.download-button.complete .button-circle {
+  background-color: #23ae23;
+}
+
+.download-button.complete .checkmark {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.download-button.complete .button-text {
+  right: 40px;
+}
+
+/* Animaciones */
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255,255,255,0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(255,255,255,0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+}
+
+@keyframes rotate {
+  to { transform: rotate(180deg); }
+}
+
+@keyframes loading {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}

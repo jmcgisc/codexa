@@ -56,18 +56,18 @@ export default function ServicesTabs() {
   const ActiveIcon = services[activeIndex].icon;
 
   return (
-    <section className="w-full max-w-6xl mx-auto py-8 md:py-24 px-4 font-sans">
+    <section className="w-full max-w-6xl mx-auto py-8 md:py-24 px-4 font-sans  text-gray-100">
       {/* Versión móvil */}
       <div className="md:hidden">
         {/* Selector de servicios */}
-        <div className="mb-6 relative">
+        <div className="mb-6 relative ">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="flex items-center justify-between w-full px-4 py-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm"
           >
             <div className="flex items-center gap-3">
-              <ActiveIcon className="w-5 h-5 text-primary" />
-              <span className="font-medium text-gray-800 dark:text-gray-200">
+              <ActiveIcon className="w-5 h-5 text-gray-100" />
+              <span className="font-medium text-gray-100 dark:text-gray-200">
                 {services[activeIndex].label}
               </span>
             </div>
@@ -114,10 +114,10 @@ export default function ServicesTabs() {
         {/* Contenido del servicio seleccionado */}
         <div className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-800">
           <div className="flex items-center gap-4 mb-6">
-            <div className="p-3 rounded-full bg-primary/10">
+            <div className="p-3 rounded-full bg-gray-900">
               <ActiveIcon className="w-6 h-6 text-primary" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <h3 className="text-2xl font-bold text-gray-200 dark:text-white">
               {services[activeIndex].label}
             </h3>
           </div>
@@ -163,9 +163,9 @@ export default function ServicesTabs() {
               transition={{ duration: 0.3 }}
               className="bg-white dark:bg-gray-900 rounded-xl p-8 shadow-sm border border-gray-200 dark:border-gray-800"
             >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="p-3 rounded-full bg-primary/10">
-                  <ActiveIcon className="w-8 h-8 text-primary" />
+              <div className="flex items-center gap-4 mb-6 ">
+                <div className="p-3 rounded-full bg-gray-900">
+                  <ActiveIcon className="w-8 h-8 bg-gray-900" />
                 </div>
                 <h3 className="text-3xl font-bold text-gray-900 dark:text-white">
                   {services[activeIndex].label}

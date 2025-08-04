@@ -9,8 +9,8 @@ import {
   DialogDescription,
   DialogClose
 } from '../../components/ui/dialog';
-
-import * as DialogPrimitive from "@radix-ui/react-dialog" 
+import DownloadButton from '../../components/buttons/download/DownloadButton';
+import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Button } from '../../components/ui/button';
 import { Code, Bot, ShieldCheck, X } from 'lucide-react';
 import React from 'react';
@@ -28,6 +28,7 @@ const selectedService = [
       'Search Console & Analytics',
     ],
     color: 'bg-cyan-100',
+    downloadText: 'Descargar folleto de Diseño Web'
   },
   {
     title: 'Chatbots Inteligentes',
@@ -41,6 +42,7 @@ const selectedService = [
       'Soporte automático',
     ],
     color: 'bg-purple-100',
+    downloadText: 'Descargar guía de Chatbots'
   },
   {
     title: 'LegalTech y Seguridad',
@@ -53,6 +55,7 @@ const selectedService = [
       'Auditoría legal',
     ],
     color: 'bg-emerald-100',
+    downloadText: 'Descargar PDF LegalTech'
   },
 ];
 
@@ -63,9 +66,9 @@ export default function Services() {
       <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
         {selectedService.map((service, i) => (
           <Dialog key={i}>
-            <div className="bg-white p-8 rounded-3xl shadow-md border hover:shadow-lg group">
+            <div className="bg-white p-8 rounded-3xl shadow-md border hover:shadow-lg group transition-shadow duration-300">
               <div className="flex justify-center mb-5">
-                <div className="bg-cyan-50 p-4 rounded-full">
+                <div className={`p-4 rounded-full ${service.color}`}>
                   {service.icon}
                 </div>
               </div>
@@ -81,42 +84,50 @@ export default function Services() {
             </div>
 
             <DialogContent className="w-[90vw] max-w-3xl rounded-2xl p-0 overflow-hidden">
-              <div className=" bg-white md:flex">
-                {/* Botón cerrar */}
-                <DialogClose >
-                  <button className="absolute top-0 right-0 text-gray-500 hover:text-black p-1.5 rounded-full bg-white shadow">
-                    <X className="w-5 h-5" />
-                  </button>
-                </DialogClose>
+              {/* Botón de cierre único y bien posicionado */}
+              <DialogClose className="absolute top-4 right-4 p-2 rounded-full bg-black transition-colors">
+                <X className="w-5 h-5 text-gray-100" />
+              </DialogClose>
 
+              <div className="bg-white md:flex">
                 {/* Lado izquierdo */}
-                <div className={`w-full md:w-1/3 p-6 flex items-center justify-center ${service.color}`}>
-                  <div className="bg-white p-4 rounded-full shadow">{service.icon}</div>
+                <div className={`w-full md:w-1/3 p-8 flex items-center justify-center ${service.color}`}>
+                  <div className="bg-white p-6 rounded-full shadow-lg">{service.icon}</div>
                 </div>
 
                 {/* Lado derecho */}
-                <div className="w-full md:w-2/3 p-6 text-left">
+                <div className="w-full md:w-2/3 p-8 text-left">
                   <DialogHeader>
-                    <DialogTitle className="text-xl font-bold mb-2">{service.title}</DialogTitle>
-                    <DialogDescription>{service.desc}</DialogDescription>
+                    <DialogTitle className="text-2xl font-bold mb-3 text-gray-900">
+                      {service.title}
+                    </DialogTitle>
+                    <DialogDescription className="text-gray-600 mb-6">
+                      {service.desc}
+                    </DialogDescription>
                   </DialogHeader>
 
-                  <ul className="mt-4 space-y-2 text-sm text-gray-700">
+                  <ul className="mt-4 space-y-3 text-gray-700">
                     {service.details.map((d, j) => (
-                      <li key={j} className="flex gap-2 items-start">
-                        <span className="text-cyan-500 mt-1">•</span>
-                        <span>{d}</span>
+                      <li key={j} className="flex gap-3 items-start">
+                        <span className={`mt-1 ${
+                          service.color.includes('cyan') ? 'text-cyan-500' :
+                          service.color.includes('purple') ? 'text-purple-500' :
+                          'text-emerald-500'
+                        }`}>•</span>
+                        <span className="text-gray-700">{d}</span>
                       </li>
                     ))}
-                  </ul>
+                  </ul> 
                   
-                  <div className="mt-6 flex flex-col sm:flex-row gap-3">
-                    <Button className="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white">
-                      Solicitar ahora
-                    </Button>
-                    <Button variant="outline" className="flex-1">
-                      Descargar PDF
-                    </Button>
+                  <div className="mt-8">
+                    <DownloadButton 
+                      pdfUrl="/public/Chatbots_IA_Stratik.pdf" 
+                      fileName="chatbots_ia_stratik.pdf" 
+  
+                    />
+                    <p className="text-xs text-gray-500 mt-2 text-center">
+                      {service.downloadText}
+                    </p>
                   </div>
                 </div>
               </div>

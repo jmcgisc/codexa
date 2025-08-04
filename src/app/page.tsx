@@ -37,11 +37,10 @@ export default function Home() {
       <Secciones />
 
       <Works />
-      {/* The Work component is where the portfolio items are displayed */}
       
-      {/* Additional sections can be added here */}
-      <PortfolioGrid />  
+      {/* <PortfolioGrid />   */}
       {/* <Testimonials /> */}
+
       <MembershipCards />
       <FormularioContacto />
       <InteractiveMap />
