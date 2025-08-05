@@ -1,46 +1,121 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import './Footer.css'; 
+import { motion, AnimatePresence } from 'framer-motion';
+import { Instagram, Twitter, Github, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+import type { HTMLMotionProps } from 'framer-motion';
 
 export default function Footer() {
+  const [activeSocial, setActiveSocial] = useState<string | null>(null);
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [cardsToggled, setCardsToggled] = useState(false);
+
+  const MotionSection: React.FC<
+    HTMLMotionProps<'section'> & React.HTMLAttributes<HTMLElement>
+  > = motion.section
 
   const toggleCards = () => {
     setCardsToggled(!cardsToggled);
   };
+  
+  const socialLinks = [
+    { icon: <Instagram size={20} />, name: 'Instagram', url: 'https://instagram.com/stratik' },
+    { icon: <Twitter size={20} />, name: 'Twitter', url: 'https://twitter.com/stratik' },
+    { icon: <Github size={20} />, name: 'GitHub', url: 'https://github.com/stratik' },
+    { icon: <Linkedin size={20} />, name: 'LinkedIn', url: 'https://linkedin.com/company/stratik' }
+  ];
+
+  const contactItems = [
+    { icon: <Mail size={16} />, text: 'hola@stratik.com' },
+    { icon: <Phone size={16} />, text: '+52 55 75 63 05 76' },
+    { icon: <MapPin size={16} />, text: 'México & España' }
+  ];
+
+  // Efecto de aparición escalonada
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
 
   return (
-    <footer className="bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 py-12 px-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
-        {/* Logo & descripción */}
-        <div>
-          <h2 className="text-2xl font-bold mb-2">STRATRIK</h2>
-          <p className="text-sm text-neutral-500 dark:text-neutral-400">
-            Creamos experiencias web memorables. Desde diseño hasta ecommerce.
-          </p>
-        </div>
+    <footer className="bg-gradient-to-b from-white to-neutral-50 dark:from-neutral-900 dark:to-neutral-800 text-neutral-800 dark:text-neutral-200 pt-16 pb-8 px-6 border-t border-neutral-200 dark:border-neutral-700">
+      <MotionSection
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={containerVariants}
+        className="max-w-7xl mx-auto"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+          {/* Logo y descripción */}
+          <MotionSection variants={itemVariants} className="space-y-4">
+            <Link href="/" aria-label="Ir al inicio" className="inline-block">
+              <div className="relative w-40 h-20">
+                <Image
+                  src="/corporativo/stratik_logo_large.png"
+                  alt="Logo STRATIK"
+                  width={280}
+                  height={100}
+                  priority
+                  className="h-52 w-auto object-contain"
+                />
+              </div>
+            </Link>
+          </MotionSection>
 
-        {/* Navegación */}
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Explora</h3>
-          <ul className="space-y-1 text-sm">
-            <li><a href="#servicios" className="hover:underline">Servicios</a></li>
-            <li><a href="#portafolio" className="hover:underline">Portafolio</a></li>
-            <li><a href="#testimonios" className="hover:underline">Testimonios</a></li>
-            <li><a href="#contacto" className="hover:underline">Contacto</a></li>
-          </ul>
-        </div>
+          {/* Navegación */}
+          <motion.div variants={itemVariants}>
+            <h3 className="text-lg font-semibold mb-4 text-indigo-600 dark:text-indigo-400">Explora</h3>
+            <ul className="space-y-3">
+              {['servicios', 'portafolio', 'testimonios', 'contacto'].map((item) => (
+                <li key={item}>
+                  <Link 
+                    href={`#${item}`}
+                    className="text-sm hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors flex items-center group"
+                  >
+                    <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    {item.charAt(0).toUpperCase() + item.slice(1)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
 
-        {/* Contacto rápido */}
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Contacto</h3>
-          <ul className="text-sm space-y-1">
-            <li>📧 hola@statrik.com</li>
-            <li>📞 +52 55 75 63 05 76</li>
-            <li>📍 México & España</li>
-          </ul>
-        </div>
+          {/* Contacto */}
+          <motion.div variants={itemVariants}>
+            <h3 className="text-lg font-semibold mb-4 text-indigo-600 dark:text-indigo-400">Contacto</h3>
+            <ul className="space-y-3">
+              {contactItems.map((item, index) => (
+                <li key={index} className="flex items-start space-x-2 text-sm">
+                  <span className="text-indigo-500 dark:text-indigo-400 mt-0.5">{item.icon}</span>
+                  <span>{item.text}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
 
+   
         {/* Redes Sociales - Componente original integrado */}
         <div className="relative">
           
@@ -114,166 +189,57 @@ export default function Footer() {
 
         </div>
       </div>
+            
+            <AnimatePresence>
+              {activeSocial && (
+                <MotionSection
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  className="absolute -top-8 left-0 bg-indigo-500 text-white text-xs px-2 py-1 rounded"
+                >
+                  {activeSocial}
+                  <div className="absolute w-2 h-2 bg-indigo-500 rotate-45 -bottom-1 left-3"></div>
+                </MotionSection>
+              )}
+            </AnimatePresence>
+          </MotionSection> 
 
-      <div className="border-t border-neutral-200 dark:border-neutral-700 mt-10 pt-6 text-center text-sm text-neutral-400">
-        © {new Date().getFullYear()} STATRIK. Todos los derechos reservados.
-      </div>
+        {/* Divider y copyright */}
+        <MotionSection
+          variants={itemVariants}
+          className="border-t border-neutral-200 dark:border-neutral-700 pt-6 items-center"
+        >
+          <div className="flex flex-col md:flex-row justify-between items-center text-sm text-neutral-500 dark:text-neutral-400">
+            <p>© {currentYear} STRATIK. Todos los derechos reservados.</p>
+            <div className="flex space-x-4 mt-4 md:mt-0">
+              <Link href="/politica-privacidad" className="hover:underline">Política de Privacidad</Link>
+              <Link href="/terminos-servicio" className="hover:underline">Términos de Servicio</Link>
+            </div>
+          </div>
+        </MotionSection> 
 
-      <style>{`
-        .main {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 0.5em;
-          position: relative;
-          height: 220px;
-          margin-bottom: 1rem;
-        }
+        
+          {/* Redes sociales con efecto hover */}
+          <MotionSection variants={itemVariants} className="relative mt-10">
+            <h3 className="text-lg font-semibold mb-4 text-indigo-600 dark:text-indigo-400">Conéctate</h3>
+            <div className="grid grid-cols-2 gap-3">
+              {socialLinks.map((social) => (
+                <MotionSection
+                  key={social.name}
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 p-2 rounded-lg border border-neutral-200 dark:border-neutral-700 hover:bg-indigo-50 dark:hover:bg-neutral-700 transition-colors"
+                  whileHover={{ y: -2 }}
+                  onHoverStart={() => setActiveSocial(social.name)}
+                  onHoverEnd={() => setActiveSocial(null)}
+                >
+                  <span className="text-indigo-500 dark:text-indigo-400">{social.icon}</span>
+                  <span className="text-sm">{social.name}</span>
+                </MotionSection>
+              ))}
+            </div>
+          </MotionSection>
 
-        .share-btn {
-          position: absolute;
-          display: flex;
-          cursor: pointer;
-          align-items: center;
-          justify-content: center;
-          background-color: #6c757d;
-          color: white;
-          border: none;
-          border-radius: 50%;
-          width: 40px;
-          height: 40px;
-          z-index: 10;
-          transition: all 0.3s ease;
-        }
-
-        .share-btn:hover {
-          background-color: #5a6268;
-          transform: scale(1.1);
-        }
-
-        .up {
-          display: flex;
-          flex-direction: row;
-          gap: 0.5em;
-        }
-
-        .down {
-          display: flex;
-          flex-direction: row;
-          gap: 0.5em;
-        }
-
-        .card1, .card2, .card3, .card4 {
-          width: 70px;
-          height: 70px;
-          outline: none;
-          border: none;
-          background: white;
-          box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 0;
-          transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .card1 {
-          border-radius: 70px 5px 5px 5px;
-        }
-
-        .card1.toggled {
-          transform: translateY(40px) translateX(50px) scale(0);
-        }
-
-        .card2 {
-          border-radius: 5px 70px 5px 5px;
-        }
-
-        .card2.toggled {
-          transform: translateY(40px) translateX(-50px) scale(0);
-        }
-
-        .card3 {
-          border-radius: 5px 5px 5px 70px;
-        }
-
-        .card3.toggled {
-          transform: translateY(-40px) translateX(50px) scale(0);
-        }
-
-        .card4 {
-          border-radius: 5px 5px 70px 5px;
-        }
-
-        .card4.toggled {
-          transform: translateY(-40px) translateX(-50px) scale(0);
-        }
-
-        .icon-container {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 100%;
-          height: 100%;
-        }
-
-        .instagram {
-          fill: #cc39a4;
-        }
-
-        .twitter {
-          fill: #03A9F4;
-        }
-
-        .github {
-          fill: #000000;
-        }
-
-        .discord {
-          fill: #8c9eff;
-        }
-
-        .card1:hover {
-          cursor: pointer;
-          transform: scale(1.1);
-          background-color: #cc39a4;
-        }
-
-        .card1:hover .instagram {
-          fill: white;
-        }
-
-        .card2:hover {
-          cursor: pointer;
-          transform: scale(1.1);
-          background-color: #03A9F4;
-        }
-
-        .card2:hover .twitter {
-          fill: white;
-        }
-
-        .card3:hover {
-          cursor: pointer;
-          transform: scale(1.1);
-          background-color: rgb(39, 39, 39);
-        }
-
-        .card3:hover .github {
-          fill: white;
-        }
-
-        .card4:hover {
-          cursor: pointer;
-          transform: scale(1.1);
-          background-color: #8c9eff;
-        }
-
-        .card4:hover .discord {
-          fill: white;
-        }
-      `}</style>
     </footer>
-  )
+  );
 }

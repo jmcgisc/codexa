@@ -1,0 +1,155 @@
+
+        .main {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5em;
+          position: relative;
+          height: 220px;
+          margin-bottom: 1rem;
+        }
+
+        .share-btn {
+          position: absolute;
+          display: flex;
+          cursor: pointer;
+          align-items: center;
+          justify-content: center;
+          background-color: #6c757d;
+          color: white;
+          border: none;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          z-index: 10;
+          transition: all 0.3s ease;
+        }
+
+        .share-btn:hover {
+          background-color: #5a6268;
+          transform: scale(1.1);
+        }
+
+        .up {
+          display: flex;
+          flex-direction: row;
+          gap: 0.5em;
+        }
+
+        .down {
+          display: flex;
+          flex-direction: row;
+          gap: 0.5em;
+        }
+
+        .card1, .card2, .card3, .card4 {
+          width: 70px;
+          height: 70px;
+          outline: none;
+          border: none;
+          background: white;
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0;
+          transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card1 {
+          border-radius: 70px 5px 5px 5px;
+        }
+
+        .card1.toggled {
+          transform: translateY(40px) translateX(50px) scale(0);
+        }
+
+        .card2 {
+          border-radius: 5px 70px 5px 5px;
+        }
+
+        .card2.toggled {
+          transform: translateY(40px) translateX(-50px) scale(0);
+        }
+
+        .card3 {
+          border-radius: 5px 5px 5px 70px;
+        }
+
+        .card3.toggled {
+          transform: translateY(-40px) translateX(50px) scale(0);
+        }
+
+        .card4 {
+          border-radius: 5px 5px 70px 5px;
+        }
+
+        .card4.toggled {
+          transform: translateY(-40px) translateX(-50px) scale(0);
+        }
+
+        .icon-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+        }
+
+        .instagram {
+          fill: #cc39a4;
+        }
+
+        .twitter {
+          fill: #03A9F4;
+        }
+
+        .github {
+          fill: #000000;
+        }
+
+        .discord {
+          fill: #8c9eff;
+        }
+
+        .card1:hover {
+          cursor: pointer;
+          transform: scale(1.1);
+          background-color: #cc39a4;
+        }
+
+        .card1:hover .instagram {
+          fill: white;
+        }
+
+        .card2:hover {
+          cursor: pointer;
+          transform: scale(1.1);
+          background-color: #03A9F4;
+        }
+
+        .card2:hover .twitter {
+          fill: white;
+        }
+
+        .card3:hover {
+          cursor: pointer;
+          transform: scale(1.1);
+          background-color: rgb(39, 39, 39);
+        }
+
+        .card3:hover .github {
+          fill: white;
+        }
+
+        .card4:hover {
+          cursor: pointer;
+          transform: scale(1.1);
+          background-color: #8c9eff;
+        }
+
+        .card4:hover .discord {
+          fill: white;
+        }
+    
