@@ -10,14 +10,13 @@ import {
   DialogClose
 } from '../../components/ui/dialog';
 import DownloadButton from '../../components/buttons/download/DownloadButton';
-import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Button } from '../../components/ui/button';
 import { Code, Bot, ShieldCheck, X } from 'lucide-react';
 import React from 'react';
 
 const selectedService = [
   {
-    title: 'Diseño Web & SEO Profesional',
+    title: 'Diseño Web & SEO',
     desc: 'Creamos sitios visualmente impactantes, rápidos y pensados para posicionarte en Google.',
     icon: <Code className="h-8 w-8 text-cyan-500" />,
     details: [
@@ -28,7 +27,9 @@ const selectedService = [
       'Search Console & Analytics',
     ],
     color: 'bg-cyan-100',
-    downloadText: 'Descargar folleto de Diseño Web'
+    downloadText: 'Descargar folleto de Diseño Web',
+    pdfUrl: '/pdfs/diseno-web-seo-stratik.pdf', 
+    fileName: 'diseno-web-seo-stratik.pdf' 
   },
   {
     title: 'Chatbots Inteligentes',
@@ -42,7 +43,9 @@ const selectedService = [
       'Soporte automático',
     ],
     color: 'bg-purple-100',
-    downloadText: 'Descargar guía de Chatbots'
+    downloadText: 'Descargar guía de Chatbots',
+    pdfUrl: '/pdfs/chatbots-ia-stratik.pdf',
+    fileName: 'chatbots-ia-stratik.pdf'
   },
   {
     title: 'LegalTech y Seguridad',
@@ -55,7 +58,9 @@ const selectedService = [
       'Auditoría legal',
     ],
     color: 'bg-emerald-100',
-    downloadText: 'Descargar PDF LegalTech'
+    downloadText: 'Descargar PDF LegalTech',
+    pdfUrl: '/pdfs/legaltech-stratik.pdf',
+    fileName: 'legaltech-stratik.pdf'
   },
 ];
 
@@ -84,18 +89,15 @@ export default function Services() {
             </div>
 
             <DialogContent className="w-[90vw] max-w-3xl rounded-2xl p-0 overflow-hidden">
-              {/* Botón de cierre único y bien posicionado */}
               <DialogClose className="absolute top-4 right-4 p-2 rounded-full bg-black transition-colors">
                 <X className="w-5 h-5 text-gray-100" />
               </DialogClose>
 
               <div className="bg-white md:flex">
-                {/* Lado izquierdo */}
                 <div className={`w-full md:w-1/3 p-8 flex items-center justify-center ${service.color}`}>
                   <div className="bg-white p-6 rounded-full shadow-lg">{service.icon}</div>
                 </div>
 
-                {/* Lado derecho */}
                 <div className="w-full md:w-2/3 p-8 text-left">
                   <DialogHeader>
                     <DialogTitle className="text-2xl font-bold mb-3 text-gray-900">
@@ -117,13 +119,12 @@ export default function Services() {
                         <span className="text-gray-700">{d}</span>
                       </li>
                     ))}
-                  </ul> 
+                  </ul>
                   
                   <div className="mt-8">
                     <DownloadButton 
-                      pdfUrl="/public/Chatbots_IA_Stratik.pdf" 
-                      fileName="chatbots_ia_stratik.pdf" 
-  
+                      pdfUrl={service.pdfUrl} 
+                      fileName={service.fileName}
                     />
                     <p className="text-xs text-gray-500 mt-2 text-center">
                       {service.downloadText}

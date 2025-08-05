@@ -1,31 +1,50 @@
 'use client'
 
 import { DisclosureButton, DisclosurePanel, Disclosure } from '@headlessui/react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, ArrowUpRight } from 'lucide-react'
 import ThemeToggle from '../ThemeToggle'
 import useScrollSpy from '../../hooks/useScrollSpy'
 import ContactModal from '../ContactModal'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useMotionTemplate, useMotionValue } from 'framer-motion'
+import type { HTMLMotionProps } from 'framer-motion';
 
 const sections = ['hero', 'servicios', 'portfolio', 'contacto']
+
+const MotionSection: React.FC<
+  HTMLMotionProps<'section'> & React.HTMLAttributes<HTMLElement>
+> = motion.section
 
 export default function Navbar() {
   const activeId = useScrollSpy(sections, 80)
   const navRef = useRef<HTMLDivElement>(null)
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null)
+  const [scrolled, setScrolled] = useState(false)
 
-  // Parallax effect for navbar
+  // Efecto de scroll para cambiar estilo
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Efecto de mouse parallax mejorado
   const handleMouseMove = (e: MouseEvent) => {
     const bounds = navRef.current?.getBoundingClientRect()
     if (!bounds) return
 
-    const x = (e.clientX - bounds.left - bounds.width / 2) / 25
-    const y = (e.clientY - bounds.top - bounds.height / 2) / 25
-    setMousePos({ x, y })
+    mouseX.set(e.clientX - bounds.left)
+    mouseY.set(e.clientY - bounds.top)
   }
+
+  // Efecto de gradiente animado
+  const background = useMotionTemplate`radial-gradient(240px circle at ${mouseX}px ${mouseY}px, rgba(99, 102, 241, 0.15), transparent 80%)`
 
   useEffect(() => {
     const nav = navRef.current
@@ -35,21 +54,47 @@ export default function Navbar() {
     return () => nav.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
+  // Animación de entrada
+  const containerVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3
+      }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: -10 },
+    visible: { opacity: 1, y: 0 }
+  }
+
   return (
-    <motion.div
-      ref={navRef}
-      className="fixed w-full z-50 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md shadow-md transition-all"
+    <MotionSection
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+      className={`fixed w-full z-50 transition-all duration-300 ${
+        scrolled 
+          ? 'bg-white/90 dark:bg-neutral-900/90 shadow-lg' 
+          : 'bg-white/80 dark:bg-neutral-900/80'
+      } backdrop-blur-md`}
+      style={{  }}
     >
       <Disclosure as="nav">
         {({ open }) => (
           <>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex h-16 items-center justify-between">
+              <div className="flex h-20 items-center justify-between">
                 
-                {/* Logo con parallax */}
-                <motion.div
-                  animate={{ x: mousePos.x, y: mousePos.y }}
-                  transition={{ type: 'spring', stiffness: 80, damping: 20 }}
+                {/* Logo con efecto de elevación */}
+                <MotionSection
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="relative z-10"
                 >
                   <Link href="/" aria-label="Ir al inicio">
                     <div className="flex items-center space-x-2">
@@ -63,76 +108,125 @@ export default function Navbar() {
                       />
                     </div>
                   </Link>
-                </motion.div>
+                </MotionSection>
 
-                {/* Desktop links con movimiento */}
-                <motion.div
-                  className="hidden md:flex items-center space-x-6"
-                  animate={{ x: -mousePos.x / 2, y: -mousePos.y / 2 }}
-                  transition={{ type: 'spring', stiffness: 70, damping: 18 }}
+                {/* Desktop links con efecto de subrayado animado */}
+                <MotionSection 
+                  className="hidden md:flex items-center space-x-8"
+                  variants={containerVariants}
                 >
                   {sections.map((id) => (
-                    <a
-                      key={id}
-                      href={`#${id}`}
-                      className={`text-sm transition-transform duration-300 hover:scale-105 ${
-                        activeId === id
-                          ? 'text-indigo-600 dark:text-indigo-400 font-semibold'
-                          : 'text-gray-700 dark:text-gray-300'
-                      }`}
-                    >
-                      {id.charAt(0).toUpperCase() + id.slice(1)}
-                    </a>
+                    <motion.div key={id} variants={itemVariants}>
+                      <Link
+                        href={`#${id}`}
+                        className={`relative px-2 py-1 text-sm transition-colors ${
+                          activeId === id
+                            ? 'text-indigo-600 dark:text-indigo-400'
+                            : 'text-gray-700 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400'
+                        }`}
+                        onMouseEnter={() => setHoveredLink(id)}
+                        onMouseLeave={() => setHoveredLink(null)}
+                      >
+                        {id.charAt(0).toUpperCase() + id.slice(1)}
+                        {(hoveredLink === id || activeId === id) && (
+                          <MotionSection
+                            layoutId="nav-underline"
+                            className="absolute left-0 bottom-0 w-full h-0.5 bg-indigo-500 dark:bg-indigo-400"
+                            initial={false}
+                            transition={{ type: 'spring', bounce: 0.25, duration: 0.5 }}
+                          />
+                        )}
+                      </Link>
+                    </motion.div>
                   ))}
-                  <Link
-                    href="/configurador"
-                    className="text-sm transition-colors hover:underline text-gray-700 dark:text-gray-300"
-                  >
-                    Configurador
-                  </Link>
-                  <ThemeToggle />
-                  <ContactModal />
-                </motion.div>
+                  
+                  <motion.div variants={itemVariants}>
+                    <Link
+                      href="/configurador"
+                      className="flex items-center text-sm text-gray-700 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors"
+                    >
+                      Configurador <ArrowUpRight className="ml-1 h-3 w-3" />
+                    </Link>
+                  </motion.div>
+                  
+                  <motion.div variants={itemVariants}>
+                    <ThemeToggle />
+                  </motion.div>
+                  
+                  <motion.div variants={itemVariants}>
+                    <ContactModal />
+                  </motion.div>
+                </MotionSection>
 
-                {/* Mobile button */}
-                <div className="md:hidden">
-                  <DisclosureButton className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800">
-                    {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                {/* Mobile button con animación */}
+                <MotionSection
+                  className="md:hidden"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <DisclosureButton 
+                    className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800 transition-colors"
+                    aria-label="Toggle menu"
+                  >
+                    {open ? (
+                      <X className="h-6 w-6" />
+                    ) : (
+                      <Menu className="h-6 w-6" />
+                    )}
                   </DisclosureButton>
-                </div>
+                </MotionSection>
               </div>
             </div>
 
-            {/* Mobile menu */}
-            <DisclosurePanel className="md:hidden bg-white/90 dark:bg-neutral-900/90 px-4 pt-4 pb-4 backdrop-blur">
-              <div className="flex flex-col space-y-2">
+            {/* Mobile menu con animación */}
+            <DisclosurePanel 
+              as={MotionSection}
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ 
+                opacity: open ? 1 : 0, 
+                height: open ? 'auto' : 0 
+              }} 
+              className="md:hidden bg-white/95 dark:bg-neutral-900/95 px-4 backdrop-blur-lg overflow-hidden"
+            >
+              <MotionSection
+                className="flex flex-col space-y-3 py-4"
+                variants={containerVariants}
+              >
                 {sections.map((id) => (
-                  <a
-                    key={id}
-                    href={`#${id}`}
-                    className={`block py-2 text-sm rounded-md transition-colors hover:bg-gray-100 dark:hover:bg-neutral-800 ${
-                      activeId === id
-                        ? 'text-indigo-600 dark:text-indigo-400 font-semibold'
-                        : 'text-gray-700 dark:text-gray-300'
-                    }`}
-                  >
-                    {id.charAt(0).toUpperCase() + id.slice(1)}
-                  </a>
+                  <motion.div key={id} variants={itemVariants}>
+                    <Link
+                      href={`#${id}`}
+                      className={`block py-2 px-3 text-sm rounded-md transition-colors ${
+                        activeId === id
+                          ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400'
+                          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800'
+                      }`}
+                    >
+                      {id.charAt(0).toUpperCase() + id.slice(1)}
+                    </Link>
+                  </motion.div>
                 ))}
-                <Link
-                  href="/configurador"
-                  className="block py-2 text-sm rounded-md transition-colors hover:bg-gray-100 dark:hover:bg-neutral-800 text-gray-700 dark:text-gray-300"
+                
+                <motion.div variants={itemVariants}>
+                  <Link
+                    href="/configurador"
+                    className="flex items-center py-2 px-3 text-sm rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800 transition-colors"
+                  >
+                    Configurador <ArrowUpRight className="ml-1 h-3 w-3" />
+                  </Link>
+                </motion.div>
+                
+                <MotionSection 
+                  variants={itemVariants}
+                  className="pt-2 px-3"
                 >
-                  Configurador
-                </Link>
-                <div className="pt-2">
                   <ThemeToggle />
-                </div>
-              </div>
+                </MotionSection>
+              </MotionSection>
             </DisclosurePanel>
           </>
         )}
       </Disclosure>
-    </motion.div>
+    </MotionSection>
   )
 }
