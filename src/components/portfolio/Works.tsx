@@ -3,7 +3,6 @@ import { UilTimes, UilArrowRight, UilExternalLinkAlt } from '@iconscout/react-un
 import { motion, AnimatePresence } from 'framer-motion';
 import type { HTMLMotionProps } from 'framer-motion';
 
-
 type Work = {
   id: number;
   title: string;

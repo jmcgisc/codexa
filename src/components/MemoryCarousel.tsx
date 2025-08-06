@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import { 
   faCode, 
   faBug, 
@@ -13,7 +12,7 @@ import {
   faLocationDot,
   faClock
 } from '@fortawesome/free-solid-svg-icons';
-import './MemoryCarousel.css'; // We'll extract the CSS separately
+import './MemoryCarousel.css';
 
 interface MemoryCard {
   id: number;
@@ -32,13 +31,21 @@ const MemoryCarousel: React.FC = () => {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [startX, setStartX] = useState<number>(0);
   const [radius, setRadius] = useState<number>(400);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   
   const carouselRef = useRef<HTMLDivElement>(null);
-    useEffect(() => {
-      const newRadius = window.innerWidth <= 768 ? 250 : 400;
-      setRadius(newRadius);
-    }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+      setRadius(mobile ? 250 : 400);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const memoryCards: MemoryCard[] = [
     {
@@ -96,7 +103,7 @@ const MemoryCarousel: React.FC = () => {
       language: "Campañas y Marketing Digital 🚀",
       title: "Campañas y Marketing Digital",
       icon: <FontAwesomeIcon icon={faRocket} />,
-      preview: "I'm trying to send it live, but which environment is real?",
+      preview: "Atrae clientes con campañas efectivas...",
       content: "Atrae clientes con campañas efectivas.<br><br>Gestionamos tu publicidad en Google, Meta y más.<br><br>🎯 Anuncios inteligentes<br><br>📩 Captación de leads<br><br>📅 Calendarios de contenido",
       location: "Mexico & Colombia",
       time: "Desde 1mes "
@@ -112,7 +119,7 @@ const MemoryCarousel: React.FC = () => {
       window.removeEventListener('resize', handleResize);
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [isMobile]);
 
   const arrangeCards = () => {
     const angle = 360 / memoryCards.length;
@@ -131,7 +138,6 @@ const MemoryCarousel: React.FC = () => {
       carouselRef.current.style.transform = `rotateY(${newTheta}deg)`;
     }
 
-    // Update current card index
     const anglePerCard = 360 / memoryCards.length;
     const newIndex = Math.round(Math.abs(newTheta / anglePerCard) % memoryCards.length);
     setCurrentIndex(newIndex >= memoryCards.length ? 0 : newIndex);
@@ -270,7 +276,6 @@ const MemoryCarousel: React.FC = () => {
                       <div className="card-content">
                         <h3 className='text-emerald-700'>{card.title}</h3>
                         <div className='text-violet-300' dangerouslySetInnerHTML={{ __html: card.content }} />
-
                         <div className="memory-coordinates">
                           <span><FontAwesomeIcon icon={faLocationDot} /> {card.location}</span>
                           <span className="time-stamp"><FontAwesomeIcon icon={faClock} /> {card.time}</span>
@@ -291,6 +296,26 @@ const MemoryCarousel: React.FC = () => {
               <FontAwesomeIcon icon={faChevronRight} />
             </button>
           </div>
+
+          {isMobile && (
+            <>
+              <div className="mobile-dots-container">
+                {memoryCards.map((_, i) => (
+                  <div 
+                    key={i} 
+                    className={`mobile-dot ${i === currentIndex ? 'active' : ''}`}
+                    onClick={() => {
+                      const angle = (360 / memoryCards.length) * i;
+                      rotateCarousel(-angle);
+                    }}
+                  />
+                ))}
+              </div>
+              <div className="mobile-tap-hint">
+                Toca la tarjeta para ver más información
+              </div>
+            </>
+          )}
         </main>
       </div>
     </div>

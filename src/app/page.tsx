@@ -5,7 +5,6 @@ import Hero from "../components/sections/Hero";
 import ServiciosInteractivos from "../components/sections/ServiciosInteractivos";
 
 import MembershipCards from "../components/sections/Testimonios/MembershipCards"
-
 {/* Atomos      Secciones */}
 import Secciones from "../components/sections/Secciones";
 
@@ -24,8 +23,11 @@ import InteractiveMap from "../components/InteractiveMap";
 import MemoryCarousel from "../components/MemoryCarousel";
 import FormularioContacto from "../components/email/FormularioContacto";
 
+import './globals.css';
+
 export default function Home() {
   return (
+      
     <main className="flex flex-col">
       <Navbar />
       <Hero /> 
@@ -49,6 +51,7 @@ export default function Home() {
 
       <Footer/>
 
-      </main>
+    </main>
+    
   )
 }
