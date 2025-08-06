@@ -99,19 +99,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <html lang="es" className="scroll-smooth">
-      <body className={inter.className}
-      
-      
-      >{children}
-
-      
-        
+      <body className={inter.className}>{children}
       <script
         async
         src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
       >
-
       </script>
+      
       <script>
         {`window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}

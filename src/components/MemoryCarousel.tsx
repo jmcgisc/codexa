@@ -50,7 +50,7 @@ const MemoryCarousel: React.FC = () => {
   const memoryCards: MemoryCard[] = [
     {
       id: 1,
-      language: "Visivilidad y Credibilidad  🖥 ️",
+      language: "Visivilidad y Credibilidad",
       title: "Diseño Web",
       icon: <FontAwesomeIcon icon={faCode} />,
       preview: "Un diseño a medida para cada cliente...",
@@ -60,7 +60,7 @@ const MemoryCarousel: React.FC = () => {
     },
     {
       id: 2,
-      language: "Seguridad Digital & Legalidad 🔐",
+      language: "Seguridad Digital & Legalidad",
       title: "Seguridad y Firmas Digitales",
       icon: <FontAwesomeIcon icon={faBug} />,
       preview: "Incluimos firmas electrónicas, de audio y...",
@@ -70,7 +70,7 @@ const MemoryCarousel: React.FC = () => {
     },
     {
       id: 3,
-      language: "Presencia Destacada 🈂",
+      language: "Presencia Destacada",
       title: "SEO & Analítica",
       icon: <FontAwesomeIcon icon={faBookOpen} />,
       preview: "Implementamos estrategias de SEO técnico y contenido...",
@@ -80,7 +80,7 @@ const MemoryCarousel: React.FC = () => {
     },
     {
       id: 4,
-      language: "IA & Velocidad de Respuesta 🤖",
+      language: "IA & Velocidad de Respuesta",
       title: "Automatización e Inteligencia Artificial",
       icon: <FontAwesomeIcon icon={faAtom} />,
       preview: "Desde respuestas automáticas hasta asistentes con IA...",
@@ -90,7 +90,7 @@ const MemoryCarousel: React.FC = () => {
     },
     {
       id: 5,
-      language: "Soluciones & Experiencia 🛠️",
+      language: "Soluciones & Experiencia",
       title: "Extras Técnicos",
       icon: <FontAwesomeIcon icon={faCodeBranch} />,
       preview: "Consultoría, servidores, bases de datos y más...",
@@ -100,7 +100,7 @@ const MemoryCarousel: React.FC = () => {
     },
     {
       id: 6,
-      language: "Campañas y Marketing Digital 🚀",
+      language: "Campañas y Marketing Digital",
       title: "Campañas y Marketing Digital",
       icon: <FontAwesomeIcon icon={faRocket} />,
       preview: "Atrae clientes con campañas efectivas...",
