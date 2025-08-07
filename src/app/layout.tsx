@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   creator: 'Stratik',
   publisher: 'Strarik',
   icons: {
-    icon: '/corporativo/favicon.ico', 
+    icon: '/corporativo/stratik_full_logo_square.ico', 
   },
 
   robots: {
