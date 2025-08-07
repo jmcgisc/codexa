@@ -524,4 +524,79 @@
   .mobile-tap-hint {
     font-size: 11px;
   }
+  /* General container */
+.memory-carousel-container {
+  overflow-x: hidden;
+}
+
+/* Evita que el carousel genere desplazamiento lateral */
+.mobile-carousel-container {
+  width: 100%;
+  max-width: 100vw;
+  overflow: hidden;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* Mobile card */
+.mobile-card {
+  max-width: 100%;
+  margin: 0 auto;
+  transform: none !important;
+  perspective: none;
+}
+
+/* Card sides no deben rotar en móvil */
+.mobile-card .card-inner {
+  transform-style: flat;
+  transition: transform 0.6s ease;
+  transform: none !important;
+  border-radius: 1rem;
+  background-color: #111827;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-card.flipped .card-inner {
+  transform: none !important;
+}
+
+/* Dots */
+.mobile-dots-container {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.mobile-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #999;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+.mobile-dot.active {
+  background-color: #4F46E5;
+  opacity: 1;
+}
+
+/* Botones móviles */
+.mobile-controls-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.mobile-control-btn {
+  background-color: #1F2937;
+  color: white;
+  border: none;
+  padding: 0.6rem;
+  border-radius: 50%;
+  font-size: 1.2rem;
+}
+
+  
 }
