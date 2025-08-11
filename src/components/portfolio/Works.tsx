@@ -30,56 +30,56 @@ const Works = () => {
       id: 1,
       title: "💻 Desarrollo Web",
       category: "web",
-      imgSrc: "https://i.postimg.cc/43Th5VXJ/work-1.png",
+      imgSrc: "https://i.postimg.cc/4dFJk9ZX/imagenes-combinadas-optimizadas.png",
       description: "Construimos sitios rápidos, seguros y escalables utilizando tecnologías modernas.",
       created: "22 Apr 2025",
       technologies: "React, Tailwind CSS, Framer Motion",
       role: "Frontend Developer",
-      viewLink: "#"
+      viewLink: "https://vagamociontravel.com"
     },
     {
       id: 2,
       title: "📱 App Mobile",
       category: "app",
-      imgSrc: "https://i.postimg.cc/sXLjnC5p/work-2.png",
+      imgSrc: "https://i.postimg.cc/43Th5VXJ/work-1.png",
       description: "Creamos aplicaciones móviles de alto rendimiento con Kotlin, Swift y React Native. Desarrollamos con foco en seguridad, escalabilidad y experiencia fluida, tanto para iOS como Android.",
       created: "15 Apr 2025",
       technologies: "Figma, Adobe XD, React Native",
-      role: "UI/UX Designer",
+      role: "Android & iOS Developer",
       viewLink: "#"
     },
     {
       id: 3,
       title: "🎨 Diseño UX/UI",
       category: "design",
-      imgSrc: "https://i.postimg.cc/QNB1jXYZ/work-3.png",
+      imgSrc: "https://i.postimg.cc/L6k8hh33/Chat-GPT-Image-8-ago-2025-12-58-28-p-m-1.png",
       description: "Transformamos ideas en experiencias visuales efectivas. Aplicamos metodologías ágiles, diseño centrado en el usuario, prototipos funcionales y tests A/B para garantizar interfaces intuitivas y atractivas.",
       created: "10 Apr 2025",
       technologies: "Illustrator, Photoshop, InDesign",
-      role: "Brand Designer",
-      viewLink: "#"
+      role: "Mockup & Graphic Designer",
+      viewLink: "https://buceapp.com"
     },
     {
       id: 4,
-      title: "📱 App Nativa",
+      title: "📱 Reservaciones y Citas Online",
       category: "app",
-      imgSrc: "https://i.postimg.cc/s2DGqyG8/work-4.png",
-      description: "Desarrollamos apps móviles nativas en Kotlin y Swift, ideales para startups o empresas que buscan estabilidad, rendimiento y compatibilidad completa con iOS y Android. Seguridad y arquitectura escalable desde el core.",
-      created: "4 Apr 2025",
-      technologies: "React Native, Firebase, Node.js",
-      role: "Full Stack Developer",
-      viewLink: "#"
+      imgSrc: "https://i.postimg.cc/TYHWqCs3/Chat-GPT-Image-10-ago-2025-11-52-26-copia.png",
+      description: "Buceapp es el marketplace que une a centros y escuelas de buceo con miles de buzos y turistas listos para su próxima inmersión.",
+      created: "Apr 2022",
+      technologies: "Stripe, Firebase, Node.js",
+      role: "Deportes y Fitness",
+      viewLink: "https://buceapp.com"
     },
     {
       id: 5,
-      title: "🛒 E-commerce Platform",
+      title: " 🌊 Desarrollos Inmobiliarios",
       category: "web",
-      imgSrc: "https://i.postimg.cc/TYVyPhrF/work-5.png",
-      description: "Diseñamos tiendas online personalizadas, optimizadas para escalar y vender. Usamos Next.js, Stripe, Shopify, WooCommerce o soluciones headless para integrar pagos seguros, catálogos dinámicos y analítica avanzada.",
-      created: "28 Mar 2025",
-      technologies: "Next.js, Stripe, MongoDB",
-      role: "Lead Developer",
-      viewLink: "#"
+      imgSrc: "https://i.postimg.cc/3NmJXw57/imagenes-unidas-reducida.png",
+      description: "Convierte visitas en clientes con un sitio web diseñado para el sector inmobiliario. Desde la primera impresión, tus desarrollos se verán profesionales, atractivos y optimizados para aparecer en Google.",
+      created: "Julio 2025",
+      technologies: "Next.js, React, Tailwind CSS",
+      role: "Desarrollos Inmobiliarios",
+      viewLink: "https://desarrollosdiamante.com"
     },
     {
       id: 6,
@@ -174,7 +174,7 @@ const Works = () => {
                 <div className="p-6">
                   <h4 className="text-xl font-semibold text-white mb-2">{work.title}</h4>
                   <p className="text-gray-400 text-sm mb-4 line-clamp-2">{work.description}</p>
-                  <div className="flex items-center text-primary hover:text-primary-light transition-colors">
+                  <div className="flex items-center text-stratik-turquesa hover:text-primary-light transition-colors">
                     Ver detalles <UilArrowRight className="ml-2" />
                   </div>
                 </div>

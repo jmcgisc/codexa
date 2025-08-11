@@ -51,6 +51,12 @@ module.exports = {
         
       }, 
       colors: {
+        stratik: {
+          azulStratik: '#0a4fa4',
+          azulMedio: '#2c9cd7',
+          azulOscuro: '#0a2740',
+          turquesa: '#2b8a93',
+        },
         background: {
           light: '#ffffff',
           dark: '#0f0f0f',
