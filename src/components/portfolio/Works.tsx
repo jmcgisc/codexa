@@ -92,7 +92,6 @@ const Works = () => {
       role: "Interaction Designer",
       viewLink: "#"
     }
-    // ... (otros objetos de worksData)
   ];
 
   // Definición correcta de filteredWorks antes de su uso

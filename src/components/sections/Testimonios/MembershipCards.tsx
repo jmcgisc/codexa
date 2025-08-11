@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
+import { DisclosureButton, DisclosurePanel, Disclosure, Dialog } from '@headlessui/react'
+import FormularioContactoPopup from '../../../components/email/FormularioContactoPopup';
 
 // 1. Definición de tipos
 interface MembershipCardsProps {
@@ -237,6 +239,9 @@ const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
       };
     }, []);
 
+// Estado para el pop-up
+const [isOpen, setIsOpen] = useState(false)
+
 
   return (
     <>
@@ -254,6 +259,7 @@ const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
         <li>Integraciones con APIs y CMS (WordPress, Strapi...)</li>
         <li>Soporte y mantenimiento personalizado</li>
       </FeaturesList>
+
       <Button className="gold">Solicitar cotización</Button>
     </CardContent>
     <GlowEffect data-glow />
