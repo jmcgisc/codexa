@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Hero from '../../components/plantillas/Hero';
 import Servicios from '../../components/plantillas/Servicios';
 import Footer from '../../components/plantillas/Footer';
-import Configurador from '../../../src/pages/configurador';
+import Configurador from '../pages/pages/configurador';
 import FormularioContactoPopup from '../../components/email/FormularioContactoPopup';
 
 export default function HomePage() {

@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import { DisclosureButton, DisclosurePanel, Disclosure, Dialog } from '@headlessui/react'
 import FormularioContactoPopup from '../../../components/email/FormularioContactoPopup';
 
 // 1. Definición de tipos
@@ -219,8 +218,12 @@ const Button = styled.button`
   }
 `;
 
+
 const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
   const [isMounted, setIsMounted] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState('');
+
     useEffect(() => {
       if (typeof window === 'undefined') return;
 
@@ -239,8 +242,10 @@ const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
       };
     }, []);
 
-// Estado para el pop-up
-const [isOpen, setIsOpen] = useState(false)
+  const handleOpenPopup = (service: string) => {
+    setSelectedService(service);
+    setIsOpen(true);
+  };
 
 
   return (
@@ -260,7 +265,12 @@ const [isOpen, setIsOpen] = useState(false)
         <li>Soporte y mantenimiento personalizado</li>
       </FeaturesList>
 
-      <Button className="gold">Solicitar cotización</Button>
+      <Button 
+        className="gold" 
+        onClick={() => handleOpenPopup('Desarrollo Web')}
+      >
+        Solicitar cotización
+      </Button>
     </CardContent>
     <GlowEffect data-glow />
   </Card>
@@ -276,7 +286,12 @@ const [isOpen, setIsOpen] = useState(false)
         <li>Soporte para Ethereum, Web3, wallets</li>
         <li>Alta seguridad y cumplimiento normativo</li>
       </FeaturesList>
-      <Button className="diamond">Contáctanos</Button>
+      <Button 
+        className="diamond" 
+        onClick={() => handleOpenPopup('Firmas Criptográficas')}
+      >
+        Contáctanos
+      </Button>
     </CardContent>
     <GlowEffect data-glow />
   </Card>
@@ -293,12 +308,26 @@ const [isOpen, setIsOpen] = useState(false)
         <li>Monitoreo de rankings y tráfico orgánico</li>
         <li>Análisis de competencia para resultado en campañas</li>
       </FeaturesList>
-      <Button className="diamond">Mejorar visibilidad</Button>
+        <Button 
+          className="diamond" 
+          onClick={() => handleOpenPopup('SEO Avanzado')}
+        >
+          Mejorar visibilidad
+        </Button>
     </CardContent>
     <GlowEffect data-glow />
   </Card>
 </Main>
       </Container>
+
+      {/* Pop-up de contacto */}
+      {isOpen && (
+        <FormularioContactoPopup 
+          onClose={() => setIsOpen(false)} 
+          // Puedes pasar el servicio seleccionado como prop adicional si lo necesitas
+          // servicio={selectedService}
+        />
+      )}
     </>
   );
 };

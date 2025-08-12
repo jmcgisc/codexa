@@ -1,13 +1,13 @@
 'use client'
 
-import { DisclosureButton, DisclosurePanel, Disclosure, Dialog } from '@headlessui/react'
-import { Menu, X, ArrowUpRight } from 'lucide-react'
+import { Disclosure, DisclosureButton, DisclosurePanel, Dialog } from '@headlessui/react'
+import { Menu, X } from 'lucide-react'
 import ThemeToggle from '../ThemeToggle'
 import useScrollSpy from '../../hooks/useScrollSpy'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
-import { motion, useMotionTemplate, useMotionValue } from 'framer-motion'
+import { motion, AnimatePresence, useMotionTemplate, useMotionValue } from 'framer-motion'
 import type { HTMLMotionProps } from 'framer-motion'
 import FormularioContactoPopup from '../../components/email/FormularioContactoPopup'
 
@@ -24,33 +24,25 @@ export default function Navbar() {
   const mouseY = useMotionValue(0)
   const [hoveredLink, setHoveredLink] = useState<string | null>(null)
   const [scrolled, setScrolled] = useState(false)
-
-  // Estado para el pop-up
   const [isOpen, setIsOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
-  // Efecto de scroll para cambiar estilo
+  // Scroll effect
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10)
-    }
+    const handleScroll = () => setScrolled(window.scrollY > 10)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Efecto de mouse parallax
+  // Mouse parallax
   const handleMouseMove = (e: MouseEvent) => {
     const bounds = navRef.current?.getBoundingClientRect()
     if (!bounds) return
     mouseX.set(e.clientX - bounds.left)
     mouseY.set(e.clientY - bounds.top)
   }
-  // En la definición de tus variants (asegúrate de que estén correctamente tipados)
-  const itemVariants = {
-    hidden: { opacity: 0, y: -10 },
-    visible: { opacity: 1, y: 0 }
-  } as const;
-  // Gradiente animado
-  const background = useMotionTemplate`radial-gradient(240px circle at ${mouseX}px ${mouseY}px, rgba(99, 102, 241, 0.15), transparent 80%)`
+
+  const background = useMotionTemplate`radial-gradient(240px circle at ${mouseX}px ${mouseY}px, rgba(99,102,241,0.15), transparent 80%)`
 
   useEffect(() => {
     const nav = navRef.current
@@ -59,18 +51,20 @@ export default function Navbar() {
     return () => nav.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
-  // Animaciones
   const containerVariants = {
     hidden: { opacity: 0, y: -20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3
-      }
+      transition: { staggerChildren: 0.1, delayChildren: 0.3 }
     }
   }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: -10 },
+    visible: { opacity: 1, y: 0 }
+  }
+
   return (
     <>
       <MotionSection
@@ -84,11 +78,10 @@ export default function Navbar() {
         } backdrop-blur-md`}
       >
         <Disclosure as="nav">
-          {({ open }) => (
+          {() => (
             <>
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex h-20 items-center justify-between">
-                  
                   {/* Logo */}
                   <MotionSection whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Link href="/" aria-label="Ir al inicio">
@@ -155,73 +148,74 @@ export default function Navbar() {
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
-                    <DisclosureButton
+                    <button
+                      onClick={() => setMenuOpen(!menuOpen)}
                       className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800 transition-colors"
                       aria-label="Toggle menu"
                     >
-                      {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-                    </DisclosureButton>
+                      {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                    </button>
                   </MotionSection>
                 </div>
               </div>
 
-              {/* Mobile menu */}
-              <DisclosurePanel
-                as={MotionSection}
-                initial={{ opacity: 0, height: 0 }}
-                animate={{
-                  opacity: open ? 1 : 0,
-                  height: open ? 'auto' : 0
-                }}
-                className="md:hidden bg-white/95 dark:bg-neutral-900/95 px-4 backdrop-blur-lg overflow-hidden"
-              >
-                <MotionSection className="flex flex-col space-y-3 py-4" variants={containerVariants}>
-                  {sections.map((id) => (
-                    <motion.div key={id} variants={itemVariants}>
-                      <Link
-                        href={`#${id}`}
-                        className={`block py-2 px-3 text-sm rounded-md transition-colors ${
-                          activeId === id
-                            ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400'
-                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800'
-                        }`}
-                      >
-                        {id.charAt(0).toUpperCase() + id.slice(1)}
-                      </Link>
-                    </motion.div>
-                  ))}
-
-                  {/* Botón contactar móvil */}
-                 
-                  <motion.button
-                    variants={itemVariants}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm hover:bg-indigo-500 transition-colors"
-                    onClick={() => setIsOpen(true)}
+              {/* Menú móvil animado */}
+              <AnimatePresence>
+                {menuOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="md:hidden bg-white dark:bg-neutral-900 px-4 py-4 border-t border-gray-200 dark:border-neutral-800"
                   >
-                    Contactar
-                  </motion.button>
+                    <div className="flex flex-col space-y-3">
+                      {sections.map((id) => (
+                        <Link
+                          key={id}
+                          href={`#${id}`}
+                          className={`block py-2 px-3 text-base font-medium rounded-md transition-colors ${
+                            activeId === id
+                              ? 'bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300'
+                              : 'text-gray-900 dark:text-gray-100 hover:bg-indigo-100 dark:hover:bg-indigo-800/50 hover:text-indigo-600 dark:hover:text-indigo-300'
+                          }`}
+                        >
+                          {id.charAt(0).toUpperCase() + id.slice(1)}
+                        </Link>
+                      ))}
 
-                  <MotionSection variants={itemVariants} className="pt-2 px-3">
-                    <ThemeToggle />
-                  </MotionSection>
-                </MotionSection>
-              </DisclosurePanel>
+                      {/* Botón contactar móvil */}
+                      <button
+                        onClick={() => {
+                          setIsOpen(true)
+                          setMenuOpen(false)
+                        }}
+                        className="px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm hover:bg-indigo-500 transition-colors"
+                      >
+                        Contactar
+                      </button>
+
+                      <div className="pt-2 px-3">
+                        <ThemeToggle />
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </>
           )}
         </Disclosure>
       </MotionSection>
 
       {/* Modal pop-up */}
-     <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-[9999]">
-      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" aria-hidden="true" />
-      <div className="fixed inset-0 flex items-center justify-center p-4">
-        <Dialog.Panel className="bg-white dark:bg-neutral-900 rounded-lg shadow-xl max-w-2xl w-full overflow-y-auto max-h-[90vh]">
-          <FormularioContactoPopup onClose={() => setIsOpen(false)} />
-        </Dialog.Panel>
-      </div>
-    </Dialog>
+      <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-[9999]">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" aria-hidden="true" />
+        <div className="fixed inset-0 flex items-center justify-center p-4">
+          <Dialog.Panel className="bg-white dark:bg-neutral-900 rounded-lg shadow-xl max-w-2xl w-full overflow-y-auto max-h-[90vh]">
+            <FormularioContactoPopup onClose={() => setIsOpen(false)} />
+          </Dialog.Panel>
+        </div>
+      </Dialog>
     </>
   )
 }

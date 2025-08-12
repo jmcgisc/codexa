@@ -32,8 +32,7 @@ export const metadata: Metadata = {
     title: 'Stratik | Un nuevo estándar en diseño web y desarrollo digital',
     description: 'Cubrimos todas las necesidades digitales de tu empresa.',
     url: siteUrl,
-    siteName: 'Stratik',
-    // ¡IMPORTANTE! Crea una imagen de 1200x630px y pon la ruta aquí.
+    siteName: 'Stratik', 
     images: [
       {
         url: '/og-image.png', // Ruta a tu imagen de Open Graph
@@ -133,10 +132,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           style={{ display: 'none', visibility: 'hidden' }}
         ></iframe>
       </noscript>   
-
-        
-
-      
 
       </body>
     </html>

@@ -8,9 +8,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Instagram, Twitter, Github, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import type { HTMLMotionProps } from 'framer-motion';
 
-export default function Footer() {
+interface LegalPages {
+  privacyPolicy: string;
+  termsOfService: string;
+}
+
+interface FooterProps {
+  legalPages: LegalPages;
+}
+export default function Footer( { legalPages }: FooterProps ) {
   const [activeSocial, setActiveSocial] = useState<string | null>(null);
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [currentYear] = useState(new Date().getFullYear());
   const [cardsToggled, setCardsToggled] = useState(false);
 
   const MotionSection: React.FC<
@@ -69,7 +77,7 @@ export default function Footer() {
       >
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
           {/* Logo y descripción */}
-          <MotionSection variants={itemVariants} className="space-y-4">
+          <MotionSection className="space-y-4">
             <Link href="/" aria-label="Ir al inicio" className="inline-block">
               <div className="relative w-40 h-20">
                 <Image
@@ -85,7 +93,7 @@ export default function Footer() {
           </MotionSection>
 
           {/* Navegación */}
-          <motion.div variants={itemVariants}>
+          <motion.div >
             <h3 className="text-lg font-semibold mb-4 text-indigo-600 dark:text-indigo-400">Explora</h3>
             <ul className="space-y-3">
               {['servicios', 'portafolio', 'testimonios', 'contacto'].map((item) => (
@@ -103,7 +111,7 @@ export default function Footer() {
           </motion.div>
 
           {/* Contacto */}
-          <motion.div variants={itemVariants}>
+          <motion.div >
             <h3 className="text-lg font-semibold mb-4 text-indigo-600 dark:text-indigo-400">Contacto</h3>
             <ul className="space-y-3">
               {contactItems.map((item, index) => (
@@ -207,21 +215,29 @@ export default function Footer() {
 
         {/* Divider y copyright */}
         <MotionSection
-          variants={itemVariants}
           className="border-t border-neutral-200 dark:border-neutral-700 pt-6 items-center"
         >
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-neutral-500 dark:text-neutral-400">
             <p>© {currentYear} STRATIK. Todos los derechos reservados.</p>
-            <div className="flex space-x-4 mt-4 md:mt-0">
-              <Link href="/politica-privacidad" className="hover:underline">Política de Privacidad</Link>
-              <Link href="/terminos-servicio" className="hover:underline">Términos de Servicio</Link>
+            <div className="flex space-x-4 mt-4 md:mt-0">          
+              <div className="flex space-x-4 mt-4 md:mt-0">
+                
+                <Link href={legalPages.privacyPolicy} className="hover:underline">
+                  Política de Privacidad
+                </Link>
+
+                <Link href={legalPages.termsOfService} className="hover:underline">
+                  Términos de Servicio
+                </Link>
+
+              </div>
             </div>
           </div>
         </MotionSection> 
 
         
           {/* Redes sociales con efecto hover */}
-          <MotionSection variants={itemVariants} className="relative mt-10">
+          <MotionSection className="relative mt-10">
             <h3 className="text-lg font-semibold mb-4 text-indigo-600 dark:text-indigo-400">Conéctate</h3>
             <div className="grid grid-cols-2 gap-3">
               {socialLinks.map((social) => (
