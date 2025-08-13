@@ -151,19 +151,19 @@ const CardContent = styled.div`
 const Title = styled.h2`
   font-size: 24px;
   margin-bottom: 1rem;
-  color: #333;
+  color: #2c9cd7;
 `;
 
 const Price = styled.h3`
   font-size: 18px;
   font-weight: 400;
   margin-bottom: 1.5rem;
-  color: rgb(131, 51, 108);
+  color: rgb(205, 49, 163);
 
   span {
     font-size: 24px;
     font-weight: 600;
-    color: rgb(35, 89, 7);
+    color: rgb(111, 199, 66);
   }
 `;
 
