@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import Navbar from "../components/sections/Navbar";
 import Hero from "../components/sections/Hero";
 import ServiciosInteractivos from "../components/sections/ServiciosInteractivos";
@@ -21,21 +22,88 @@ export default function Home() {
     termsOfService: "/terminos-servicio"
   };
 
+  // ----- Scroll con offset para anclas (#id) -----
+  useEffect(() => {
+    const NAV_OFFSET = 88; // ~h-20 (5rem) + margen
+
+    const scrollToId = (id: string) => {
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (!el) return;
+      const y = el.getBoundingClientRect().top + window.pageYOffset - NAV_OFFSET;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    };
+
+    // Si la página carga con hash
+    if (window.location.hash) {
+      scrollToId(window.location.hash.slice(1));
+    }
+
+    // Reaplicar offset cuando cambie el hash (click en el navbar, back/forward, etc.)
+    const onHashChange = () => {
+      scrollToId(window.location.hash.slice(1));
+    };
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+  // -----------------------------------------------
+
   return (
     <main className="flex flex-col">
       <Navbar />
-      <Hero />
-      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
-        <MemoryCarousel />
-      </div> 
-      <Services /> 
-      <ServiciosInteractivos />
-      <Secciones />
-      <Works />
-      <MembershipCards />
-      <FormularioContacto />
-      <InteractiveMap />
-      <FAQ /> 
+
+      {/* HERO */}
+      <section id="hero" className="scroll-mt-28">
+        <Hero />
+      </section>
+
+      {/* BLOQUE MEMORIAS */}
+      <section className="scroll-mt-28">
+        <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+          <MemoryCarousel />
+        </div>
+      </section>
+
+      {/* SERVICIOS (ancla principal "servicios") */}
+      <section id="servicios" className="scroll-mt-28">
+        <Services />
+      </section>
+
+      {/* Extras de servicios */}
+      <section className="scroll-mt-28">
+        <ServiciosInteractivos />
+      </section>
+
+      {/* SECCIONES DESTACADAS */}
+      <section className="scroll-mt-28">
+        <Secciones />
+      </section>
+
+      {/* PORTAFOLIO (ancla "portfolio") */}
+      <section id="portfolio" className="scroll-mt-28">
+        <Works />
+      </section>
+
+      {/* TESTIMONIOS / MEMBERSHIP */}
+      <section className="scroll-mt-28">
+        <MembershipCards />
+      </section>
+
+      {/* CONTACTO (ancla "contacto") */}
+      <section id="contacto" className="scroll-mt-28">
+        <FormularioContacto />
+      </section>
+
+      {/* MAPA */}
+      <section className="scroll-mt-28">
+        <InteractiveMap />
+      </section>
+
+      {/* FAQ */}
+      <section className="scroll-mt-28">
+        <FAQ />
+      </section>
+
       <WhatsAppFloat />
       <Footer legalPages={legalPages} />
     </main>
