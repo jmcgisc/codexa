@@ -162,7 +162,7 @@ const FormularioContacto = () => {
                 <ReCAPTCHA
                   ref={captcha}
                   onChange={onChangeCaptcha}
-                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LfUIlUrAAAAAEkjBb8F0jo93uMtzjVtFZeefYE_"}
+                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY!}
                   theme="light" 
                 />
                 {captchaValido === false && (

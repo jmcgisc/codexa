@@ -164,7 +164,7 @@ const FormularioContactoPremium = ({ onClose }: { onClose: () => void }) => {
               <div className="flex justify-center">
                 <ReCAPTCHA
                   ref={captchaRef}
-                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LfUIlUrAAAAAEkjBb8F0jo93uMtzjVtFZeefYE_"}
+                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY!}
                   onChange={handleCaptchaChange}
                   theme="dark"
                 />
