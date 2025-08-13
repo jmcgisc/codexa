@@ -47,8 +47,8 @@ export const metadata: Metadata = {
   // Twitter Cards: controla la vista previa en Twitter
   twitter: {
     card: 'summary_large_image',
-    title: 'Mi Aplicación | Título para Twitter',
-    description: 'Descripción para Twitter (puede ser más corta).',
+    title: 'Stratik | Diseño Web y Desarrollo Digital en México',
+    description: 'Diseño Web y Desarrollo Digital en México.',
     // ¡IMPORTANTE! La imagen de Open Graph se suele reutilizar aquí.
     images: ['/og-image.png'], 
     creator: '@tuUsuarioDeTwitter', // Tu usuario de Twitter

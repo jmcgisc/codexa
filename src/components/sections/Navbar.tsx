@@ -1,10 +1,9 @@
 'use client'
 
-import { Disclosure, DisclosureButton, DisclosurePanel, Dialog } from '@headlessui/react'
+import { Disclosure, Dialog } from '@headlessui/react'
 import { Menu, X } from 'lucide-react'
 import ThemeToggle from '../ThemeToggle'
 import useScrollSpy from '../../hooks/useScrollSpy'
-import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence, useMotionTemplate, useMotionValue } from 'framer-motion'
@@ -27,14 +26,14 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
-  // Scroll effect
+  // Manejo de scroll para navbar
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Mouse parallax
+  // Movimiento parallax del mouse
   const handleMouseMove = (e: MouseEvent) => {
     const bounds = navRef.current?.getBoundingClientRect()
     if (!bounds) return
@@ -50,6 +49,17 @@ export default function Navbar() {
     nav.addEventListener('mousemove', handleMouseMove)
     return () => nav.removeEventListener('mousemove', handleMouseMove)
   }, [])
+
+  // Función para hacer scroll suave a la sección
+  const handleScrollTo = (id: string) => {
+    const element = document.getElementById(id)
+    if (element) {
+      const yOffset = -80 // Altura del navbar fijo
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset
+      window.scrollTo({ top: y, behavior: 'smooth' })
+      setMenuOpen(false) // Cierra menú móvil si está abierto
+    }
+  }
 
   const containerVariants = {
     hidden: { opacity: 0, y: -20 },
@@ -82,9 +92,10 @@ export default function Navbar() {
             <>
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex h-20 items-center justify-between">
+                  
                   {/* Logo */}
                   <MotionSection whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Link href="/" aria-label="Ir al inicio">
+                    <button onClick={() => handleScrollTo('hero')} aria-label="Ir al inicio">
                       <div className="flex items-center space-x-2">
                         <Image
                           src="/corporativo/stratik_logo_large.png"
@@ -95,18 +106,18 @@ export default function Navbar() {
                           className="h-28 w-auto object-contain"
                         />
                       </div>
-                    </Link>
+                    </button>
                   </MotionSection>
 
-                  {/* Desktop links */}
+                  {/* Links Desktop */}
                   <MotionSection
                     className="hidden md:flex items-center space-x-8"
                     variants={containerVariants}
                   >
                     {sections.map((id) => (
                       <motion.div key={id} variants={itemVariants}>
-                        <Link
-                          href={`#${id}`}
+                        <button
+                          onClick={() => handleScrollTo(id)}
                           className={`relative px-2 py-1 text-sm transition-colors ${
                             activeId === id
                               ? 'text-indigo-600 dark:text-indigo-400'
@@ -124,11 +135,11 @@ export default function Navbar() {
                               transition={{ type: 'spring', bounce: 0.25, duration: 0.5 }}
                             />
                           )}
-                        </Link>
+                        </button>
                       </motion.div>
                     ))}
 
-                    {/* Botón contactar */}
+                    {/* Botón Contactar */}
                     <motion.button
                       variants={itemVariants}
                       onClick={() => setIsOpen(true)}
@@ -142,7 +153,7 @@ export default function Navbar() {
                     </motion.div>
                   </MotionSection>
 
-                  {/* Botón menú móvil */}
+                  {/* Botón Menú Móvil */}
                   <MotionSection
                     className="md:hidden"
                     whileHover={{ scale: 1.1 }}
@@ -171,9 +182,9 @@ export default function Navbar() {
                   >
                     <div className="flex flex-col space-y-3">
                       {sections.map((id) => (
-                        <Link
+                        <button
                           key={id}
-                          href={`#${id}`}
+                          onClick={() => handleScrollTo(id)}
                           className={`block py-2 px-3 text-base font-medium rounded-md transition-colors ${
                             activeId === id
                               ? 'bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300'
@@ -181,7 +192,7 @@ export default function Navbar() {
                           }`}
                         >
                           {id.charAt(0).toUpperCase() + id.slice(1)}
-                        </Link>
+                        </button>
                       ))}
 
                       {/* Botón contactar móvil */}
@@ -207,7 +218,7 @@ export default function Navbar() {
         </Disclosure>
       </MotionSection>
 
-      {/* Modal pop-up */}
+      {/* Modal Contacto */}
       <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-[9999]">
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" aria-hidden="true" />
         <div className="fixed inset-0 flex items-center justify-center p-4">
