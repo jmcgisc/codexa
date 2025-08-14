@@ -4,12 +4,10 @@ import React, { useEffect, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import FormularioContactoPopup from '../../../components/email/FormularioContactoPopup';
 
-// 1. Definición de tipos
 interface MembershipCardsProps {
   className?: string;
 }
 
-// 2. Estilos globales
 const GlobalStyle = createGlobalStyle`  
   :root {
     --backdrop: hsla(0, 0%, 0%, 0.12);
@@ -27,7 +25,6 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-// 3. Componentes estilizados
 const Container = styled.div`
   display: grid;
   place-items: center;
@@ -45,12 +42,19 @@ const Main = styled.main`
   max-width: calc(100vw - 2rem);
   position: relative;
   padding: 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem;
+  }
 `;
 
 const Card = styled.article`
   aspect-ratio: 3 / 4;
   border-radius: calc(var(--radius) * 1px);
   width: 350px;
+  max-width: 100%;
   position: relative;
   grid-template-rows: 1fr auto;
   box-shadow: 0 1rem 2rem -1rem rgba(0, 0, 0, 0.5);
@@ -59,7 +63,7 @@ const Card = styled.article`
   gap: 1rem;
   backdrop-filter: blur(calc(var(--cardblur, 5) * 1px));
 
-  /* Efecto glow */
+  /* Glow effect */
   --border-size: calc(var(--border, 2) * 1px);
   --spotlight-size: calc(var(--size, 150) * 1px);
   --hue: calc(var(--base) + (var(--xp, 0) * var(--spread, 0)));
@@ -120,6 +124,10 @@ const Card = styled.article`
     --base: 220;
     --spread: 200;
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const GlowEffect = styled.div`
@@ -133,11 +141,6 @@ const GlowEffect = styled.div`
   background: none;
   pointer-events: none;
   border: none;
-
-  &::before {
-    inset: -10px;
-    border-width: 10px;
-  }
 `;
 
 const CardContent = styled.div`
@@ -218,114 +221,90 @@ const Button = styled.button`
   }
 `;
 
-
 const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
-  const [isMounted, setIsMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedService, setSelectedService] = useState('');
 
-    useEffect(() => {
-      if (typeof window === 'undefined') return;
-
-      const syncPointer = (e: PointerEvent) => {
-        const x = e.clientX;
-        const y = e.clientY;
-        document.documentElement.style.setProperty('--x', x.toFixed(2));
-        document.documentElement.style.setProperty('--xp', (x / window.innerWidth).toFixed(2));
-        document.documentElement.style.setProperty('--y', y.toFixed(2));
-        document.documentElement.style.setProperty('--yp', (y / window.innerHeight).toFixed(2));
-      };
-
-      window.addEventListener('pointermove', syncPointer);
-      return () => {
-        window.removeEventListener('pointermove', syncPointer);
-      };
-    }, []);
+  useEffect(() => {
+    const syncPointer = (e: PointerEvent) => {
+      const x = e.clientX;
+      const y = e.clientY;
+      document.documentElement.style.setProperty('--x', x.toFixed(2));
+      document.documentElement.style.setProperty('--xp', (x / window.innerWidth).toFixed(2));
+      document.documentElement.style.setProperty('--y', y.toFixed(2));
+      document.documentElement.style.setProperty('--yp', (y / window.innerHeight).toFixed(2));
+    };
+    window.addEventListener('pointermove', syncPointer);
+    return () => window.removeEventListener('pointermove', syncPointer);
+  }, []);
 
   const handleOpenPopup = (service: string) => {
     setSelectedService(service);
     setIsOpen(true);
   };
 
-
   return (
     <>
       <GlobalStyle />
       <Container className={className}>
-       <Main>
-  {/* Desarrollo Web */}
-  <Card data-glow>
-    <CardContent>
-      <Title>Desarrollo Web 💻</Title>
-      <Price><span>$4500+</span> / proyecto</Price>
-      <FeaturesList>
-        <li>Sitios rápidos, modernos y responsivos</li>
-        <li>Diseño UI/UX optimizado para conversión</li>
-        <li>Integraciones con APIs y CMS (WordPress, Strapi...)</li>
-        <li>Soporte y mantenimiento personalizado</li>
-      </FeaturesList>
+        <Main>
+          <Card data-glow>
+            <CardContent>
+              <Title>Desarrollo Web 💻</Title>
+              <Price><span>Desde $4,500.00 mxn</span> / proyecto</Price>
+              <FeaturesList>
+                <li>Sitios rápidos, modernos y responsivos</li>
+                <li>Diseño UI/UX optimizado para conversión</li>
+                <li>Integraciones con APIs y CMS</li>
+                <li>Soporte y mantenimiento personalizado</li>
+              </FeaturesList>
+              <Button className="gold" onClick={() => handleOpenPopup('Desarrollo Web')}>
+                Solicitar cotización
+              </Button>
+            </CardContent>
+            <GlowEffect data-glow />
+          </Card>
 
-      <Button 
-        className="gold" 
-        onClick={() => handleOpenPopup('Desarrollo Web')}
-      >
-        Solicitar cotización
-      </Button>
-    </CardContent>
-    <GlowEffect data-glow />
-  </Card>
+          <Card data-glow>
+            <CardContent>
+              <Title>Firmas Criptográficas 🔐</Title>
+              <Price><span>Desde $180.00 mxn</span> / integración</Price>
+              <FeaturesList>
+                <li>Validación de identidad y documentos</li>
+                <li>Integración con certificados digitales</li>
+                <li>Soporte para Ethereum, Web3, wallets</li>
+                <li>Alta seguridad y cumplimiento normativo</li>
+              </FeaturesList>
+              <Button className="diamond" onClick={() => handleOpenPopup('Firmas Criptográficas')}>
+                Contáctanos
+              </Button>
+            </CardContent>
+            <GlowEffect data-glow />
+          </Card>
 
-  {/* Firmas Criptográficas */}
-  <Card data-glow>
-    <CardContent>
-      <Title>Firmas Criptográficas 🔐</Title>
-      <Price><span>$180</span> / integración</Price>
-      <FeaturesList>
-        <li>Validación de identidad y documentos</li>
-        <li>Integración con certificados digitales</li>
-        <li>Soporte para Ethereum, Web3, wallets</li>
-        <li>Alta seguridad y cumplimiento normativo</li>
-      </FeaturesList>
-      <Button 
-        className="diamond" 
-        onClick={() => handleOpenPopup('Firmas Criptográficas')}
-      >
-        Contáctanos
-      </Button>
-    </CardContent>
-    <GlowEffect data-glow />
-  </Card>
-
-  {/* SEO Avanzado */}
-  <Card data-glow>
-    <CardContent>
-      <Title>SEO Avanzado 🔍</Title>
-      <Price><span>$650</span> / mes</Price>
-      <FeaturesList>
-        <li>Optimización técnica (CWV)</li>
-        <li>Auditoría de contenido y keywords</li>
-        <li>Backlinks y autoridad de dominio</li>
-        <li>Monitoreo de rankings y tráfico orgánico</li>
-        <li>Análisis de competencia para resultado en campañas</li>
-      </FeaturesList>
-        <Button 
-          className="diamond" 
-          onClick={() => handleOpenPopup('SEO Avanzado')}
-        >
-          Mejorar visibilidad
-        </Button>
-    </CardContent>
-    <GlowEffect data-glow />
-  </Card>
-</Main>
+          <Card data-glow>
+            <CardContent>
+              <Title>SEO Avanzado 🔍</Title>
+              <Price><span>Desde $650.00 mxn</span> / mes</Price>
+              <FeaturesList>
+                <li>Optimización técnica (CWV)</li>
+                <li>Auditoría de contenido y keywords</li>
+                <li>Backlinks y autoridad de dominio</li>
+                <li>Monitoreo de rankings y tráfico orgánico</li>
+                <li>Análisis de competencia para campañas</li>
+              </FeaturesList>
+              <Button className="diamond" onClick={() => handleOpenPopup('SEO Avanzado')}>
+                Mejorar visibilidad
+              </Button>
+            </CardContent>
+            <GlowEffect data-glow />
+          </Card>
+        </Main>
       </Container>
 
-      {/* Pop-up de contacto */}
       {isOpen && (
         <FormularioContactoPopup 
           onClose={() => setIsOpen(false)} 
-          // Puedes pasar el servicio seleccionado como prop adicional si lo necesitas
-          // servicio={selectedService}
         />
       )}
     </>
