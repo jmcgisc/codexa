@@ -5,7 +5,7 @@ import Navbar from "../components/sections/Navbar";
 import Hero from "../components/sections/Hero";
 import ServiciosInteractivos from "../components/sections/ServiciosInteractivos";
 import MembershipCards from "../components/sections/Testimonios/MembershipCards";
-import Secciones from "../components/sections/Secciones";
+import ServiceSection from "../components/sections/Secciones";
 import Works from "../components/portfolio/Works";
 import Services from "../components/sections/Services";
 import FAQ from '../components/FAQ';
@@ -76,7 +76,7 @@ export default function Home() {
 
       {/* SECCIONES DESTACADAS */}
       <section className="scroll-mt-28">
-        <Secciones />
+        <ServiceSection servicio={undefined} />
       </section>
 
       {/* PORTAFOLIO (ancla "portfolio") */}

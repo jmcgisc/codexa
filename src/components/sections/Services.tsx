@@ -12,6 +12,7 @@ import {
 import DownloadButton from '../../components/buttons/download/DownloadButton';
 import { Button } from '../../components/ui/button';
 import { Code, Bot, ShieldCheck, X } from 'lucide-react';
+import Reveal from '../effects/Reveal';
 import React from 'react';
 
 const selectedService = [
@@ -68,17 +69,25 @@ export default function Services() {
   return (
     <section className="py-24 px-6 bg-white text-center">
       <h2 className="text-4xl font-bold mb-16 text-gray-900">Servicios Destacados</h2>
+
       <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
         {selectedService.map((service, i) => (
           <Dialog key={i}>
             <div className="bg-white p-8 rounded-3xl shadow-md border hover:shadow-lg group transition-shadow duration-300">
               <div className="flex justify-center mb-5">
                 <div className={`p-4 rounded-full ${service.color}`}>
-                  {service.icon}
+                <Reveal direction="down">
+                      {service.icon}
+                </Reveal>
                 </div>
               </div>
+            <Reveal direction="up">
               <h3 className="text-xl font-semibold text-gray-800 mb-2">{service.title}</h3>
+            </Reveal>
+
+            <Reveal direction="left">
               <p className="text-gray-600 text-sm">{service.desc}</p>
+            </Reveal>
               <div className="mt-6">
                 <DialogTrigger asChild>
                   <Button variant="outline" className="w-full">
@@ -102,10 +111,12 @@ export default function Services() {
                   <DialogHeader>
                     <DialogTitle className="text-2xl font-bold mb-3 text-gray-900">
                       {service.title}
-                    </DialogTitle>
+                    </DialogTitle> 
+                    
                     <DialogDescription className="text-gray-600 mb-6">
                       {service.desc}
                     </DialogDescription>
+ 
                   </DialogHeader>
 
                   <ul className="mt-4 space-y-3 text-gray-700">

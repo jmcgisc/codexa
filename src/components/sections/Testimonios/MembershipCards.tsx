@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import FormularioContactoPopup from '../../../components/email/FormularioContactoPopup';
+import Reveal from '../../effects/Reveal';
 
 interface MembershipCardsProps {
   className?: string;
@@ -248,57 +249,63 @@ const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
       <GlobalStyle />
       <Container className={className}>
         <Main>
-          <Card data-glow>
-            <CardContent>
-              <Title>Desarrollo Web 💻</Title>
-              <Price><span>Desde $4,500.00 mxn</span> / proyecto</Price>
-              <FeaturesList>
-                <li>Sitios rápidos, modernos y responsivos</li>
-                <li>Diseño UI/UX optimizado para conversión</li>
-                <li>Integraciones con APIs y CMS</li>
-                <li>Soporte y mantenimiento personalizado</li>
-              </FeaturesList>
-              <Button className="gold" onClick={() => handleOpenPopup('Desarrollo Web')}>
-                Solicitar cotización
-              </Button>
-            </CardContent>
-            <GlowEffect data-glow />
-          </Card>
+          <Reveal>
+            <Card data-glow>
+              <CardContent>
+                <Title>Desarrollo Web 💻</Title>
+                <Price><span>Desde $4,500.00 mxn</span> / proyecto</Price>
+                <FeaturesList>
+                  <li>Sitios rápidos, modernos y responsivos</li>
+                  <li>Diseño UI/UX optimizado para conversión</li>
+                  <li>Integraciones con APIs y CMS</li>
+                  <li>Soporte y mantenimiento personalizado</li>
+                </FeaturesList>
+                <Button className="gold" onClick={() => handleOpenPopup('Desarrollo Web')}>
+                  Solicitar cotización
+                </Button>
+              </CardContent>
+              <GlowEffect data-glow />
+            </Card>
+          </Reveal>
 
-          <Card data-glow>
-            <CardContent>
-              <Title>Firmas Criptográficas 🔐</Title>
-              <Price><span>Desde $180.00 mxn</span> / integración</Price>
-              <FeaturesList>
-                <li>Validación de identidad y documentos</li>
-                <li>Integración con certificados digitales</li>
-                <li>Soporte para Ethereum, Web3, wallets</li>
-                <li>Alta seguridad y cumplimiento normativo</li>
-              </FeaturesList>
-              <Button className="diamond" onClick={() => handleOpenPopup('Firmas Criptográficas')}>
-                Contáctanos
-              </Button>
-            </CardContent>
-            <GlowEffect data-glow />
-          </Card>
+          <Reveal>
+            <Card data-glow>
+              <CardContent>
+                <Title>Firmas Criptográficas 🔐</Title>
+                <Price><span>Desde $180.00 mxn</span> / integración</Price>
+                <FeaturesList>
+                  <li>Validación de identidad y documentos</li>
+                  <li>Integración con certificados digitales</li>
+                  <li>Soporte para Ethereum, Web3, wallets</li>
+                  <li>Alta seguridad y cumplimiento normativo</li>
+                </FeaturesList>
+                <Button className="diamond" onClick={() => handleOpenPopup('Firmas Criptográficas')}>
+                  Contáctanos
+                </Button>
+              </CardContent>
+              <GlowEffect data-glow />
+            </Card>
+          </Reveal>
 
-          <Card data-glow>
-            <CardContent>
-              <Title>SEO Avanzado 🔍</Title>
-              <Price><span>Desde $650.00 mxn</span> / mes</Price>
-              <FeaturesList>
-                <li>Optimización técnica (CWV)</li>
-                <li>Auditoría de contenido y keywords</li>
-                <li>Backlinks y autoridad de dominio</li>
-                <li>Monitoreo de rankings y tráfico orgánico</li>
-                <li>Análisis de competencia para campañas</li>
-              </FeaturesList>
-              <Button className="diamond" onClick={() => handleOpenPopup('SEO Avanzado')}>
-                Mejorar visibilidad
-              </Button>
-            </CardContent>
-            <GlowEffect data-glow />
-          </Card>
+          <Reveal>
+            <Card data-glow>
+              <CardContent>
+                <Title>SEO Avanzado 🔍</Title>
+                <Price><span>Desde $650.00 mxn</span> / mes</Price>
+                <FeaturesList>
+                  <li>Optimización técnica (CWV)</li>
+                  <li>Auditoría de contenido y keywords</li>
+                  <li>Backlinks y autoridad de dominio</li>
+                  <li>Monitoreo de rankings y tráfico orgánico</li>
+                  <li>Análisis de competencia para campañas</li>
+                </FeaturesList>
+                <Button className="diamond" onClick={() => handleOpenPopup('SEO Avanzado')}>
+                  Mejorar visibilidad
+                </Button>
+              </CardContent>
+              <GlowEffect data-glow />
+            </Card>
+          </Reveal>
         </Main>
       </Container>
 

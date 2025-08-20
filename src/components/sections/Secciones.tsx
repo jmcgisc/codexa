@@ -4,6 +4,7 @@ import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { UilArrowRight, UilRocket, UilShieldCheck, UilChartLine } from '@iconscout/react-unicons';
+import Reveal from '../effects/Reveal';
 import type { HTMLMotionProps } from 'framer-motion';
 
 const servicios = [
@@ -176,10 +177,14 @@ const ServiceSection = ({ servicio }: { servicio: typeof servicios[0] }) => {
 
 export default function Servicios() {
   return (
+
+          <Reveal direction="left">
     <div className="w-full bg-white overflow-hidden">
       {servicios.map((servicio) => (
         <ServiceSection key={servicio.id} servicio={servicio} />
       ))}
     </div>
+          </Reveal>
+
   );
 }
