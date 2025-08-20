@@ -1,7 +1,8 @@
 // src/components/animations/Reveal.tsx
 'use client'
 
-import { motion } from "framer-motion"
+import { motion, Variants } from "framer-motion"
+import { easeOut } from "framer-motion"
 import { ReactNode } from "react"
 
 interface RevealProps {
@@ -21,7 +22,7 @@ export default function Reveal({ children, direction = "up", delay = 0 }: Reveal
       opacity: 1,
       x: 0,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut", delay }
+        transition: { duration: 0.6, ease: easeOut, delay }
     }
   }
 
@@ -29,7 +30,7 @@ export default function Reveal({ children, direction = "up", delay = 0 }: Reveal
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }} // solo se ejecuta 1 vez
+      viewport={{ once: true, amount: 0.2 }} 
       variants={variants}
     >
       {children}
