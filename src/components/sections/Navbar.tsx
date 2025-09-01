@@ -1,6 +1,6 @@
 'use client'
 
-import { Menu, X, ChevronDown, ArrowRight, Star, Calendar, Users, FileText, Globe, Search, Scale, Palette } from 'lucide-react'
+import { Menu, X, ChevronDown, ArrowRight, Star, Calendar, Users, FileText, Globe, Search, Scale, Palette, BookOpen, Download, Video, Code } from 'lucide-react'
 import ThemeToggle from '../ThemeToggle'
 import useScrollSpy from '../../hooks/useScrollSpy'
 import Image from 'next/image'
@@ -14,6 +14,14 @@ const serviceIcons = {
   seo: Search,
   legal: Scale,
   design: Palette
+};
+
+// Iconos para los recursos
+const resourceIcons = {
+  guias: BookOpen,
+  plantillas: Download,
+  tutoriales: Video,
+  herramientas: Code
 };
 
 const serviciosDropdown = [
@@ -43,10 +51,37 @@ const serviciosDropdown = [
   },
 ]
 
+const recursosDropdown = [
+  {
+    id: 'guias',
+    label: 'Guías Prácticas',
+    desc: 'Manuales completos para implementar estrategias digitales',
+    features: ['Guías paso a paso', 'Casos de estudio', 'Mejores prácticas']
+  },
+  {
+    id: 'plantillas',
+    label: 'Plantillas',
+    desc: 'Recursos descargables para acelerar tu trabajo',
+    features: ['Plantillas web', 'Documentos legales', 'Recursos de diseño']
+  },
+  {
+    id: 'tutoriales',
+    label: 'Tutoriales',
+    desc: 'Videotutoriales y contenido educativo',
+    features: ['Videotutoriales', 'Webinars grabados', 'Cursos rápidos']
+  },
+  {
+    id: 'herramientas',
+    label: 'Herramientas',
+    desc: 'Software y utilidades para potenciar tu negocio',
+    features: ['Herramientas SEO', 'Generadores de contenido', 'Software legal']
+  }
+]
+
 const extraLinks = [
   { id: 'about', label: 'Nosotros', icon: Users },
   { id: 'blog', label: 'Blog', icon: FileText },
-  { id: 'resources', label: 'Recursos', icon: Star },
+  { id: 'projects', label: 'Proyectos', icon: Star },
   { id: 'contact', label: 'Contacto', icon: Calendar },
 ]
 
@@ -56,9 +91,12 @@ export default function PremiumNavbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [isContactOpen, setIsContactOpen] = useState(false)
-  const [showMegaMenu, setShowMegaMenu] = useState(false)
+  const [showServicesMenu, setShowServicesMenu] = useState(false)
+  const [showResourcesMenu, setShowResourcesMenu] = useState(false)
   const [activeService, setActiveService] = useState(0)
-  const megaMenuTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const [activeResource, setActiveResource] = useState(0)
+  const servicesTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const resourcesTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const handleScroll = useCallback(() => {
     setScrolled(window.scrollY > 10)
@@ -69,22 +107,43 @@ export default function PremiumNavbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [handleScroll])
 
-  const handleMegaMenuMouseLeave = useCallback(() => {
-    megaMenuTimeoutRef.current = setTimeout(() => {
-      setShowMegaMenu(false)
+  // Manejar hover para servicios
+  const handleServicesMouseEnter = useCallback(() => {
+    if (servicesTimeoutRef.current) {
+      clearTimeout(servicesTimeoutRef.current)
+    }
+    setShowResourcesMenu(false) // Cerrar menú de recursos
+    setShowServicesMenu(true)
+  }, [])
+
+  const handleServicesMouseLeave = useCallback(() => {
+    servicesTimeoutRef.current = setTimeout(() => {
+      setShowServicesMenu(false)
     }, 300)
   }, [])
 
-  const handleMegaMenuMouseEnter = useCallback(() => {
-    if (megaMenuTimeoutRef.current) {
-      clearTimeout(megaMenuTimeoutRef.current)
+  // Manejar hover para recursos
+  const handleResourcesMouseEnter = useCallback(() => {
+    if (resourcesTimeoutRef.current) {
+      clearTimeout(resourcesTimeoutRef.current)
     }
+    setShowServicesMenu(false) // Cerrar menú de servicios
+    setShowResourcesMenu(true)
+  }, [])
+
+  const handleResourcesMouseLeave = useCallback(() => {
+    resourcesTimeoutRef.current = setTimeout(() => {
+      setShowResourcesMenu(false)
+    }, 300)
   }, [])
 
   useEffect(() => {
     return () => {
-      if (megaMenuTimeoutRef.current) {
-        clearTimeout(megaMenuTimeoutRef.current)
+      if (servicesTimeoutRef.current) {
+        clearTimeout(servicesTimeoutRef.current)
+      }
+      if (resourcesTimeoutRef.current) {
+        clearTimeout(resourcesTimeoutRef.current)
       }
     }
   }, [])
@@ -96,14 +155,16 @@ export default function PremiumNavbar() {
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset
       window.scrollTo({ top: y, behavior: 'smooth' })
       setMenuOpen(false)
-      setShowMegaMenu(false)
+      setShowServicesMenu(false)
+      setShowResourcesMenu(false)
     }
   }, [])
 
   // Función para navegar a la página Nosotros
   const navigateToAbout = useCallback(() => {
     setMenuOpen(false)
-    setShowMegaMenu(false)
+    setShowServicesMenu(false)
+    setShowResourcesMenu(false)
     router.push('/nosotros')
   }, [router])
 
@@ -111,6 +172,8 @@ export default function PremiumNavbar() {
   const openContactModal = useCallback(() => {
     setIsContactOpen(true)
     setMenuOpen(false)
+    setShowServicesMenu(false)
+    setShowResourcesMenu(false)
   }, [])
 
   useEffect(() => {
@@ -143,37 +206,59 @@ export default function PremiumNavbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-20 items-center justify-between">
             {/* Logo */}
-            <a href="/" className="flex items-center">
-              <div className="flex items-center space-x-2 dark:brightness-200">
+            <button 
+              onClick={() => handleScrollTo('hero')}
+              aria-label="Ir al inicio"
+              className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md p-1 transition-all duration-300 hover:scale-105"
+            >
+              <div className="flex items-center space-x-2">
                 <Image 
                   src="/corporativo/stratik_logo_large.png" 
                   alt="Logo STRATIK" 
-                  width={300} 
-                  height={100} 
+                  width={180} 
+                  height={50} 
                   priority 
-                  className="h-48 w-auto object-contain" 
+                  className="h-28 w-auto object-contain" 
                 />
               </div>
-            </a>
-            
+            </button>
+
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-1">
+              {/* Menú de Servicios */}
               <div 
                 className="relative"
-                onMouseEnter={() => setShowMegaMenu(true)}
-                onMouseLeave={handleMegaMenuMouseLeave}
+                onMouseEnter={handleServicesMouseEnter}
+                onMouseLeave={handleServicesMouseLeave}
               >
                 <button
                   className="flex items-center gap-1 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg px-4 py-2.5 transition-all font-medium group relative"
-                  aria-expanded={showMegaMenu}
+                  aria-expanded={showServicesMenu}
                   aria-haspopup="true"
                 >
                   <span>Servicios</span>
-                  <ChevronDown size={16} className={`transition-transform duration-300 ${showMegaMenu ? 'rotate-180' : ''} group-hover:translate-y-0.5`} />
+                  <ChevronDown size={16} className={`transition-transform duration-300 ${showServicesMenu ? 'rotate-180' : ''} group-hover:translate-y-0.5`} />
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
                 </button>
               </div>
-              
+
+              {/* Menú de Recursos */}
+              <div 
+                className="relative"
+                onMouseEnter={handleResourcesMouseEnter}
+                onMouseLeave={handleResourcesMouseLeave}
+              >
+                <button
+                  className="flex items-center gap-1 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg px-4 py-2.5 transition-all font-medium group relative"
+                  aria-expanded={showResourcesMenu}
+                  aria-haspopup="true"
+                >
+                  <span>Recursos</span>
+                  <ChevronDown size={16} className={`transition-transform duration-300 ${showResourcesMenu ? 'rotate-180' : ''} group-hover:translate-y-0.5`} />
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+                </button>
+              </div>
+
               {extraLinks.map((link) => {
                 const IconComponent = link.icon;
                 
@@ -248,6 +333,7 @@ export default function PremiumNavbar() {
               className="md:hidden bg-white dark:bg-neutral-900 shadow-xl border-t border-gray-200/50 dark:border-neutral-800"
             >
               <div className="px-4 pt-2 pb-6 space-y-1">
+                {/* Menú de Servicios móvil */}
                 <div className="pt-4">
                   <button
                     onClick={() => {
@@ -278,6 +364,44 @@ export default function PremiumNavbar() {
                           className="w-full text-left px-4 py-2.5 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg flex items-center gap-3 transition-colors group"
                         >
                           {ServiceIcon && <ServiceIcon size={16} className="text-blue-500" />}
+                          {item.label}
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                {/* Menú de Recursos móvil */}
+                <div className="pt-4">
+                  <button
+                    onClick={() => {
+                      // Navegar a recursos o abrir submenú
+                      setMenuOpen(false)
+                    }}
+                    className="w-full text-left px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg flex items-center justify-between font-medium group"
+                  >
+                    <span className="flex items-center gap-3">
+                      <div className="h-6 w-6 bg-green-100 dark:bg-green-900/30 rounded flex items-center justify-center">
+                        <div className="h-3 w-3 bg-green-500 rounded-full"></div>
+                      </div>
+                      Recursos
+                    </span>
+                    <ChevronDown size={16} />
+                  </button>
+                  
+                  <div className="pl-6 mt-2 space-y-2 border-l border-gray-200 dark:border-neutral-700 ml-4">
+                    {recursosDropdown.map((item) => {
+                      const ResourceIcon = resourceIcons[item.id as keyof typeof resourceIcons];
+                      return (
+                        <button
+                          key={item.id}
+                          onClick={() => {
+                            // Navegar al recurso específico
+                            setMenuOpen(false)
+                          }}
+                          className="w-full text-left px-4 py-2.5 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg flex items-center gap-3 transition-colors group"
+                        >
+                          {ResourceIcon && <ResourceIcon size={16} className="text-green-500" />}
                           {item.label}
                         </button>
                       )
@@ -338,17 +462,17 @@ export default function PremiumNavbar() {
         </AnimatePresence>
       </motion.nav>
 
-      {/* Mega menú desktop - Estilo Premium */}
+      {/* Mega menú de Servicios */}
       <AnimatePresence>
-        {showMegaMenu && (
+        {showServicesMenu && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
             className="fixed inset-x-0 top-20 z-40 bg-white/98 dark:bg-neutral-950/98 backdrop-blur-xl border-b border-gray-200/30 dark:border-neutral-800 shadow-2xl"
-            onMouseEnter={handleMegaMenuMouseEnter}
-            onMouseLeave={handleMegaMenuMouseLeave}
+            onMouseEnter={handleServicesMouseEnter}
+            onMouseLeave={handleServicesMouseLeave}
             role="dialog"
             aria-label="Menú de servicios"
           >
@@ -416,10 +540,10 @@ export default function PremiumNavbar() {
                         <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg">{service.desc}</p>
                         
                         <div className="mb-8">
-                          <h5 className="text-sm font-semibold text-gray-300 dark:text-gray-400 mb-3 uppercase tracking-wider">Características principales</h5>
+                          <h5 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wider">Características principales</h5>
                           <ul className="space-y-2">
                             {service.features.map((feature, i) => (
-                              <li key={i} className="flex items-center gap-3 text-gray-300 dark:text-gray-300">
+                              <li key={i} className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
                                 <div className="h-5 w-5 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
                                   <div className="h-2 w-2 bg-blue-500 rounded-full"></div>
                                 </div>
@@ -432,13 +556,126 @@ export default function PremiumNavbar() {
                         <motion.button
                           onClick={() => {
                             handleScrollTo('servicios')
-                            setShowMegaMenu(false)
+                            setShowServicesMenu(false)
                           }}
                           className="px-5 py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-700 text-white hover:from-blue-700 hover:to-indigo-800 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-medium shadow-lg hover:shadow-blue-500/30 flex items-center gap-2 group"
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                         >
                           <span>Explorar servicio</span>
+                          <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                        </motion.button>
+                      </motion.div>
+                    )
+                  })}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Mega menú de Recursos */}
+      <AnimatePresence>
+        {showResourcesMenu && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="fixed inset-x-0 top-20 z-40 bg-white/98 dark:bg-neutral-950/98 backdrop-blur-xl border-b border-gray-200/30 dark:border-neutral-800 shadow-2xl"
+            onMouseEnter={handleResourcesMouseEnter}
+            onMouseLeave={handleResourcesMouseLeave}
+            role="dialog"
+            aria-label="Menú de recursos"
+          >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+              <div className="flex">
+                {/* Navegación de recursos */}
+                <div className="w-1/3 pr-8 border-r border-gray-100 dark:border-neutral-800">
+                  <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-6 px-2">Nuestros Recursos</h3>
+                  <div className="space-y-2">
+                    {recursosDropdown.map((resource, index) => {
+                      const ResourceIcon = resourceIcons[resource.id as keyof typeof resourceIcons];
+                      return (
+                        <button
+                          key={resource.id}
+                          onMouseEnter={() => setActiveResource(index)}
+                          className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-300 flex items-center gap-3 group ${
+                            index === activeResource 
+                              ? 'bg-green-50 dark:bg-green-950/40 text-green-600 dark:text-green-400 shadow-sm' 
+                              : 'text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-neutral-800/50'
+                          }`}
+                        >
+                          <div className={`h-10 w-10 rounded-lg flex items-center justify-center transition-colors ${
+                            index === activeResource 
+                              ? 'bg-green-100 dark:bg-green-900/30' 
+                              : 'bg-gray-100 dark:bg-neutral-800 group-hover:bg-green-100 dark:group-hover:bg-green-900/20'
+                          }`}>
+                            {ResourceIcon && (
+                              <ResourceIcon 
+                                size={20} 
+                                className={`transition-colors ${
+                                  index === activeResource 
+                                    ? 'text-green-600' 
+                                    : 'text-gray-500 group-hover:text-green-500'
+                                }`} 
+                              />
+                            )}
+                          </div>
+                          <span className="font-medium">{resource.label}</span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                {/* Detalles del recurso activo */}
+                <div className="w-2/3 pl-10">
+                  {recursosDropdown.map((resource, index) => {
+                    const ResourceIcon = resourceIcons[resource.id as keyof typeof resourceIcons];
+                    return (
+                      <motion.div
+                        key={resource.id}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: index === activeResource ? 1 : 0 }}
+                        transition={{ duration: 0.2 }}
+                        className={`${index === activeResource ? 'block' : 'hidden'}`}
+                      >
+                        <div className="flex items-center gap-3 mb-4">
+                          {ResourceIcon && (
+                            <div className="h-12 w-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
+                              <ResourceIcon size={24} className="text-green-600 dark:text-green-400" />
+                            </div>
+                          )}
+                          <h4 className="text-2xl font-bold text-gray-800 dark:text-white">{resource.label}</h4>
+                        </div>
+                        <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg">{resource.desc}</p>
+                        
+                        <div className="mb-8">
+                          <h5 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wider">Lo que encontrarás</h5>
+                          <ul className="space-y-2">
+                            {resource.features.map((feature, i) => (
+                              <li key={i} className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
+                                <div className="h-5 w-5 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                                  <div className="h-2 w-2 bg-green-500 rounded-full"></div>
+                                </div>
+                                {feature}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        
+                        <motion.button
+                          onClick={() => {
+                            // Navegar a la sección de recursos
+                            setShowResourcesMenu(false)
+                          }}
+                          className="px-5 py-2.5 rounded-lg bg-gradient-to-r from-green-600 to-teal-700 text-white hover:from-green-700 hover:to-teal-800 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 font-medium shadow-lg hover:shadow-green-500/30 flex items-center gap-2 group"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <span>Explorar recursos</span>
                           <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                         </motion.button>
                       </motion.div>
