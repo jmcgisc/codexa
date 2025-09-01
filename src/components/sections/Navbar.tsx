@@ -211,14 +211,14 @@ export default function PremiumNavbar() {
               aria-label="Ir al inicio"
               className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md p-1 transition-all duration-300 hover:scale-105"
             >
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 dark:brightness-200">
                 <Image 
                   src="/corporativo/stratik_logo_large.png" 
                   alt="Logo STRATIK" 
-                  width={180} 
-                  height={50} 
+                  width={300} 
+                  height={100} 
                   priority 
-                  className="h-28 w-auto object-contain" 
+                  className="h-48 w-auto object-contain" 
                 />
               </div>
             </button>
