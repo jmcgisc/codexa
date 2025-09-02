@@ -90,6 +90,8 @@ export default function PremiumNavbar() {
   const activeId = useScrollSpy(['hero', 'servicios', 'portfolio', 'contacto'], 80)
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
+  const [mobileResourcesOpen, setMobileResourcesOpen] = useState(false)
   const [isContactOpen, setIsContactOpen] = useState(false)
   const [showServicesMenu, setShowServicesMenu] = useState(false)
   const [showResourcesMenu, setShowResourcesMenu] = useState(false)
@@ -324,33 +326,34 @@ export default function PremiumNavbar() {
 
         {/* Mobile Menu */}
         <AnimatePresence>
-          {menuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="md:hidden bg-white dark:bg-neutral-900 shadow-xl border-t border-gray-200/50 dark:border-neutral-800"
-            >
-              <div className="px-4 pt-2 pb-6 space-y-1">
-                {/* Menú de Servicios móvil */}
-                <div className="pt-4">
-                  <button
-                    onClick={() => {
-                      handleScrollTo('servicios')
-                      setMenuOpen(false)
-                    }}
-                    className="w-full text-left px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg flex items-center justify-between font-medium group"
-                  >
-                    <span className="flex items-center gap-3">
-                      <div className="h-6 w-6 bg-blue-100 dark:bg-blue-900/30 rounded flex items-center justify-center">
-                        <div className="h-3 w-3 bg-blue-500 rounded-full"></div>
-                      </div>
-                      Servicios
-                    </span>
-                    <ChevronDown size={16} />
-                  </button>
-                  
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden bg-white dark:bg-neutral-900 shadow-xl border-t border-gray-200/50 dark:border-neutral-800"
+          >
+            <div className="px-4 pt-2 pb-6 space-y-1">
+              {/* Menú de Servicios móvil */}
+              <div className="pt-4">
+                <button
+                  onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                  className="w-full text-left px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg flex items-center justify-between font-medium group"
+                >
+                  <span className="flex items-center gap-3">
+                    <div className="h-6 w-6 bg-blue-100 dark:bg-blue-900/30 rounded flex items-center justify-center">
+                      <div className="h-3 w-3 bg-blue-500 rounded-full"></div>
+                    </div>
+                    Servicios
+                  </span>
+                  <ChevronDown
+                    size={16}
+                    className={`transition-transform ${mobileServicesOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+                
+                {mobileServicesOpen && (
                   <div className="pl-6 mt-2 space-y-2 border-l border-gray-200 dark:border-neutral-700 ml-4">
                     {serviciosDropdown.map((item) => {
                       const ServiceIcon = serviceIcons[item.id as keyof typeof serviceIcons];
@@ -358,7 +361,7 @@ export default function PremiumNavbar() {
                         <button
                           key={item.id}
                           onClick={() => {
-                            handleScrollTo('servicios')
+                            handleScrollTo("servicios")
                             setMenuOpen(false)
                           }}
                           className="w-full text-left px-4 py-2.5 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg flex items-center gap-3 transition-colors group"
@@ -369,36 +372,35 @@ export default function PremiumNavbar() {
                       )
                     })}
                   </div>
-                </div>
+                )}
+              </div>
 
-                {/* Menú de Recursos móvil */}
-                <div className="pt-4">
-                  <button
-                    onClick={() => {
-                      // Navegar a recursos o abrir submenú
-                      setMenuOpen(false)
-                    }}
-                    className="w-full text-left px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg flex items-center justify-between font-medium group"
-                  >
-                    <span className="flex items-center gap-3">
-                      <div className="h-6 w-6 bg-green-100 dark:bg-green-900/30 rounded flex items-center justify-center">
-                        <div className="h-3 w-3 bg-green-500 rounded-full"></div>
-                      </div>
-                      Recursos
-                    </span>
-                    <ChevronDown size={16} />
-                  </button>
-                  
+              {/* Menú de Recursos móvil */}
+              <div className="pt-4">
+                <button
+                  onClick={() => setMobileResourcesOpen(!mobileResourcesOpen)}
+                  className="w-full text-left px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg flex items-center justify-between font-medium group"
+                >
+                  <span className="flex items-center gap-3">
+                    <div className="h-6 w-6 bg-green-100 dark:bg-green-900/30 rounded flex items-center justify-center">
+                      <div className="h-3 w-3 bg-green-500 rounded-full"></div>
+                    </div>
+                    Recursos
+                  </span>
+                  <ChevronDown
+                    size={16}
+                    className={`transition-transform ${mobileResourcesOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+
+                {mobileResourcesOpen && (
                   <div className="pl-6 mt-2 space-y-2 border-l border-gray-200 dark:border-neutral-700 ml-4">
                     {recursosDropdown.map((item) => {
                       const ResourceIcon = resourceIcons[item.id as keyof typeof resourceIcons];
                       return (
                         <button
                           key={item.id}
-                          onClick={() => {
-                            // Navegar al recurso específico
-                            setMenuOpen(false)
-                          }}
+                          onClick={() => setMenuOpen(false)}
                           className="w-full text-left px-4 py-2.5 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg flex items-center gap-3 transition-colors group"
                         >
                           {ResourceIcon && <ResourceIcon size={16} className="text-green-500" />}
@@ -407,7 +409,8 @@ export default function PremiumNavbar() {
                       )
                     })}
                   </div>
-                </div>
+                )}
+              </div>
                 
                 {extraLinks.map((link) => {
                   const IconComponent = link.icon;
