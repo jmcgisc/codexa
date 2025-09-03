@@ -275,52 +275,6 @@ export default function Nosotros() {
         </div>
       </section>
 
-      {/* Sección de valores en acción */}
-      <section className="bg-gray-50 dark:bg-neutral-800 py-20 px-6 md:px-12 lg:px-24">
-        <div className="max-w-6xl mx-auto">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white text-center mb-16"
-          >
-            Valores en <span className="text-blue-600">Acción</span>
-          </motion.h2>
-
-          <div className="grid gap-12 md:grid-cols-3">
-            {valoresExtra.map((valor, index) => {
-              const IconComponent = valor.icon
-              return (
-                <motion.div
-                  key={valor.title}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                  className="bg-white dark:bg-neutral-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group"
-                >
-                  <div className="relative h-48 w-full bg-gradient-to-br from-blue-500 to-purple-600">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <IconComponent size={48} className="text-white" />
-                    </div>
-                    <div className="absolute top-4 right-4 bg-white dark:bg-blue-600 text-blue-600 dark:text-white px-3 py-1 rounded-full font-bold text-sm">
-                      {valor.stats}
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                      {valor.title}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400">{valor.desc}</p>
-                  </div>
-                </motion.div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
       {/* Sección de testimonios */}
       <section className="bg-white dark:bg-neutral-900 py-20 px-6 md:px-12 lg:px-24">
         <div className="max-w-6xl mx-auto">
