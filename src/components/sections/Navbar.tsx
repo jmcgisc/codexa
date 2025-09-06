@@ -261,29 +261,35 @@ export default function PremiumNavbar() {
                 </button>
               </div>
 
-              {extraLinks.map((link) => {
-                const IconComponent = link.icon;
-                
-                // Renderizar enlace de navegación para "Nosotros"
-                if (link.id === 'about') {
-                  return (
-                    <button
-                      key={link.id}
-                      onClick={navigateToAbout}
-                      className="px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium transition-all duration-300 group relative flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
-                    >
-                      <IconComponent size={16} />
-                      <span>{link.label}</span>
-                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-                    </button>
-                  )
-                }
-                
-                // Renderizar enlace normal para otros items
+            {extraLinks.map((link) => {
+              const IconComponent = link.icon;
+              
+              // Enlace de navegación para "Nosotros"
+              if (link.id === 'about') {
                 return (
                   <button
                     key={link.id}
-                    onClick={() => handleScrollTo(link.id)}
+                    onClick={navigateToAbout}
+                    className="px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium transition-all duration-300 group relative flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                  >
+                    <IconComponent size={16} />
+                    <span>{link.label}</span>
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+                  </button>
+                )
+              }
+
+              // Enlace de navegación para "Blog"
+              if (link.id === 'blog') {
+                return (
+                  <button
+                    key={link.id}
+                    onClick={() => {
+                      setMenuOpen(false);
+                      setShowServicesMenu(false);
+                      setShowResourcesMenu(false);
+                      router.push('/blog'); // Navega a la página de blog
+                    }}
                     className={`px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium transition-all duration-300 group relative flex items-center gap-2 ${
                       activeId === link.id
                         ? 'text-blue-600 dark:text-blue-400'
@@ -295,8 +301,26 @@ export default function PremiumNavbar() {
                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
                   </button>
                 )
-              })}
-              
+              }
+
+              // Enlace normal para otros items
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => handleScrollTo(link.id)}
+                  className={`px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium transition-all duration-300 group relative flex items-center gap-2 ${
+                    activeId === link.id
+                      ? 'text-blue-600 dark:text-blue-400'
+                      : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
+                  }`}
+                >
+                  <IconComponent size={16} />
+                  <span>{link.label}</span>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+                </button>
+              )
+            })}
+              {/* Toggle de tema y botón de contacto */}    
               <div className="flex items-center space-x-3 ml-4">
                 <ThemeToggle />
                 <motion.button
