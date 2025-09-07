@@ -14,7 +14,6 @@ interface BlogPostParams {
     slug: string
   }
 }
-
 // Función requerida para export estático
 export async function generateStaticParams() {
   const posts = getAllPosts()
