@@ -9,16 +9,13 @@ import { Card, CardContent } from '../../components/ui/card'
 import { Button } from '../../components/ui/button'
 import Navbar from '@/src/components/sections/Navbar'
 import Footer from "@/src/components/layout/Footer"
-import { notFound } from 'next/navigation'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
-import NewsletterSubscription from '@/src/components/NewsletterSubscription'
+
 import { Search, Calendar, User, Clock, Tag, Filter, X, ArrowRight, BookOpen, Sparkles, Eye } from 'lucide-react'
 
 // Importar los posts desde el archivo
 import { posts, getAllTags } from '../../lib/posts'
 
-export default function BlogPostPage({ params }: BlogPostParams) {
+export default function BlogPage() {
   const [query, setQuery] = useState('')
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [sortBy, setSortBy] = useState<'date' | 'readTime' | 'popularity'>('date')
