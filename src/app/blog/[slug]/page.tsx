@@ -27,6 +27,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: BlogPostParams) {
   const post = getPostBySlug(params.slug)
   
+  
   if (!post) {
     return {
       title: 'Artículo no encontrado | Blog de Stratik',

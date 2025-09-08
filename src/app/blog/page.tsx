@@ -3,7 +3,6 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { Input } from '../../components/ui/input'
 import { Card, CardContent } from '../../components/ui/card'
 import { Button } from '../../components/ui/button'

@@ -208,8 +208,11 @@ export default function PremiumNavbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-20 items-center justify-between">
             {/* Logo */}
-            <button 
-              onClick={() => handleScrollTo('hero')}
+            
+            <a href="/" >
+            <button
+
+              onClick={() => handleScrollTo('/')}
               aria-label="Ir al inicio"
               className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md p-1 transition-all duration-300 hover:scale-105"
             >
@@ -224,6 +227,7 @@ export default function PremiumNavbar() {
                 />
               </div>
             </button>
+            </a>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-1">
