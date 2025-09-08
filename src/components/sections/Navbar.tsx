@@ -208,7 +208,7 @@ export default function PremiumNavbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-20 items-center justify-between">
             {/* Logo */}
-            
+             
             <a href="/" >
             <button
 
