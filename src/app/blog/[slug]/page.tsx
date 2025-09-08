@@ -9,11 +9,14 @@ import Navbar from '@/src/components/sections/Navbar'
 import Footer from "@/src/components/layout/Footer"
 import NewsletterSubscription from '@/src/components/NewsletterSubscription'
 
-interface BlogPostParams {
-  params: {
-    slug: string
-  }
+// Elimina la interfaz BlogPostParams y usa tipos de Next.js
+import type { Metadata, ResolvingMetadata } from 'next'
+
+type Props = {
+  params: Promise<{ slug: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
+
 // Función requerida para export estático
 export async function generateStaticParams() {
   const posts = getAllPosts()
@@ -24,10 +27,13 @@ export async function generateStaticParams() {
 }
 
 // Metadata dinámica para SEO
-export async function generateMetadata({ params }: BlogPostParams) {
-  const post = getPostBySlug(params.slug)
-  
-  
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { slug } = await params
+  const post = getPostBySlug(slug)
+
   if (!post) {
     return {
       title: 'Artículo no encontrado | Blog de Stratik',
@@ -47,8 +53,9 @@ export async function generateMetadata({ params }: BlogPostParams) {
   }
 }
 
-export default function BlogPostPage({ params }: BlogPostParams) {
-  const post = getPostBySlug(params.slug)
+export default async function BlogPostPage({ params }: Props) {
+  const { slug } = await params
+  const post = getPostBySlug(slug)
 
   if (!post) {
     notFound()
@@ -59,7 +66,7 @@ export default function BlogPostPage({ params }: BlogPostParams) {
     termsOfService: "/terminos-servicio"
   }
 
-  const relatedPosts = getRelatedPosts(params.slug)
+  const relatedPosts = getRelatedPosts(slug)
 
   // Función para obtener un color basado en el tag
   const getTagColor = (tag: string) => {
@@ -275,7 +282,7 @@ export default function BlogPostPage({ params }: BlogPostParams) {
         )}
 
         {/* Newsletter Subscription */}
-                <NewsletterSubscription variant="inline" />
+        <NewsletterSubscription variant="inline" />
 
       </article>
 
