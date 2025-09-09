@@ -283,7 +283,6 @@ export default async function BlogPostPage({ params }: Props) {
 
         {/* Newsletter Subscription */}
         <NewsletterSubscription variant="inline" />
-
       </article>
 
       <Footer legalPages={legalPages} />
