@@ -13,6 +13,8 @@ import WhatsAppFloat from "../components/WhatsAppFloat";
 import Footer from "../components/layout/Footer";
 import InteractiveMap from "../components/InteractiveMap"; 
 import MemoryCarousel from "../components/MemoryCarousel";
+import ChatWindow from "../components/ChatWindow";
+import ChatWidget from "../components/ChatWidget";
 import FormularioContacto from "../components/email/FormularioContacto";
 import './globals.css';
 
@@ -104,7 +106,9 @@ export default function Home() {
         <FAQ />
       </section>
 
-      <WhatsAppFloat />
+      {/* Burbuja flotante */}
+      <ChatWidget />
+      {/* <WhatsAppFloat /> */}
       <Footer legalPages={legalPages} />
     </main>
   );

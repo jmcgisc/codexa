@@ -2,5 +2,9 @@
   command = "npm run build"
   publish = ".next"
 
+[build.environment]
+  NODE_VERSION = "18.x"
+  NEXT_PRIVATE_SKIP_SWC_DEPENDENCY_CHECK = "1"
+
 [[plugins]]
   package = "@netlify/plugin-nextjs"
