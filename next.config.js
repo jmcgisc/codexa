@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: 'export', // Necesario para builds estáticos
+  experimental: { appDir: true },
   images: {
     unoptimized: true, // Requerido para export estático
   },
