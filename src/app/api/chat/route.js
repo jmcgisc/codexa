@@ -11,6 +11,9 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
+export async function GET() {
+  return NextResponse.json({ status: "ok", message: "API de Evelyn funcionando ✅" });
+}
 export async function POST(req) {
   try {
     const { message } = await req.json();
