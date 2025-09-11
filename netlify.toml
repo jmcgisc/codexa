@@ -3,7 +3,7 @@
   publish = ".next"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "20.18.1"
   NEXT_PRIVATE_SKIP_SWC_DEPENDENCY_CHECK = "1"
 
 [[plugins]]
