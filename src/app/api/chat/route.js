@@ -2,18 +2,18 @@ import { NextResponse } from "next/server";
 import OpenAI from "openai";
 import { createClient } from "@supabase/supabase-js";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
+// Inicializar OpenAI y Supabase
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
-export async function GET() {
-  return NextResponse.json({ status: "ok", message: "API de Evelyn funcionando ✅" });
-}
+// 🚦 Memoria simple en servidor (ideal migrar a Redis o DB si quieres más control)
+const sessionUsage = {}; // { ip: { count: number, lastMessage: timestamp } }
+const MAX_MESSAGES = 10;
+const RATE_LIMIT_MS = 5000;
+
 export async function POST(req) {
   try {
     const { message } = await req.json();
@@ -21,20 +21,44 @@ export async function POST(req) {
       return NextResponse.json({ response: "❌ Mensaje vacío." }, { status: 400 });
     }
 
-    // 1. Crear embedding
-    let embedding;
-    try {
-      const embeddingRes = await openai.embeddings.create({
-        model: "text-embedding-3-small",
-        input: message,
-      });
-      embedding = embeddingRes.data[0].embedding;
-    } catch (err) {
-      console.error("❌ Error creando embedding:", err);
-      return NextResponse.json({ response: "Error creando embedding" }, { status: 500 });
+    // 📌 Identificar usuario por IP (mejor usar auth en proyectos serios)
+    const ip = req.headers.get("x-forwarded-for") || "anon";
+    const now = Date.now();
+
+    if (!sessionUsage[ip]) {
+      sessionUsage[ip] = { count: 0, lastMessage: 0 };
     }
 
-    // 2. Buscar en Supabase
+    const usage = sessionUsage[ip];
+
+    // 1. Límite de mensajes
+    if (usage.count >= MAX_MESSAGES) {
+      return NextResponse.json(
+        { response: "⚠️ Has alcanzado el límite de mensajes en esta sesión." },
+        { status: 429 }
+      );
+    }
+
+    // 2. Rate limit
+    if (now - usage.lastMessage < RATE_LIMIT_MS) {
+      return NextResponse.json(
+        { response: "⚠️ Espera unos segundos antes de enviar otro mensaje." },
+        { status: 429 }
+      );
+    }
+
+    // Actualizar uso
+    usage.count++;
+    usage.lastMessage = now;
+
+    // 🔹 Crear embedding
+    const embeddingRes = await openai.embeddings.create({
+      model: "text-embedding-3-small",
+      input: message,
+    });
+    const embedding = embeddingRes.data[0].embedding;
+
+    // 🔹 Buscar contexto en Supabase
     let context = "";
     try {
       const { data: matches, error } = await supabase.rpc("match_documents", {
@@ -43,9 +67,7 @@ export async function POST(req) {
         match_count: 3,
       });
 
-      if (error) {
-        console.error("❌ Error Supabase:", error);
-      }
+      if (error) console.error("❌ Error Supabase:", error);
 
       context =
         matches && matches.length > 0
@@ -56,29 +78,19 @@ export async function POST(req) {
       context = "Error al buscar en la base de datos.";
     }
 
-    // 3. Generar respuesta con OpenAI
-    let reply;
-    try {
-      const completion = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
-        messages: [
-          {
-            role: "system",
-            content: `
-              Eres Evelyn, asistente virtual de Stratik.
-              Usa la siguiente información para responder:
-              ${context}
-            `,
-          },
-          { role: "user", content: message },
-        ],
-      });
+    // 🔹 Generar respuesta con OpenAI
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content: `Eres Evelyn, asistente virtual de Stratik. Usa la siguiente información para responder:\n${context}`,
+        },
+        { role: "user", content: message },
+      ],
+    });
 
-      reply = completion.choices[0].message.content;
-    } catch (err) {
-      console.error("❌ Error creando respuesta con OpenAI:", err);
-      reply = "Error al generar la respuesta con OpenAI.";
-    }
+    const reply = completion.choices[0].message.content;
 
     return NextResponse.json({ response: reply });
   } catch (error) {

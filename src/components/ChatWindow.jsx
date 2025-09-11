@@ -14,6 +14,12 @@ export default function ChatWindow() {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
 
+  // 🚦 Control de límites
+  const [messageCount, setMessageCount] = useState(0);
+  const [lastMessageTime, setLastMessageTime] = useState(0);
+  const MAX_MESSAGES = 10;     // máximo por sesión
+  const RATE_LIMIT_MS = 5000;  // mínimo 5 segundos entre mensajes
+
   // Auto-scroll
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -21,6 +27,35 @@ export default function ChatWindow() {
 
   const sendMessage = async () => {
     if (!input.trim()) return;
+
+    // 1. Verificar límite de mensajes
+    if (messageCount >= MAX_MESSAGES) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: "system",
+          text: "⚠️ Has alcanzado el límite de mensajes en esta sesión.",
+          agent: "Sistema",
+          color: "bg-gradient-to-r from-gray-500 to-gray-600",
+        },
+      ]);
+      return;
+    }
+
+    // 2. Verificar rate limit
+    const now = Date.now();
+    if (now - lastMessageTime < RATE_LIMIT_MS) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: "system",
+          text: "⚠️ Espera unos segundos antes de enviar otro mensaje.",
+          agent: "Sistema",
+          color: "bg-gradient-to-r from-yellow-500 to-yellow-600",
+        },
+      ]);
+      return;
+    }
 
     const userMessage = { sender: "user", text: input };
     setMessages((prev) => [...prev, userMessage]);
@@ -42,10 +77,11 @@ export default function ChatWindow() {
         color: data.color || "bg-gradient-to-r from-purple-500 to-indigo-600",
       };
 
-      // Simular tiempo de escritura para mejor UX
       setTimeout(() => {
         setMessages((prev) => [...prev, botMessage]);
         setIsTyping(false);
+        setMessageCount((c) => c + 1);   // ✅ aumentar contador
+        setLastMessageTime(now);         // ✅ actualizar tiempo
       }, 1000);
     } catch (err) {
       console.error("Error enviando mensaje:", err);
@@ -53,18 +89,18 @@ export default function ChatWindow() {
     }
   };
 
-  // Mapeo de colores para los badges de agentes
   const agentColorMap = {
     Evelyn: "bg-gradient-to-r from-purple-500 to-indigo-600",
     Soporte: "bg-gradient-to-r from-blue-500 to-cyan-600",
     Ventas: "bg-gradient-to-r from-green-500 to-emerald-600",
     Técnico: "bg-gradient-to-r from-orange-500 to-amber-600",
+    Sistema: "bg-gradient-to-r from-gray-400 to-gray-500",
     Default: "bg-gradient-to-r from-gray-500 to-gray-600",
   };
 
   return (
     <div className="flex flex-col h-[400px] w-80 bg-white rounded-lg shadow-xl overflow-hidden border border-gray-200">
-      {/* Header con gradiente */}
+      {/* Header */}
       <div className="bg-gradient-to-r from-blue-600 to-purple-700 p-3 text-white">
         <div className="flex items-center space-x-2">
           <div className="relative">
@@ -85,14 +121,8 @@ export default function ChatWindow() {
       {/* Mensajes */}
       <div className="flex-1 overflow-y-auto p-3 space-y-2 bg-gradient-to-b from-gray-50 to-gray-100">
         {messages.map((msg, i) => (
-          <div
-            key={i}
-            className={`flex flex-col ${
-              msg.sender === "user" ? "items-end" : "items-start"
-            }`}
-          >
-            {/* Badge de agente */}
-            {msg.sender === "bot" && (
+          <div key={i} className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}>
+            {msg.sender === "bot" || msg.sender === "system" ? (
               <div className="flex items-center mb-1 ml-1">
                 <span
                   className={`text-xs px-2 py-0.5 rounded-full text-white font-medium ${agentColorMap[msg.agent] || agentColorMap.Default}`}
@@ -100,9 +130,7 @@ export default function ChatWindow() {
                   {msg.agent}
                 </span>
               </div>
-            )}
-            
-            {/* Burbuja de mensaje */}
+            ) : null}
             <div
               className={`relative p-2 rounded-lg max-w-[85%] break-words text-sm ${
                 msg.sender === "user"
@@ -112,31 +140,29 @@ export default function ChatWindow() {
             >
               {msg.text}
             </div>
-            
-            {/* Hora del mensaje */}
             <span className="text-xs text-gray-500 mt-0.5 ml-1">
               {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </span>
           </div>
         ))}
-        
+
         {/* Indicador de escritura */}
         {isTyping && (
           <div className="flex items-start">
             <div className="bg-white text-gray-800 p-2 rounded-lg rounded-bl-none border border-gray-200 max-w-[85%]">
               <div className="flex space-x-1">
                 <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></div>
-                <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-                <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.4s'}}></div>
+                <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+                <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.4s" }}></div>
               </div>
             </div>
           </div>
         )}
-        
+
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input area */}
+      {/* Input */}
       <div className="p-3 bg-white border-t border-gray-200">
         <div className="flex items-center">
           <input
