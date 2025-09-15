@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
+import emailjs from '@emailjs/browser'
 
 // Iconos para los servicios
 const serviceIcons = {
@@ -97,6 +98,8 @@ export default function PremiumNavbar() {
   const [showResourcesMenu, setShowResourcesMenu] = useState(false)
   const [activeService, setActiveService] = useState(0)
   const [activeResource, setActiveResource] = useState(0)
+  const [isSending, setIsSending] = useState(false)
+  const [showSuccess, setShowSuccess] = useState(false)
   const servicesTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const resourcesTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -178,6 +181,39 @@ export default function PremiumNavbar() {
     setShowResourcesMenu(false)
   }, [])
 
+  // Función para enviar el formulario con EmailJS
+  const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSending(true);
+    
+    try {
+      await emailjs.sendForm(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        e.currentTarget,
+        process.env.NEXT_PUBLIC_EMAILJS_USER_ID!
+      ); 
+      
+    setShowSuccess(true);
+    // Resetear el formulario de manera segura
+    const form = e.currentTarget as HTMLFormElement;
+    if (form) {
+      form.reset();
+    }
+      setIsContactOpen(false); // cerrar modal al enviar
+      
+      setTimeout(() => {
+            setShowSuccess(false);
+            setIsContactOpen(false);
+          }, 3000);
+        } catch (error) {
+          console.error('Error al enviar el mensaje:', error);
+          alert('Error al enviar el mensaje. Por favor, intenta nuevamente.');
+        } finally {
+          setIsSending(false);
+        }
+      };
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (menuOpen && window.innerWidth < 768) {
@@ -191,6 +227,16 @@ export default function PremiumNavbar() {
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [menuOpen])
+
+      // Efecto para ocultar el toast automáticamente
+      useEffect(() => {
+        if (showSuccess) {
+          const timer = setTimeout(() => {
+            setShowSuccess(false);
+          }, 3000); // ⏱ se cierra a los 3s
+          return () => clearTimeout(timer); // cleanup
+        }
+      }, [showSuccess]);
 
   return (
     <>
@@ -719,7 +765,7 @@ export default function PremiumNavbar() {
         )}
       </AnimatePresence>
 
-      {/* Modal de contacto simplificado */}
+      {/* Modal de contacto simplificado con EmailJS */}
       <AnimatePresence>
         {isContactOpen && (
           <motion.div
@@ -752,67 +798,101 @@ export default function PremiumNavbar() {
                     Completa el formulario y nos pondremos en contacto contigo en menos de 24 horas.
                   </p>
                   
-                  <div className="space-y-4">
+                  <form onSubmit={sendEmail} className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre completo</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre completo *</label>
                       <input 
                         type="text" 
+                        name="user_name"
                         className="w-full px-4 py-2.5 border border-gray-300 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:text-white transition-colors" 
                         placeholder="Tu nombre"
+                        required
                       />
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Correo electrónico</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Teléfono *</label>
+                      <input 
+                        type="tel" 
+                        name="user_phone"
+                        className="w-full px-4 py-2.5 border border-gray-300 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:text-white transition-colors" 
+                        placeholder="Tu teléfono"
+                        required
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Correo electrónico *</label>
                       <input 
                         type="email" 
+                        name="user_email"
                         className="w-full px-4 py-2.5 border border-gray-300 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:text-white transition-colors" 
                         placeholder="tu@email.com"
+                        required
                       />
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Servicio de interés</label>
-                      <select className="w-full px-4 py-2.5 border border-gray-300 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:text-white transition-colors">
-                        <option>Selecciona un servicio</option>
-                        {serviciosDropdown.map(service => (
-                          <option key={service.id}>{service.label}</option>
-                        ))}
-                      </select>
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Mensaje</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Mensaje *</label>
                       <textarea 
                         rows={3} 
+                        name="message"
                         className="w-full px-4 py-2.5 border border-gray-300 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:text-white transition-colors" 
                         placeholder="Describe tu proyecto o necesidades"
+                        required
                       ></textarea>
                     </div>
-                  </div>
-                </div>
-                
-                <div className="px-6 pb-6 pt-4 bg-gray-50 dark:bg-neutral-800/50">
-                  <div className="flex gap-3">
-                    <button
-                      onClick={() => setIsContactOpen(false)}
-                      className="flex-1 px-4 py-2.5 border border-gray-300 dark:border-neutral-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 transition-colors font-medium"
-                    >
-                      Cancelar
-                    </button>
-                    <motion.button
-                      onClick={() => setIsContactOpen(false)}
-                      className="flex-1 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-lg hover:from-blue-700 hover:to-indigo-800 transition-all font-medium shadow-lg flex items-center justify-center gap-2"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <span>Enviar solicitud</span>
-                      <ArrowRight size={16} />
-                    </motion.button>
-                  </div>
+                    
+                    <div className="px-6 pb-6 pt-4 bg-gray-50 dark:bg-neutral-800/50">
+                      <div className="flex gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setIsContactOpen(false)}
+                          className="flex-1 px-4 py-2.5 border border-gray-300 dark:border-neutral-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 transition-colors font-medium"
+                        >
+                          Cancelar
+                        </button>
+                        <motion.button
+                          type="submit"
+                          className="flex-1 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-lg hover:from-blue-700 hover:to-indigo-800 transition-all font-medium shadow-lg flex items-center justify-center gap-2"
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          disabled={isSending}
+                        >
+                          {isSending ? (
+                            <span>Enviando...</span>
+                          ) : (
+                            <>
+                              <span>Enviar</span>
+                              <ArrowRight size={16} />
+                            </>
+                          )}
+                        </motion.button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </div>
             </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Mensaje de éxito */}
+      <AnimatePresence>
+        {showSuccess && (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            className="fixed bottom-6 right-6 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50"
+          >
+            <div className="flex items-center gap-2">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span>¡Mensaje enviado con éxito! Te contactaremos pronto.</span>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

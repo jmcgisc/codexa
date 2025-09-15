@@ -17,7 +17,6 @@ import ChatWindow from "../components/ChatWindow";
 import ChatWidget from "../components/ChatWidget";
 import FormularioContacto from "../components/email/FormularioContacto";
 import './globals.css';
-
 export default function Home() {
   const legalPages = {
     privacyPolicy: "/politica-privacidad",

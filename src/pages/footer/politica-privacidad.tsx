@@ -1,6 +1,19 @@
 'use client'
 import Link from "next/link"
 
+export const metadata = {
+  title: "Stratik – Agencia Web",
+  description: "Diseñamos sitios modernos con SEO optimizado. Seguridad Digital. IA.",
+  openGraph: {
+    title: "Stratik – Agencia Web",
+    description: "Diseñamos sitios modernos con React + Next.js y SEO optimizado.",
+    url: "https://stratik.com.mx",
+    siteName: "Stratik",
+    images: ["/images/imagen.jpg"],
+    locale: "es_MX",
+    type: "website",
+  },
+}
 export default function PoliticaPrivacidad() {
   return (
     <div className="max-w-4xl mx-auto py-10 px-6 text-justify">

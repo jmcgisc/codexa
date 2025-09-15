@@ -35,6 +35,20 @@ const valoresPrincipales = [
   }
 ]
 
+export const metadata = {
+  title: "Stratik – Agencia Web",
+  description: "Diseñamos sitios modernos con SEO optimizado. Seguridad Digital. IA.",
+  openGraph: {
+    title: "Stratik – Agencia Web",
+    description: "Diseñamos sitios modernos con React + Next.js y SEO optimizado.",
+    url: "https://stratik.com.mx",
+    siteName: "Stratik",
+    images: ["/images/imagen.jpg"],
+    locale: "es_MX",
+    type: "website",
+  },
+}
+
 // Valores adicionales con imágenes
 const valoresExtra = [
   {
