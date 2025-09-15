@@ -14,8 +14,6 @@ interface FormValues {
   nombreCompleto: string;
   telefonoMovil: string;
   email: string;
-  presupuesto: string;
-  interesadoEn: string;
   mensaje: string;
 }
 
@@ -28,8 +26,6 @@ const FormularioContacto = () => {
     nombreCompleto: '',
     telefonoMovil: '',
     email: '',
-    presupuesto: '',
-    interesadoEn: '',
     mensaje: ''
   });
 
@@ -73,8 +69,6 @@ const FormularioContacto = () => {
         nombreCompleto: '',
         telefonoMovil: '',
         email: '',
-        presupuesto: '',
-        interesadoEn: '',
         mensaje: '',
       });
       setStatus('SUCCESS');

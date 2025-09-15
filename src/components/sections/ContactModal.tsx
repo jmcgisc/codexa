@@ -12,7 +12,6 @@ export default function ContactModal({ onClose }: Props) {
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
-    servicio: '',
     mensaje: ''
   })
 
@@ -38,7 +37,7 @@ export default function ContactModal({ onClose }: Props) {
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY as string
       )
       setStatus('success')
-      setFormData({ nombre: '', email: '', servicio: '', mensaje: '' })
+      setFormData({ nombre: '', email: '', mensaje: '' })
     } catch (error) {
       console.error('❌ Error al enviar:', error)
       setStatus('error')
@@ -85,23 +84,6 @@ export default function ContactModal({ onClose }: Props) {
               className="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-neutral-800 dark:text-white"
               required
             />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-1">Servicio de interés</label>
-            <select
-              name="servicio"
-              value={formData.servicio}
-              onChange={handleChange}
-              className="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-neutral-800 dark:text-white"
-              required
-            >
-              <option value="">Selecciona un servicio</option>
-              <option>Desarrollo Web</option>
-              <option>SEO & Marketing</option>
-              <option>LegalTech</option>
-              <option>Branding & Diseño</option>
-            </select>
           </div>
 
           <div>
