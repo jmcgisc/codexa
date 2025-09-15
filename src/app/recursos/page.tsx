@@ -3,19 +3,6 @@
 import { motion } from "framer-motion"
 import { BookOpen, FileText, Wrench, Video } from "lucide-react"
 
-export const metadata = {
-  title: "Stratik – Agencia Web",
-  description: "Diseñamos sitios modernos con SEO optimizado. Seguridad Digital. IA.",
-  openGraph: {
-    title: "Stratik – Agencia Web",
-    description: "Diseñamos sitios modernos con React + Next.js y SEO optimizado.",
-    url: "https://stratik.com.mx",
-    siteName: "Stratik",
-    images: ["/images/imagen.jpg"],
-    locale: "es_MX",
-    type: "website",
-  },
-}
 export default function Recursos() {
   const categorias = [
     { id: 1, label: "Guías & Ebooks", icon: BookOpen, desc: "Aprende estrategias y técnicas paso a paso." },
