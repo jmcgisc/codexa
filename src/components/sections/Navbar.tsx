@@ -795,7 +795,7 @@ export default function PremiumNavbar() {
                     </button>
                   </div>
                   <p className="text-gray-600 dark:text-gray-300 mb-6">
-                    Completa el formulario y nos pondremos en contacto contigo en menos de 24 horas.
+                       contacto contigo en menos de 24 horas.
                   </p>
                   
                   <form onSubmit={sendEmail} className="space-y-4">
@@ -803,20 +803,9 @@ export default function PremiumNavbar() {
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre completo *</label>
                       <input 
                         type="text" 
-                        name="user_name"
+                        name="from_name"
                         className="w-full px-4 py-2.5 border border-gray-300 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:text-white transition-colors" 
                         placeholder="Tu nombre"
-                        required
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Teléfono *</label>
-                      <input 
-                        type="tel" 
-                        name="user_phone"
-                        className="w-full px-4 py-2.5 border border-gray-300 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:text-white transition-colors" 
-                        placeholder="Tu teléfono"
                         required
                       />
                     </div>
@@ -825,9 +814,20 @@ export default function PremiumNavbar() {
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Correo electrónico *</label>
                       <input 
                         type="email" 
-                        name="user_email"
+                        name="from_email"
                         className="w-full px-4 py-2.5 border border-gray-300 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:text-white transition-colors" 
                         placeholder="tu@email.com"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Teléfono *</label>
+                      <input 
+                        type="tel" 
+                        name="phone"
+                        className="w-full px-4 py-2.5 border border-gray-300 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:text-white transition-colors" 
+                        placeholder="Tu teléfono"
                         required
                       />
                     </div>

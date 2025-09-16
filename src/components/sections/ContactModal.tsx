@@ -36,10 +36,10 @@ export default function ContactModal({ onClose }: Props) {
 
     try {
       const templateParams = {
-        from_name: formData.nombreCompleto,   // 👈 se alinea con EmailJS
-        phone: formData.telefonoMovil,
-        from_email: formData.email,
-        message: formData.mensaje
+      nombreCompleto: formData.nombreCompleto,
+      telefonoMovil: formData.telefonoMovil,
+      email: formData.email,
+      mensaje: formData.mensaje
       }
 
       const result = await emailjs.send(

@@ -60,7 +60,12 @@ const FormularioContacto = () => {
       const response = await emailjs.send(
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID        as string,
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID       as string,
-        values,
+        {
+          from_name: values.nombreCompleto,    // ← mapea a {{from_name}}
+          phone: values.telefonoMovil,         // ← mapea a {{phone}}
+          from_email: values.email,            // ← mapea a {{from_email}}
+          message: values.mensaje,             // ← mapea a {{message}}
+        },
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY       as string
       );
 
@@ -121,7 +126,6 @@ const FormularioContacto = () => {
                 value={values.nombreCompleto}   
                 handleChange={handleChange} 
                 label="Nombre Completo"        
-                aria-labelledby="Nombre Completo" 
                 name="nombreCompleto"   
                 type="text"     
                 placeholder="Juan Perez" 
@@ -129,8 +133,7 @@ const FormularioContacto = () => {
               <InputField 
                 value={values.telefonoMovil}    
                 handleChange={handleChange} 
-                label="Telefono Móvil"         
-                aria-labelledby="Teléfono Móvil"  
+                label="Teléfono Móvil"         
                 name="telefonoMovil"    
                 type="text"     
                 placeholder="+52 55 55 55 55 55" 
@@ -139,7 +142,6 @@ const FormularioContacto = () => {
                 value={values.email}            
                 handleChange={handleChange} 
                 label="E-mail"                 
-                aria-labelledby="E-Mail"          
                 name="email"            
                 type="email"    
                 placeholder="st@gmail.com" 
@@ -148,7 +150,6 @@ const FormularioContacto = () => {
                 value={values.mensaje}       
                 handleChange={handleChange} 
                 label="Mensaje"               
-                aria-labelledby="Mensaje"                            
                 name="mensaje" 
               />
  
@@ -169,7 +170,7 @@ const FormularioContacto = () => {
               <button 
                 id="button"
                 type="submit"
-                className="inline-block self-end font-semibold px-6 bg-sand text-diamonBlack rounded-xl shadow-lg shadow-indigo-500/40 py-2 uppercase text-sm hover:bg-opacity-90 transition-colors"
+                className="inline-block self-end font-semibold px-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl shadow-lg py-2 uppercase text-sm hover:opacity-90 transition-colors"
               >
                 Enviar Formulario
               </button>
