@@ -153,7 +153,7 @@ const FormularioContacto = () => {
                 name="mensaje" 
               />
  
-              <div className="text-center">
+              {/* <div className="text-center">
                 <ReCAPTCHA
                   ref={captcha}
                   onChange={onChangeCaptcha}
@@ -165,7 +165,7 @@ const FormularioContacto = () => {
                     Por favor, verifica que no eres un robot
                   </div>
                 )}
-              </div>
+              </div> */}
 
               <button 
                 id="button"

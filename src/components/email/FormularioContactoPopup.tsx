@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX, FiSend, FiCheckCircle, FiAlertCircle, FiUser, FiPhone, FiMail, FiMessageSquare } from 'react-icons/fi';
@@ -123,7 +123,7 @@ const FormularioContactoPremium = ({ onClose }: { onClose: () => void }) => {
             {/* Formulario */}
             <form ref={formRef} onSubmit={handleSubmit} className="p-6 space-y-6">
               <FloatingInput
-                name="nombre"
+                name="from_name"   // ✅ coincide con {{from_name}}
                 label="Nombre Completo"
                 icon={FiUser}
                 value={formData.nombre}
@@ -132,7 +132,7 @@ const FormularioContactoPremium = ({ onClose }: { onClose: () => void }) => {
               />
               
               <FloatingInput
-                name="telefono"
+                name="phone"       // ✅ coincide con {{phone}}
                 label="Teléfono"
                 icon={FiPhone}
                 type="tel"
@@ -141,7 +141,7 @@ const FormularioContactoPremium = ({ onClose }: { onClose: () => void }) => {
               />
               
               <FloatingInput
-                name="email"
+                name="from_email"  // ✅ coincide con {{from_email}}
                 label="Correo Electrónico"
                 icon={FiMail}
                 type="email"
@@ -151,7 +151,7 @@ const FormularioContactoPremium = ({ onClose }: { onClose: () => void }) => {
               />
               
               <FloatingTextArea
-                name="mensaje"
+                name="message"     // ✅ coincide con {{message}}
                 label="Tu Mensaje"
                 icon={FiMessageSquare}
                 rows={4}
@@ -233,24 +233,6 @@ const FormularioContactoPremium = ({ onClose }: { onClose: () => void }) => {
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
-          
-          {/* Efecto de partículas (opcional) */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl">
-            {[...Array(10)].map((_, i) => (
-              <div 
-                key={i}
-                className="absolute rounded-full bg-blue-400/20"
-                style={{
-                  width: `${Math.random() * 10 + 5}px`,
-                  height: `${Math.random() * 10 + 5}px`,
-                  top: `${Math.random() * 100}%`,
-                  left: `${Math.random() * 100}%`,
-                  animation: `float ${Math.random() * 10 + 10}s linear infinite`,
-                  animationDelay: `${Math.random() * 5}s`
-                }}
-              />
-            ))}
           </div>
         </motion.div>
       </div>
