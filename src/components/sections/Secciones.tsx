@@ -6,7 +6,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { UilArrowRight, UilRocket, UilShieldCheck, UilChartLine } from '@iconscout/react-unicons';
 import Reveal from '../effects/Reveal';
 import type { HTMLMotionProps } from 'framer-motion';
-import FormularioContactoPopup from '../email/FormularioContactoPopup'; // ← ruta desde /components/sections
+import FormularioContactoPopup from '../email/FormularioContactoPopup'; 
 
 const servicios = [
   {

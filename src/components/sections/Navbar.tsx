@@ -353,6 +353,30 @@ export default function PremiumNavbar() {
                 )
               }
 
+              // Enlace de navegación para "contacto"
+              if (link.id === 'contact') {
+                return (
+                  <button
+                    key={link.id}
+                    onClick={() => {
+                      setMenuOpen(false);
+                      setShowServicesMenu(false);
+                      setShowResourcesMenu(false);
+                      router.push('/contacto'); // Navega a la página de blog
+                    }}
+                    className={`px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium transition-all duration-300 group relative flex items-center gap-2 ${
+                      activeId === link.id
+                        ? 'text-blue-600 dark:text-blue-400'
+                        : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
+                    }`}
+                  >
+                    <IconComponent size={16} />
+                    <span>{link.label}</span>
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+                  </button>
+                )
+              }
+
               // Enlace normal para otros items
               return (
                 <button
@@ -830,7 +854,7 @@ export default function PremiumNavbar() {
                         placeholder="Tu teléfono"
                         required
                       />
-                    </div>
+                    </div>  
                     
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Mensaje *</label>

@@ -196,10 +196,37 @@ export default function Nosotros() {
               viewport={{ once: true }}
               className="relative"
             >
-              <div className="bg-gradient-to-br from-blue-500 to-purple-600 h-80 w-full rounded-2xl shadow-xl"></div>
-              <div className="absolute -bottom-6 -right-6 bg-gray-800 h-64 w-64 rounded-2xl shadow-xl">
-                <div className="h-full w-full bg-gradient-to-tr from-orange-500 to-pink-600 rounded-2xl opacity-90"></div>
-              </div>
+             <div className="relative">
+  {/* Imagen principal con overlay de gradiente */}
+  <div className="relative h-80 w-full rounded-2xl shadow-xl overflow-hidden">
+    <img 
+      src="/images/jose carreiro.png" 
+      alt="Postre principal" 
+      className= "object-fit-cover"
+    />
+    <div className="absolute inset-50 bg-gradient-to-br from-blue-900/70 to-purple-800/70 rounded-2xl"></div>
+    
+    {/* Texto superpuesto */}
+    <div className="absolute bottom-6 left-6 text-white">
+      <h3 className="text-2xl font-bold">CEO Stratik</h3>
+    </div>
+  </div>
+  
+  {/* Imagen secundaria */}
+  <div className="absolute -bottom-6 -right-6 h-64 w-64 rounded-2xl shadow-xl overflow-hidden">
+    <img 
+      src="/images/Equipo_Stratik.png" 
+      alt="Detalle de postre" 
+      className="w-full h-full object-cover"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-gray-800/70 to-transparent rounded-2xl"></div>
+    
+    {/* Texto superpuesto en la imagen secundaria */}
+    <div className="absolute bottom-4 left-4 text-white">
+      <p className="text-sm font-medium">Nuestra misión: Impulsar tu negocio.</p>
+    </div>
+  </div>
+</div>
             </motion.div>
           </div>
         </div>
@@ -276,7 +303,8 @@ export default function Nosotros() {
       </section>
 
       {/* Sección de testimonios */}
-      <section className="bg-white dark:bg-neutral-900 py-20 px-6 md:px-12 lg:px-24">
+      
+      {/* <section className="bg-white dark:bg-neutral-900 py-20 px-6 md:px-12 lg:px-24">
         <div className="max-w-6xl mx-auto">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
@@ -310,7 +338,7 @@ export default function Nosotros() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
       <section className="bg-gradient-to-r from-blue-600 to-indigo-700 py-20 px-6 md:px-12 lg:px-24">
