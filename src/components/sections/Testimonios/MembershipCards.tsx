@@ -253,7 +253,7 @@ const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
             <Card data-glow>
               <CardContent>
                 <Title>Desarrollo Web 💻</Title>
-                <Price><span>Desde $4,500.00 mxn</span> / proyecto</Price>
+                <Price><span>Desde $9,000.00 mxn</span> / proyecto</Price>
                 <FeaturesList>
                   <li>Sitios rápidos, modernos y responsivos</li>
                   <li>Diseño UI/UX optimizado para conversión</li>
@@ -271,15 +271,15 @@ const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
           <Reveal>
             <Card data-glow>
               <CardContent>
-                <Title>Firmas Criptográficas 🔐</Title>
-                <Price><span>Desde $180.00 mxn</span> / integración</Price>
+                <Title>Agentes de IA 🤖</Title>
+                <Price><span>Desde $8,000.00 mxn</span> / proyecto</Price>
                 <FeaturesList>
-                  <li>Validación de identidad y documentos</li>
-                  <li>Integración con certificados digitales</li>
-                  <li>Soporte para Ethereum, Web3, wallets</li>
-                  <li>Alta seguridad y cumplimiento normativo</li>
+                  <li>Atención al cliente automatizada 24/7</li>
+                  <li>Integración con WhatsApp, web y redes</li>
+                  <li>Análisis de datos y generación de reportes</li>
+                  <li>Automatización de procesos repetitivos</li>
                 </FeaturesList>
-                <Button className="diamond" onClick={() => handleOpenPopup('Firmas Criptográficas')}>
+                <Button className="diamond" onClick={() => handleOpenPopup('Agentes de IA')}>
                   Contáctanos
                 </Button>
               </CardContent>
@@ -290,17 +290,16 @@ const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
           <Reveal>
             <Card data-glow>
               <CardContent>
-                <Title>SEO Avanzado 🔍</Title>
-                <Price><span>Desde $650.00 mxn</span> / mes</Price>
+                <Title>CRM Personalizados �</Title>
+                <Price><span>Desde $6,000.00 mxn</span> / proyecto</Price>
                 <FeaturesList>
-                  <li>Optimización técnica (CWV)</li>
-                  <li>Auditoría de contenido y keywords</li>
-                  <li>Backlinks y autoridad de dominio</li>
-                  <li>Monitoreo de rankings y tráfico orgánico</li>
-                  <li>Análisis de competencia para campañas</li>
+                  <li>Embudos de ventas adaptados a tu negocio</li>
+                  <li>Automatización de tareas y seguimientos</li>
+                  <li>Dashboards integrados en tiempo real</li>
+                  <li>Integración con tus herramientas actuales</li>
                 </FeaturesList>
-                <Button className="diamond" onClick={() => handleOpenPopup('SEO Avanzado')}>
-                  Mejorar visibilidad
+                <Button className="diamond" onClick={() => handleOpenPopup('CRM Personalizados')}>
+                  Automatizar procesos
                 </Button>
               </CardContent>
               <GlowEffect data-glow />
@@ -310,8 +309,8 @@ const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
       </Container>
 
       {isOpen && (
-        <FormularioContactoPopup 
-          onClose={() => setIsOpen(false)} 
+        <FormularioContactoPopup
+          onClose={() => setIsOpen(false)}
         />
       )}
     </>

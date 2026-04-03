@@ -11,12 +11,16 @@ import Services from "../components/sections/Services";
 import FAQ from '../components/FAQ';
 import WhatsAppFloat from "../components/WhatsAppFloat";
 import Footer from "../components/layout/Footer";
-import InteractiveMap from "../components/InteractiveMap"; 
+import InteractiveMap from "../components/InteractiveMap";
 import MemoryCarousel from "../components/MemoryCarousel";
 import ChatWindow from "../components/ChatWindow";
 import ChatWidget from "../components/ChatWidget";
 import FormularioContacto from "../components/email/FormularioContacto";
 import './globals.css';
+import { DynamicLanding } from "@/src/components/DynamicLanding"
+import { DynamicSections } from "@/src/components/DynamicSections"
+
+
 export default function Home() {
   const legalPages = {
     privacyPolicy: "/politica-privacidad",
@@ -51,6 +55,11 @@ export default function Home() {
 
   return (
     <main className="flex flex-col">
+
+      {/* 🎯 NUEVO: Landing dinámico */}
+      {/* <DynamicSections /> */}
+      {/* <DynamicLanding /> */}
+
       <Navbar />
 
       {/* HERO */}
