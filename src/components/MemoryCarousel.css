@@ -61,12 +61,12 @@
 
 /* Cosmic Background */
 .memory-carousel-container .cosmos-background {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: 0;
   background: radial-gradient(
     ellipse at bottom,
     #1b2735 0%,
@@ -527,6 +527,7 @@
   /* General container */
 .memory-carousel-container {
   overflow-x: hidden;
+  position: relative;
 }
 
 /* Evita que el carousel genere desplazamiento lateral */
