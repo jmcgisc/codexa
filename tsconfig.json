@@ -5,8 +5,11 @@
       "dom",
       "dom.iterable",
       "esnext"
-    ],"paths": {
-      "@/*": ["./*"]
+    ],
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
     },
     "allowJs": true,
     "baseUrl": ".",
@@ -16,13 +19,13 @@
     "incremental": true,
     "module": "esnext",
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "types": [
       "framer-motion"
     ],
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "plugins": [
       {
         "name": "next"
@@ -34,8 +37,10 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "src/app/page.jsx"  ],
+    "**/*.tsx",
+    "src/app/page.jsx",
+    ".next/dev/types/**/*.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

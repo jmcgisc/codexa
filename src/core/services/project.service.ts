@@ -1,7 +1,6 @@
 // src/core/services/project.service.ts
 
 import { Project } from "../types/project"
-import { useSearchParams } from "next/navigation"
 
 const mockProjects: Project[] = [
     {
@@ -15,10 +14,10 @@ const mockProjects: Project[] = [
             features: {
                 blog: true,
                 testimonials: true,
-                chatbot: true
+                chatbot: true,
             },
-            sections: ["hero", "cta"]
-        }
+            sections: ["hero", "cta"],
+        },
     },
     {
         id: "2",
@@ -31,19 +30,19 @@ const mockProjects: Project[] = [
             features: {
                 blog: true,
                 testimonials: true,
-                chatbot: true
+                chatbot: true,
             },
-            sections: ["hero", "cta"]
-        }
-    }
+            sections: ["hero", "cta"],
+        },
+    },
 ]
 
-// 🔍 Detectar por dominio
+// Detectar por dominio
 export const getProjectByDomain = (domain: string): Project | null => {
-    return mockProjects.find(p => domain.includes(p.domain)) || null
+    return mockProjects.find((p) => domain.includes(p.domain)) || null
 }
 
-// 🧠 Fallback inteligente
+// Fallback inteligente
 export const getDefaultProject = (): Project => {
     return mockProjects[0]
 }
