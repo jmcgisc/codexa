@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { UilArrowRight, UilRocket, UilShieldCheck, UilChartLine } from '@iconscout/react-unicons';
 import Reveal from '../effects/Reveal';
 import type { HTMLMotionProps } from 'framer-motion';
@@ -72,8 +72,6 @@ const ServiceSection = ({ servicio }: { servicio: typeof servicios[0] }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [showForm, setShowForm] = useState(false);
 
-  const { scrollYProgress } = useScroll({});
-  const y = useTransform(scrollYProgress, [0, 1], [servicio.reverse ? -50 : 50, 0]);
 
   // Cerrar con ESC + bloquear/desbloquear scroll cuando hay modal
   useEffect(() => {
@@ -119,7 +117,6 @@ const ServiceSection = ({ servicio }: { servicio: typeof servicios[0] }) => {
         className={`${servicio.color} py-12 md:py-20 px-4 sm:px-6 md:px-12 lg:px-24 flex flex-col ${
           servicio.reverse ? 'md:flex-row-reverse' : 'md:flex-row'
         } items-center gap-8 md:gap-12`}
-        style={{ y }} // ← usar motion value correctamente
       >
         {/* Texto */}
         <div className="w-full md:w-1/2 space-y-4 md:space-y-6">
