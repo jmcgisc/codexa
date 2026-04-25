@@ -85,9 +85,7 @@ export default function Home() {
       </section>
 
       {/* SECCIONES DESTACADAS */}
-      <section className="scroll-mt-28">
-        <Secciones />
-      </section>
+      <Secciones />
 
       {/* PORTAFOLIO (ancla "portfolio") */}
       <section id="portfolio" className="scroll-mt-28">

@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faCode, 
-  faBug, 
-  faBookOpen, 
-  faAtom, 
-  faCodeBranch, 
+import {
+  faCode,
+  faBug,
+  faBookOpen,
+  faAtom,
+  faCodeBranch,
   faRocket,
   faChevronLeft,
-  faChevronRight, 
+  faChevronRight,
   faLocationDot,
   faClock
 } from '@fortawesome/free-solid-svg-icons';
@@ -32,7 +32,7 @@ const MemoryCarousel: React.FC = () => {
   const [startX, setStartX] = useState<number>(0);
   const [radius, setRadius] = useState<number>(400);
   const [isMobile, setIsMobile] = useState<boolean>(false);
-  
+
   const carouselRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -124,7 +124,7 @@ const MemoryCarousel: React.FC = () => {
   const arrangeCards = () => {
     const angle = 360 / memoryCards.length;
     const cards = document.querySelectorAll('.memory-card');
-    
+
     cards.forEach((card: Element, index: number) => {
       const cardElement = card as HTMLElement;
       const cardAngle = angle * index;
@@ -194,8 +194,8 @@ const MemoryCarousel: React.FC = () => {
     if (!isDragging) return;
     setIsDragging(false);
 
-    const clientX = 'changedTouches' in e ? 
-      e.changedTouches[0].clientX : 
+    const clientX = 'changedTouches' in e ?
+      e.changedTouches[0].clientX :
       (e as MouseEvent).clientX;
     const diffX = clientX - startX;
 
@@ -254,9 +254,9 @@ const MemoryCarousel: React.FC = () => {
               onMouseDown={dragStart}
               onTouchStart={dragStart}>
               {memoryCards.map((card, index) => (
-                <div 
+                <div
                   key={card.id}
-                  className="memory-card" 
+                  className="memory-card"
                   data-index={index}
                   onClick={() => flipCard(index)}>
                   <div className="card-inner">
@@ -301,8 +301,8 @@ const MemoryCarousel: React.FC = () => {
             <>
               <div className="mobile-dots-container">
                 {memoryCards.map((_, i) => (
-                  <div 
-                    key={i} 
+                  <div
+                    key={i}
                     className={`mobile-dot ${i === currentIndex ? 'active' : ''}`}
                     onClick={() => {
                       const angle = (360 / memoryCards.length) * i;
