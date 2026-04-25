@@ -139,7 +139,7 @@ const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
       `}</style>
 
       <div
-        className={`mc-container w-full min-h-screen flex items-center justify-center bg-[#0a0a0f] py-16 px-4 ${className ?? ''}`}
+        className={`mc-container w-full flex items-center justify-center py-16 px-4 ${className ?? ''}`}
       >
         <div className="flex flex-wrap gap-8 items-stretch justify-center w-full max-w-6xl">
           {services.map((svc, i) => (
