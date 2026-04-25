@@ -250,7 +250,7 @@ const ServiceSection = ({ servicio }: { servicio: typeof servicios[0] }) => {
 
 export default function Servicios() {
   return (
-    <Reveal direction="left">
+    <Reveal direction="up">
       <div className="w-full bg-white overflow-hidden">
         {servicios.map((servicio) => (
           <ServiceSection key={servicio.id} servicio={servicio} />

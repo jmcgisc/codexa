@@ -26,12 +26,15 @@ export default function Reveal({ children, direction = "up", delay = 0 }: Reveal
     }
   }
 
+  const isHorizontal = direction === "left" || direction === "right";
+
   return (
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }} 
+      viewport={{ once: true, amount: 0.2 }}
       variants={variants}
+      style={isHorizontal ? { overflowX: 'hidden', width: '100%' } : undefined}
     >
       {children}
     </motion.div>
