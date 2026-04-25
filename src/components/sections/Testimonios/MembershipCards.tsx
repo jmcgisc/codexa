@@ -99,7 +99,6 @@ const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
           background-color: var(--backdrop, transparent);
           background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
           background-position: 50% 50%;
-          background-attachment: fixed;
           border: var(--border-size) solid var(--backup-border);
           border-radius: calc(var(--radius) * 1px);
         }
@@ -110,7 +109,6 @@ const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
           inset: calc(var(--border-size) * -1);
           border: var(--border-size) solid transparent;
           border-radius: calc(var(--radius) * 1px);
-          background-attachment: fixed;
           background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
           background-repeat: no-repeat;
           background-position: 50% 50%;
