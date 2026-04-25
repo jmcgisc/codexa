@@ -25,11 +25,6 @@
   box-sizing: border-box;
 }
 
-.memory-carousel-container {
-  position: relative;
-  overflow: hidden;
-}
-
 .memory-carousel-container body,
 .memory-carousel-container html {
   height: 100%;
@@ -66,7 +61,7 @@
 
 /* Cosmic Background */
 .memory-carousel-container .cosmos-background {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -117,8 +112,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  touch-action: none;
-  overflow: hidden;
+  touch-action: none; /* Prevent default touch actions */
 }
 
 .memory-carousel-container .carousel {
