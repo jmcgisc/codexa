@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import FormularioContactoPopup from '../../../components/email/FormularioContactoPopup';
 import Reveal from '../../effects/Reveal';
 
@@ -9,207 +8,50 @@ interface MembershipCardsProps {
   className?: string;
 }
 
-const Container = styled.div`
-  display: grid;
-  place-items: center;
-  min-height: 100vh;
-  width: 100%;
-  background: #0a0a0f;
-  --backdrop: hsla(0, 0%, 100%, 0.06);
-  --radius: 14;
-  --border: 3;
-  --backup-border: var(--backdrop);
-  --size: 200;
-`;
-
-const Main = styled.main`
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: calc(100vw - 2rem);
-  position: relative;
-  padding: 2rem;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 1.5rem;
-    padding: 1rem;
-  }
-`;
-
-const Card = styled.article`
-  min-height: 420px;
-  border-radius: calc(var(--radius) * 1px);
-  width: 350px;
-  max-width: 100%;
-  position: relative;
-  grid-template-rows: 1fr auto;
-  box-shadow: 0 1rem 2rem -1rem rgba(0, 0, 0, 0.5);
-  padding: 1rem;
-  display: grid;
-  gap: 1rem;
-  backdrop-filter: blur(calc(var(--cardblur, 5) * 1px));
-
-  /* Glow effect */
-  --border-size: calc(var(--border, 2) * 1px);
-  --spotlight-size: calc(var(--size, 150) * 1px);
-  --hue: calc(var(--base) + (var(--xp, 0) * var(--spread, 0)));
-  background-image: radial-gradient(
-    var(--spotlight-size) var(--spotlight-size) at calc(var(--x, 0) * 1px) calc(var(--y, 0) * 1px),
-    hsl(var(--hue, 210) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 70) * 1%) / var(--bg-spot-opacity, 0.1)),
-    transparent
-  );
-  background-color: var(--backdrop, transparent);
-  background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
-  background-position: 50% 50%;
-  background-attachment: fixed;
-  border: var(--border-size) solid var(--backup-border);
-  touch-action: none;
-
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    inset: calc(var(--border-size) * -1);
-    border: var(--border-size) solid transparent;
-    border-radius: calc(var(--radius) * 1px);
-    background-attachment: fixed;
-    background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
-    mask-clip: padding-box, border-box;
-    mask-composite: intersect;
-    pointer-events: none;
-  }
-
-  &::before {
-    background-image: radial-gradient(
-      calc(var(--spotlight-size) * 0.75) calc(var(--spotlight-size) * 0.75) at calc(var(--x, 0) * 1px) calc(var(--y, 0) * 1px),
-      hsl(var(--hue, 210) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) / var(--border-spot-opacity, 1)),
-      transparent 100%
-    );
-    filter: brightness(2);
-  }
-
-  &::after {
-    background-image: radial-gradient(
-      calc(var(--spotlight-size) * 0.5) calc(var(--spotlight-size) * 0.5) at calc(var(--x, 0) * 1px) calc(var(--y, 0) * 1px),
-      hsl(0 100% 100% / var(--border-light-opacity, 1)),
-      transparent 100%
-    );
-  }
-
-  &:first-of-type {
-    --base: 80;
-    --spread: 500;
-    --outer: 1;
-  }
-
-  &:last-of-type {
-    --outer: 1;
-    --base: 220;
-    --spread: 200;
-  }
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`;
-
-const GlowEffect = styled.div`
-  position: absolute;
-  inset: 0;
-  will-change: filter;
-  opacity: var(--outer, 1);
-  border-radius: calc(var(--radius) * 1px);
-  border-width: calc(var(--border-size) * 20);
-  filter: blur(calc(var(--border-size) * 10));
-  background: none;
-  pointer-events: none;
-  border: none;
-`;
-
-const CardContent = styled.div`
-  color: rgb(211, 211, 211);
-  padding: 10px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Title = styled.h2`
-  font-size: 24px;
-  margin-bottom: 1rem;
-  color: #2c9cd7;
-`;
-
-const Price = styled.h3`
-  font-size: 18px;
-  font-weight: 400;
-  margin-bottom: 1.5rem;
-  color: rgb(205, 49, 163);
-
-  span {
-    font-size: 24px;
-    font-weight: 600;
-    color: rgb(111, 199, 66);
-  }
-`;
-
-const FeaturesList = styled.ul`
-  list-style: circle;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding-left: 20px;
-  margin-bottom: 2rem;
-  flex-grow: 1;
-`;
-
-const Button = styled.button`
-  height: 45px;
-  width: 80%;
-  border-radius: 50px;
-  border: none;
-  font-size: 18px;
-  font-weight: 600;
-  margin-top: auto;
-  margin-bottom: 20px;
-  align-self: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &.gold {
-    border: 2px solid rgb(255, 111, 171);
-    &:hover {
-      background-color: rgb(255, 111, 171);
-      box-shadow: 0 0 10px rgb(255, 111, 171);
-      color: white;
-    }
-  }
-
-  &.diamond {
-    border: 2px solid rgb(22, 181, 250);
-    &:hover {
-      background-color: rgb(22, 181, 250);
-      box-shadow: 0 0 10px rgb(22, 181, 250);
-      color: white;
-    }
-  }
-
-  &.platinum {
-    border: 2px solid rgb(251, 192, 17);
-    &:hover {
-      background-color: rgb(251, 192, 17);
-      box-shadow: 0 0 10px rgb(251, 192, 17);
-      color: white;
-    }
-  }
-`;
+const services = [
+  {
+    title: 'Desarrollo Web 💻',
+    price: 'Desde $9,000.00 mxn',
+    features: [
+      'Sitios rápidos, modernos y responsivos',
+      'Diseño UI/UX optimizado para conversión',
+      'Integraciones con APIs y CMS',
+      'Soporte y mantenimiento personalizado',
+    ],
+    btnLabel: 'Solicitar cotización',
+    btnColor: 'border-pink-400 hover:bg-pink-400 hover:shadow-[0_0_16px_rgba(255,111,171,0.7)]',
+    hue: '80',
+    spread: '500',
+  },
+  {
+    title: 'Agentes de IA 🤖',
+    price: 'Desde $8,000.00 mxn',
+    features: [
+      'Atención al cliente automatizada 24/7',
+      'Integración con WhatsApp, web y redes',
+      'Análisis de datos y generación de reportes',
+      'Automatización de procesos repetitivos',
+    ],
+    btnLabel: 'Contáctanos',
+    btnColor: 'border-cyan-400 hover:bg-cyan-400 hover:shadow-[0_0_16px_rgba(22,181,250,0.7)]',
+    hue: '200',
+    spread: '300',
+  },
+  {
+    title: 'CRM Personalizados 🔷',
+    price: 'Desde $6,000.00 mxn',
+    features: [
+      'Embudos de ventas adaptados a tu negocio',
+      'Automatización de tareas y seguimientos',
+      'Dashboards integrados en tiempo real',
+      'Integración con tus herramientas actuales',
+    ],
+    btnLabel: 'Automatizar procesos',
+    btnColor: 'border-yellow-400 hover:bg-yellow-400 hover:shadow-[0_0_16px_rgba(251,192,17,0.7)]',
+    hue: '220',
+    spread: '200',
+  },
+];
 
 const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -235,66 +77,111 @@ const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
 
   return (
     <>
-      <Container className={className}>
-        <Main>
-          <Reveal>
-            <Card data-glow>
-              <CardContent>
-                <Title>Desarrollo Web 💻</Title>
-                <Price><span>Desde $9,000.00 mxn</span> / proyecto</Price>
-                <FeaturesList>
-                  <li>Sitios rápidos, modernos y responsivos</li>
-                  <li>Diseño UI/UX optimizado para conversión</li>
-                  <li>Integraciones con APIs y CMS</li>
-                  <li>Soporte y mantenimiento personalizado</li>
-                </FeaturesList>
-                <Button className="gold" onClick={() => handleOpenPopup('Desarrollo Web')}>
-                  Solicitar cotización
-                </Button>
-              </CardContent>
-              <GlowEffect data-glow />
-            </Card>
-          </Reveal>
+      {/* Scoped CSS sin styled-components para evitar problemas de SSR en Next.js */}
+      <style>{`
+        .mc-container {
+          --backdrop: hsla(0,0%,100%,0.06);
+          --radius: 14;
+          --border: 3;
+          --backup-border: var(--backdrop);
+          --size: 200;
+        }
+        .mc-card {
+          --border-size: calc(var(--border, 2) * 1px);
+          --spotlight-size: calc(var(--size, 150) * 1px);
+          --hue: calc(var(--base, 210) + (var(--xp, 0) * var(--spread, 0)));
+          background-image: radial-gradient(
+            var(--spotlight-size) var(--spotlight-size)
+            at calc(var(--x, 0) * 1px) calc(var(--y, 0) * 1px),
+            hsl(var(--hue) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 70) * 1%) / var(--bg-spot-opacity, 0.08)),
+            transparent
+          );
+          background-color: var(--backdrop, transparent);
+          background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
+          background-position: 50% 50%;
+          background-attachment: fixed;
+          border: var(--border-size) solid var(--backup-border);
+          border-radius: calc(var(--radius) * 1px);
+        }
+        .mc-card::before,
+        .mc-card::after {
+          content: "";
+          position: absolute;
+          inset: calc(var(--border-size) * -1);
+          border: var(--border-size) solid transparent;
+          border-radius: calc(var(--radius) * 1px);
+          background-attachment: fixed;
+          background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
+          background-repeat: no-repeat;
+          background-position: 50% 50%;
+          mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+          mask-clip: padding-box, border-box;
+          mask-composite: intersect;
+          pointer-events: none;
+        }
+        .mc-card::before {
+          background-image: radial-gradient(
+            calc(var(--spotlight-size) * 0.75) calc(var(--spotlight-size) * 0.75)
+            at calc(var(--x, 0) * 1px) calc(var(--y, 0) * 1px),
+            hsl(var(--hue) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) / var(--border-spot-opacity, 1)),
+            transparent 100%
+          );
+          filter: brightness(2);
+        }
+        .mc-card::after {
+          background-image: radial-gradient(
+            calc(var(--spotlight-size) * 0.5) calc(var(--spotlight-size) * 0.5)
+            at calc(var(--x, 0) * 1px) calc(var(--y, 0) * 1px),
+            hsl(0 100% 100% / var(--border-light-opacity, 1)),
+            transparent 100%
+          );
+        }
+      `}</style>
 
-          <Reveal>
-            <Card data-glow>
-              <CardContent>
-                <Title>Agentes de IA 🤖</Title>
-                <Price><span>Desde $8,000.00 mxn</span> / proyecto</Price>
-                <FeaturesList>
-                  <li>Atención al cliente automatizada 24/7</li>
-                  <li>Integración con WhatsApp, web y redes</li>
-                  <li>Análisis de datos y generación de reportes</li>
-                  <li>Automatización de procesos repetitivos</li>
-                </FeaturesList>
-                <Button className="diamond" onClick={() => handleOpenPopup('Agentes de IA')}>
-                  Contáctanos
-                </Button>
-              </CardContent>
-              <GlowEffect data-glow />
-            </Card>
-          </Reveal>
+      <div
+        className={`mc-container w-full min-h-screen flex items-center justify-center bg-[#0a0a0f] py-16 px-4 ${className ?? ''}`}
+      >
+        <div className="flex flex-wrap gap-8 items-stretch justify-center w-full max-w-6xl">
+          {services.map((svc, i) => (
+            <Reveal key={i}>
+              <article
+                className="mc-card relative flex flex-col gap-4 p-6 min-h-[420px] w-[340px] max-w-full touch-none"
+                style={{
+                  ['--base' as string]: svc.hue,
+                  ['--spread' as string]: svc.spread,
+                }}
+              >
+                {/* Contenido */}
+                <div className="flex flex-col h-full text-gray-200">
+                  {/* Título */}
+                  <h2 className="text-2xl font-semibold mb-4 text-[#2c9cd7]">{svc.title}</h2>
 
-          <Reveal>
-            <Card data-glow>
-              <CardContent>
-                <Title>CRM Personalizados �</Title>
-                <Price><span>Desde $6,000.00 mxn</span> / proyecto</Price>
-                <FeaturesList>
-                  <li>Embudos de ventas adaptados a tu negocio</li>
-                  <li>Automatización de tareas y seguimientos</li>
-                  <li>Dashboards integrados en tiempo real</li>
-                  <li>Integración con tus herramientas actuales</li>
-                </FeaturesList>
-                <Button className="diamond" onClick={() => handleOpenPopup('CRM Personalizados')}>
-                  Automatizar procesos
-                </Button>
-              </CardContent>
-              <GlowEffect data-glow />
-            </Card>
-          </Reveal>
-        </Main>
-      </Container>
+                  {/* Precio */}
+                  <p className="mb-6 text-[rgb(205,49,163)]">
+                    <span className="text-2xl font-bold text-[rgb(111,199,66)]">{svc.price}</span>
+                    {' / proyecto'}
+                  </p>
+
+                  {/* Features */}
+                  <ul className="list-disc pl-5 flex flex-col gap-4 mb-8 flex-1 text-sm text-gray-300">
+                    {svc.features.map((f, j) => (
+                      <li key={j}>{f}</li>
+                    ))}
+                  </ul>
+
+                  {/* Botón */}
+                  <button
+                    onClick={() => handleOpenPopup(svc.title)}
+                    className={`mt-auto self-center w-4/5 h-11 rounded-full border-2 bg-transparent text-white font-semibold text-base transition-all duration-300 cursor-pointer ${svc.btnColor}`}
+                  >
+                    {svc.btnLabel}
+                  </button>
+                </div>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </div>
 
       {isOpen && (
         <FormularioContactoPopup
