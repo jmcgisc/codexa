@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import FormularioContactoPopup from '../../../components/email/FormularioContactoPopup';
 import Reveal from '../../effects/Reveal';
 
@@ -9,28 +9,17 @@ interface MembershipCardsProps {
   className?: string;
 }
 
-const GlobalStyle = createGlobalStyle`  
-  :root {
-    --backdrop: hsla(0, 0%, 0%, 0.12);
-    --radius: 14;
-    --border: 3;
-    --backup-border: var(--backdrop);
-    --size: 200;
-  }
-
-  body {
-    background: #E5F8FF;
-    margin: 0;
-    padding: 0;
-    font-family: "Open Sans", sans-serif;
-  }
-`;
-
 const Container = styled.div`
   display: grid;
   place-items: center;
   min-height: 100vh;
   width: 100%;
+  background: #0a0a0f;
+  --backdrop: hsla(0, 0%, 100%, 0.06);
+  --radius: 14;
+  --border: 3;
+  --backup-border: var(--backdrop);
+  --size: 200;
 `;
 
 const Main = styled.main`
@@ -52,7 +41,7 @@ const Main = styled.main`
 `;
 
 const Card = styled.article`
-  aspect-ratio: 3 / 4;
+  min-height: 420px;
   border-radius: calc(var(--radius) * 1px);
   width: 350px;
   max-width: 100%;
@@ -246,7 +235,6 @@ const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
 
   return (
     <>
-      <GlobalStyle />
       <Container className={className}>
         <Main>
           <Reveal>
