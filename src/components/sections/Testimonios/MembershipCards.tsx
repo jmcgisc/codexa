@@ -80,10 +80,10 @@ const MembershipCards: React.FC<MembershipCardsProps> = ({ className }) => {
       {/* Scoped CSS sin styled-components para evitar problemas de SSR en Next.js */}
       <style>{`
         .mc-container {
-          --backdrop: hsla(0,0%,100%,0.06);
+          --backdrop: #111827;
           --radius: 14;
           --border: 3;
-          --backup-border: var(--backdrop);
+          --backup-border: #374151;
           --size: 200;
         }
         .mc-card {

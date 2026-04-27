@@ -7,6 +7,9 @@ import ServiciosInteractivos from "../components/sections/ServiciosInteractivos"
 import MembershipCards from "../components/sections/Testimonios/MembershipCards";
 import Secciones from "../components/sections/Secciones";
 import Works from "../components/portfolio/Works";
+import NosotrosPreview from "../components/sections/NosotrosPreview";
+import BlogPreview from "../components/sections/BlogPreview";
+import RecursosPreview from "../components/sections/RecursosPreview";
 import Services from "../components/sections/Services";
 import FAQ from '../components/FAQ';
 import WhatsAppFloat from "../components/WhatsAppFloat";
@@ -97,6 +100,11 @@ export default function Home() {
         <MembershipCards />
       </section>
 
+      {/* BLOG (Nuevo) */}
+      <section id="blog" className="scroll-mt-28">
+        <BlogPreview />
+      </section>
+
       {/* CONTACTO (ancla "contacto") */}
       <section id="contacto" className="scroll-mt-28">
         <FormularioContacto />
@@ -105,6 +113,16 @@ export default function Home() {
       {/* MAPA */}
       <section className="scroll-mt-28">
         <InteractiveMap />
+      </section>
+
+      {/* RECURSOS (Nuevo) */}
+      <section id="recursos" className="scroll-mt-28">
+        <RecursosPreview />
+      </section>
+
+      {/* NOSOTROS (Nuevo) */}
+      <section id="nosotros" className="scroll-mt-28">
+        <NosotrosPreview />
       </section>
 
       {/* FAQ */}

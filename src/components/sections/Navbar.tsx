@@ -6,7 +6,7 @@ import useScrollSpy from '../../hooks/useScrollSpy'
 import Image from 'next/image'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import emailjs from '@emailjs/browser'
 
 // Iconos para los servicios
@@ -80,15 +80,16 @@ const recursosDropdown = [
 ]
 
 const extraLinks = [
-  { id: 'about', label: 'Nosotros', icon: Users },
-  { id: 'blog', label: 'Blog', icon: FileText },
-  { id: 'projects', label: 'Proyectos', icon: Star },
-  { id: 'contact', label: 'Contacto', icon: Calendar },
+  { id: 'nosotros', label: 'Nosotros', icon: Users, path: '/nosotros' },
+  { id: 'blog', label: 'Blog', icon: FileText, path: '/blog' },
+  { id: 'portfolio', label: 'Proyectos', icon: Star, path: '/#portfolio' },
+  { id: 'contacto', label: 'Contacto', icon: Calendar, path: '/contacto' },
 ]
 
 export default function PremiumNavbar() {
   const router = useRouter()
-  const activeId = useScrollSpy(['hero', 'servicios', 'portfolio', 'contacto'], 80)
+  const pathname = usePathname()
+  const activeId = useScrollSpy(['hero', 'servicios', 'nosotros', 'recursos', 'blog', 'portfolio', 'contacto'], 80)
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
@@ -165,7 +166,19 @@ export default function PremiumNavbar() {
     }
   }, [])
 
-  // Función para navegar a la página Nosotros
+  const handleNavigation = useCallback((id: string, path: string | null) => {
+    setMenuOpen(false)
+    setShowServicesMenu(false)
+    setShowResourcesMenu(false)
+
+    if (pathname === '/') {
+      setTimeout(() => handleScrollTo(id), 100);
+    } else {
+      router.push(path || `/#${id}`)
+    }
+  }, [pathname, router, handleScrollTo])
+
+  // Función para navegar a la página Nosotros (Legacy)
   const navigateToAbout = useCallback(() => {
     setMenuOpen(false)
     setShowServicesMenu(false)
@@ -185,34 +198,34 @@ export default function PremiumNavbar() {
   const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSending(true);
-    
+
     try {
       await emailjs.sendForm(
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
         e.currentTarget,
         process.env.NEXT_PUBLIC_EMAILJS_USER_ID!
-      ); 
-      
-    setShowSuccess(true);
-    // Resetear el formulario de manera segura
-    const form = e.currentTarget as HTMLFormElement;
-    if (form) {
-      form.reset();
-    }
+      );
+
+      setShowSuccess(true);
+      // Resetear el formulario de manera segura
+      const form = e.currentTarget as HTMLFormElement;
+      if (form) {
+        form.reset();
+      }
       setIsContactOpen(false); // cerrar modal al enviar
-      
+
       setTimeout(() => {
-            setShowSuccess(false);
-            setIsContactOpen(false);
-          }, 3000);
-        } catch (error) {
-          console.error('Error al enviar el mensaje:', error);
-          alert('Error al enviar el mensaje. Por favor, intenta nuevamente.');
-        } finally {
-          setIsSending(false);
-        }
-      };
+        setShowSuccess(false);
+        setIsContactOpen(false);
+      }, 3000);
+    } catch (error) {
+      console.error('Error al enviar el mensaje:', error);
+      alert('Error al enviar el mensaje. Por favor, intenta nuevamente.');
+    } finally {
+      setIsSending(false);
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -228,15 +241,15 @@ export default function PremiumNavbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [menuOpen])
 
-      // Efecto para ocultar el toast automáticamente
-      useEffect(() => {
-        if (showSuccess) {
-          const timer = setTimeout(() => {
-            setShowSuccess(false);
-          }, 3000); // ⏱ se cierra a los 3s
-          return () => clearTimeout(timer); // cleanup
-        }
-      }, [showSuccess]);
+  // Efecto para ocultar el toast automáticamente
+  useEffect(() => {
+    if (showSuccess) {
+      const timer = setTimeout(() => {
+        setShowSuccess(false);
+      }, 3000); // ⏱ se cierra a los 3s
+      return () => clearTimeout(timer); // cleanup
+    }
+  }, [showSuccess]);
 
   return (
     <>
@@ -245,40 +258,38 @@ export default function PremiumNavbar() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className={`fixed w-full z-50 transition-all duration-500 ${
-          scrolled
+        className={`fixed w-full z-50 transition-all duration-500 ${scrolled
             ? 'bg-white/95 dark:bg-neutral-950/95 shadow-lg border-b border-gray-200/20 backdrop-blur-xl'
             : 'bg-white/90 dark:bg-neutral-950/90 backdrop-blur-md'
-        }`}
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-20 items-center justify-between">
             {/* Logo */}
-             
-            <a href="/" >
-            <button
 
-              onClick={() => handleScrollTo('/')}
-              aria-label="Ir al inicio"
-              className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md p-1 transition-all duration-300 hover:scale-105"
-            >
-              <div className="flex items-center space-x-2 dark:brightness-200">
-                <Image 
-                  src="/corporativo/stratik_logo_large.png" 
-                  alt="Logo STRATIK" 
-                  width={300} 
-                  height={100} 
-                  priority 
-                  className="h-48 w-auto object-contain" 
-                />
-              </div>
-            </button>
+            <a href="/" >
+              <button
+                onClick={() => handleNavigation('/', null)}
+                aria-label="Ir al inicio"
+                className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md p-1 transition-all duration-300 hover:scale-105"
+              >
+                <div className="flex items-center space-x-2 dark:brightness-200">
+                  <Image
+                    src="/corporativo/stratik_logo_large.png"
+                    alt="Logo STRATIK"
+                    width={300}
+                    height={100}
+                    priority
+                    className="h-48 w-auto object-contain"
+                  />
+                </div>
+              </button>
             </a>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-1">
               {/* Menú de Servicios */}
-              <div 
+              <div
                 className="relative"
                 onMouseEnter={handleServicesMouseEnter}
                 onMouseLeave={handleServicesMouseLeave}
@@ -295,7 +306,7 @@ export default function PremiumNavbar() {
               </div>
 
               {/* Menú de Recursos */}
-              <div 
+              <div
                 className="relative"
                 onMouseEnter={handleResourcesMouseEnter}
                 onMouseLeave={handleResourcesMouseLeave}
@@ -311,90 +322,25 @@ export default function PremiumNavbar() {
                 </button>
               </div>
 
-            {extraLinks.map((link) => {
-              const IconComponent = link.icon;
-              
-              // Enlace de navegación para "Nosotros"
-              if (link.id === 'about') {
-                return (
-                  <button
-                    key={link.id}
-                    onClick={navigateToAbout}
-                    className="px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium transition-all duration-300 group relative flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
-                  >
-                    <IconComponent size={16} />
-                    <span>{link.label}</span>
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-                  </button>
-                )
-              }
+              {extraLinks.map((link) => {
+                const IconComponent = link.icon;
 
-              // Enlace de navegación para "Blog"
-              if (link.id === 'blog') {
                 return (
                   <button
                     key={link.id}
-                    onClick={() => {
-                      setMenuOpen(false);
-                      setShowServicesMenu(false);
-                      setShowResourcesMenu(false);
-                      router.push('/blog'); // Navega a la página de blog
-                    }}
-                    className={`px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium transition-all duration-300 group relative flex items-center gap-2 ${
-                      activeId === link.id
+                    onClick={() => handleNavigation(link.id, link.path)}
+                    className={`px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium transition-all duration-300 group relative flex items-center gap-2 ${activeId === link.id
                         ? 'text-blue-600 dark:text-blue-400'
                         : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
-                    }`}
+                      }`}
                   >
                     <IconComponent size={16} />
                     <span>{link.label}</span>
                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
                   </button>
                 )
-              }
-
-              // Enlace de navegación para "contacto"
-              if (link.id === 'contact') {
-                return (
-                  <button
-                    key={link.id}
-                    onClick={() => {
-                      setMenuOpen(false);
-                      setShowServicesMenu(false);
-                      setShowResourcesMenu(false);
-                      router.push('/contacto'); // Navega a la página de blog
-                    }}
-                    className={`px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium transition-all duration-300 group relative flex items-center gap-2 ${
-                      activeId === link.id
-                        ? 'text-blue-600 dark:text-blue-400'
-                        : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
-                    }`}
-                  >
-                    <IconComponent size={16} />
-                    <span>{link.label}</span>
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-                  </button>
-                )
-              }
-
-              // Enlace normal para otros items
-              return (
-                <button
-                  key={link.id}
-                  onClick={() => handleScrollTo(link.id)}
-                  className={`px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium transition-all duration-300 group relative flex items-center gap-2 ${
-                    activeId === link.id
-                      ? 'text-blue-600 dark:text-blue-400'
-                      : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
-                  }`}
-                >
-                  <IconComponent size={16} />
-                  <span>{link.label}</span>
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-                </button>
-              )
-            })}
-              {/* Toggle de tema y botón de contacto */}    
+              })}
+              {/* Toggle de tema y botón de contacto */}
               <div className="flex items-center space-x-3 ml-4">
                 <ThemeToggle />
                 <motion.button
@@ -424,126 +370,107 @@ export default function PremiumNavbar() {
 
         {/* Mobile Menu */}
         <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden bg-white dark:bg-neutral-900 shadow-xl border-t border-gray-200/50 dark:border-neutral-800"
-          >
-            <div className="px-4 pt-2 pb-6 space-y-1">
-              {/* Menú de Servicios móvil */}
-              <div className="pt-4">
-                <button
-                  onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                  className="w-full text-left px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg flex items-center justify-between font-medium group"
-                >
-                  <span className="flex items-center gap-3">
-                    <div className="h-6 w-6 bg-blue-100 dark:bg-blue-900/30 rounded flex items-center justify-center">
-                      <div className="h-3 w-3 bg-blue-500 rounded-full"></div>
-                    </div>
-                    Servicios
-                  </span>
-                  <ChevronDown
-                    size={16}
-                    className={`transition-transform ${mobileServicesOpen ? "rotate-180" : ""}`}
-                  />
-                </button>
-                
-                {mobileServicesOpen && (
-                  <div className="pl-6 mt-2 space-y-2 border-l border-gray-200 dark:border-neutral-700 ml-4">
-                    {serviciosDropdown.map((item) => {
-                      const ServiceIcon = serviceIcons[item.id as keyof typeof serviceIcons];
-                      return (
-                        <button
-                          key={item.id}
-                          onClick={() => {
-                            handleScrollTo("servicios")
-                            setMenuOpen(false)
-                          }}
-                          className="w-full text-left px-4 py-2.5 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg flex items-center gap-3 transition-colors group"
-                        >
-                          {ServiceIcon && <ServiceIcon size={16} className="text-blue-500" />}
-                          {item.label}
-                        </button>
-                      )
-                    })}
-                  </div>
-                )}
-              </div>
+          {menuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="md:hidden bg-white dark:bg-neutral-900 shadow-xl border-t border-gray-200/50 dark:border-neutral-800"
+            >
+              <div className="px-4 pt-2 pb-6 space-y-1">
+                {/* Menú de Servicios móvil */}
+                <div className="pt-4">
+                  <button
+                    onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                    className="w-full text-left px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg flex items-center justify-between font-medium group"
+                  >
+                    <span className="flex items-center gap-3">
+                      <div className="h-6 w-6 bg-blue-100 dark:bg-blue-900/30 rounded flex items-center justify-center">
+                        <div className="h-3 w-3 bg-blue-500 rounded-full"></div>
+                      </div>
+                      Servicios
+                    </span>
+                    <ChevronDown
+                      size={16}
+                      className={`transition-transform ${mobileServicesOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
 
-              {/* Menú de Recursos móvil */}
-              <div className="pt-4">
-                <button
-                  onClick={() => setMobileResourcesOpen(!mobileResourcesOpen)}
-                  className="w-full text-left px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg flex items-center justify-between font-medium group"
-                >
-                  <span className="flex items-center gap-3">
-                    <div className="h-6 w-6 bg-green-100 dark:bg-green-900/30 rounded flex items-center justify-center">
-                      <div className="h-3 w-3 bg-green-500 rounded-full"></div>
+                  {mobileServicesOpen && (
+                    <div className="pl-6 mt-2 space-y-2 border-l border-gray-200 dark:border-neutral-700 ml-4">
+                      {serviciosDropdown.map((item) => {
+                        const ServiceIcon = serviceIcons[item.id as keyof typeof serviceIcons];
+                        return (
+                          <button
+                            key={item.id}
+                            onClick={() => handleNavigation("servicios", null)}
+                            className="w-full text-left px-4 py-2.5 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg flex items-center gap-3 transition-colors group"
+                          >
+                            {ServiceIcon && <ServiceIcon size={16} className="text-blue-500" />}
+                            {item.label}
+                          </button>
+                        )
+                      })}
                     </div>
-                    Recursos
-                  </span>
-                  <ChevronDown
-                    size={16}
-                    className={`transition-transform ${mobileResourcesOpen ? "rotate-180" : ""}`}
-                  />
-                </button>
+                  )}
+                </div>
 
-                {mobileResourcesOpen && (
-                  <div className="pl-6 mt-2 space-y-2 border-l border-gray-200 dark:border-neutral-700 ml-4">
-                    {recursosDropdown.map((item) => {
-                      const ResourceIcon = resourceIcons[item.id as keyof typeof resourceIcons];
-                      return (
-                        <button
-                          key={item.id}
-                          onClick={() => setMenuOpen(false)}
-                          className="w-full text-left px-4 py-2.5 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg flex items-center gap-3 transition-colors group"
-                        >
-                          {ResourceIcon && <ResourceIcon size={16} className="text-green-500" />}
-                          {item.label}
-                        </button>
-                      )
-                    })}
-                  </div>
-                )}
-              </div>
-                
+                {/* Menú de Recursos móvil */}
+                <div className="pt-4">
+                  <button
+                    onClick={() => setMobileResourcesOpen(!mobileResourcesOpen)}
+                    className="w-full text-left px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg flex items-center justify-between font-medium group"
+                  >
+                    <span className="flex items-center gap-3">
+                      <div className="h-6 w-6 bg-green-100 dark:bg-green-900/30 rounded flex items-center justify-center">
+                        <div className="h-3 w-3 bg-green-500 rounded-full"></div>
+                      </div>
+                      Recursos
+                    </span>
+                    <ChevronDown
+                      size={16}
+                      className={`transition-transform ${mobileResourcesOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+
+                  {mobileResourcesOpen && (
+                    <div className="pl-6 mt-2 space-y-2 border-l border-gray-200 dark:border-neutral-700 ml-4">
+                      {recursosDropdown.map((item) => {
+                        const ResourceIcon = resourceIcons[item.id as keyof typeof resourceIcons];
+                        return (
+                          <button
+                            key={item.id}
+                            onClick={() => handleNavigation("recursos", "/recursos")}
+                            className="w-full text-left px-4 py-2.5 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg flex items-center gap-3 transition-colors group"
+                          >
+                            {ResourceIcon && <ResourceIcon size={16} className="text-green-500" />}
+                            {item.label}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  )}
+                </div>
+
                 {extraLinks.map((link) => {
                   const IconComponent = link.icon;
-                  
-                  // Enlace de navegación para "Nosotros" en móvil
-                  if (link.id === 'about') {
-                    return (
-                      <button
-                        key={link.id}
-                        onClick={navigateToAbout}
-                        className="w-full text-left px-4 py-3 rounded-lg font-medium transition-colors flex items-center gap-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800"
-                      >
-                        <IconComponent size={18} />
-                        {link.label}
-                      </button>
-                    )
-                  }
-                  
-                  // Enlace normal para otros items en móvil
+
                   return (
                     <button
                       key={link.id}
-                      onClick={() => handleScrollTo(link.id)}
-                      className={`w-full text-left px-4 py-3 rounded-lg font-medium transition-colors flex items-center gap-3 ${
-                        activeId === link.id
+                      onClick={() => handleNavigation(link.id, link.path)}
+                      className={`w-full text-left px-4 py-3 rounded-lg font-medium transition-colors flex items-center gap-3 ${activeId === link.id
                           ? 'text-blue-600 bg-blue-50 dark:bg-blue-900/20 dark:text-blue-400'
                           : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800'
-                      }`}
+                        }`}
                     >
                       <IconComponent size={18} />
                       {link.label}
                     </button>
                   )
                 })}
-                
+
                 <div className="pt-4 border-t border-gray-200 dark:border-neutral-800 mt-4">
                   <div className="flex justify-center mb-4">
                     <ThemeToggle />
@@ -589,25 +516,22 @@ export default function PremiumNavbar() {
                         <button
                           key={service.id}
                           onMouseEnter={() => setActiveService(index)}
-                          className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-300 flex items-center gap-3 group ${
-                            index === activeService 
-                              ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 shadow-sm' 
+                          className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-300 flex items-center gap-3 group ${index === activeService
+                              ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 shadow-sm'
                               : 'text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-neutral-800/50'
-                          }`}
+                            }`}
                         >
-                          <div className={`h-10 w-10 rounded-lg flex items-center justify-center transition-colors ${
-                            index === activeService 
-                              ? 'bg-blue-100 dark:bg-blue-900/30' 
+                          <div className={`h-10 w-10 rounded-lg flex items-center justify-center transition-colors ${index === activeService
+                              ? 'bg-blue-100 dark:bg-blue-900/30'
                               : 'bg-gray-100 dark:bg-neutral-800 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/20'
-                          }`}>
+                            }`}>
                             {ServiceIcon && (
-                              <ServiceIcon 
-                                size={20} 
-                                className={`transition-colors ${
-                                  index === activeService 
-                                    ? 'text-blue-600' 
+                              <ServiceIcon
+                                size={20}
+                                className={`transition-colors ${index === activeService
+                                    ? 'text-blue-600'
                                     : 'text-gray-500 group-hover:text-blue-500'
-                                }`} 
+                                  }`}
                               />
                             )}
                           </div>
@@ -639,7 +563,7 @@ export default function PremiumNavbar() {
                           <h4 className="text-2xl font-bold text-gray-800 dark:text-white">{service.label}</h4>
                         </div>
                         <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg">{service.desc}</p>
-                        
+
                         <div className="mb-8">
                           <h5 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wider">Características principales</h5>
                           <ul className="space-y-2">
@@ -653,12 +577,9 @@ export default function PremiumNavbar() {
                             ))}
                           </ul>
                         </div>
-                        
+
                         <motion.button
-                          onClick={() => {
-                            handleScrollTo('servicios')
-                            setShowServicesMenu(false)
-                          }}
+                          onClick={() => handleNavigation("servicios", null)}
                           className="px-5 py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-700 text-white hover:from-blue-700 hover:to-indigo-800 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-medium shadow-lg hover:shadow-blue-500/30 flex items-center gap-2 group"
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
@@ -702,25 +623,22 @@ export default function PremiumNavbar() {
                         <button
                           key={resource.id}
                           onMouseEnter={() => setActiveResource(index)}
-                          className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-300 flex items-center gap-3 group ${
-                            index === activeResource 
-                              ? 'bg-green-50 dark:bg-green-950/40 text-green-600 dark:text-green-400 shadow-sm' 
+                          className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-300 flex items-center gap-3 group ${index === activeResource
+                              ? 'bg-green-50 dark:bg-green-950/40 text-green-600 dark:text-green-400 shadow-sm'
                               : 'text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-neutral-800/50'
-                          }`}
+                            }`}
                         >
-                          <div className={`h-10 w-10 rounded-lg flex items-center justify-center transition-colors ${
-                            index === activeResource 
-                              ? 'bg-green-100 dark:bg-green-900/30' 
+                          <div className={`h-10 w-10 rounded-lg flex items-center justify-center transition-colors ${index === activeResource
+                              ? 'bg-green-100 dark:bg-green-900/30'
                               : 'bg-gray-100 dark:bg-neutral-800 group-hover:bg-green-100 dark:group-hover:bg-green-900/20'
-                          }`}>
+                            }`}>
                             {ResourceIcon && (
-                              <ResourceIcon 
-                                size={20} 
-                                className={`transition-colors ${
-                                  index === activeResource 
-                                    ? 'text-green-600' 
+                              <ResourceIcon
+                                size={20}
+                                className={`transition-colors ${index === activeResource
+                                    ? 'text-green-600'
                                     : 'text-gray-500 group-hover:text-green-500'
-                                }`} 
+                                  }`}
                               />
                             )}
                           </div>
@@ -752,7 +670,7 @@ export default function PremiumNavbar() {
                           <h4 className="text-2xl font-bold text-gray-800 dark:text-white">{resource.label}</h4>
                         </div>
                         <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg">{resource.desc}</p>
-                        
+
                         <div className="mb-8">
                           <h5 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wider">Lo que encontrarás</h5>
                           <ul className="space-y-2">
@@ -766,12 +684,9 @@ export default function PremiumNavbar() {
                             ))}
                           </ul>
                         </div>
-                        
+
                         <motion.button
-                          onClick={() => {
-                            // Navegar a la sección de recursos
-                            setShowResourcesMenu(false)
-                          }}
+                          onClick={() => handleNavigation("recursos", "/recursos")}
                           className="px-5 py-2.5 rounded-lg bg-gradient-to-r from-green-600 to-teal-700 text-white hover:from-green-700 hover:to-teal-800 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 font-medium shadow-lg hover:shadow-green-500/30 flex items-center gap-2 group"
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
@@ -819,27 +734,27 @@ export default function PremiumNavbar() {
                     </button>
                   </div>
                   <p className="text-gray-600 dark:text-gray-300 mb-6">
-                       contacto contigo en menos de 24 horas.
+                    contacto contigo en menos de 24 horas.
                   </p>
-                  
+
                   <form onSubmit={sendEmail} className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre completo *</label>
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         name="from_name"
-                        className="w-full px-4 py-2.5 border border-gray-300 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:text-white transition-colors" 
+                        className="w-full px-4 py-2.5 border border-gray-300 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:text-white transition-colors"
                         placeholder="Tu nombre"
                         required
                       />
                     </div>
-                    
+
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Correo electrónico *</label>
-                      <input 
-                        type="email" 
+                      <input
+                        type="email"
                         name="from_email"
-                        className="w-full px-4 py-2.5 border border-gray-300 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:text-white transition-colors" 
+                        className="w-full px-4 py-2.5 border border-gray-300 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:text-white transition-colors"
                         placeholder="tu@email.com"
                         required
                       />
@@ -847,26 +762,26 @@ export default function PremiumNavbar() {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Teléfono *</label>
-                      <input 
-                        type="tel" 
+                      <input
+                        type="tel"
                         name="phone"
-                        className="w-full px-4 py-2.5 border border-gray-300 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:text-white transition-colors" 
+                        className="w-full px-4 py-2.5 border border-gray-300 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:text-white transition-colors"
                         placeholder="Tu teléfono"
                         required
                       />
-                    </div>  
-                    
+                    </div>
+
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Mensaje *</label>
-                      <textarea 
-                        rows={3} 
+                      <textarea
+                        rows={3}
                         name="message"
-                        className="w-full px-4 py-2.5 border border-gray-300 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:text-white transition-colors" 
+                        className="w-full px-4 py-2.5 border border-gray-300 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:text-white transition-colors"
                         placeholder="Describe tu proyecto o necesidades"
                         required
                       ></textarea>
                     </div>
-                    
+
                     <div className="px-6 pb-6 pt-4 bg-gray-50 dark:bg-neutral-800/50">
                       <div className="flex gap-3">
                         <button

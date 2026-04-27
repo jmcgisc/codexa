@@ -95,7 +95,7 @@ const Works = () => {
   ];
 
   // Definición correcta de filteredWorks antes de su uso
-  const filteredWorks = worksData.filter(work => 
+  const filteredWorks = worksData.filter(work =>
     activeFilter === 'all' || work.category === activeFilter
   );
 
@@ -125,7 +125,6 @@ const Works = () => {
     <section className="works-section py-20 px-4 md:px-8" id="work">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-sm uppercase tracking-wider text-primary mb-2">Portfolio</h2>
           <h3 className="text-4xl font-bold text-white mb-4">Nuestros trabajos destacados</h3>
           <p className="text-gray-400 max-w-2xl mx-auto">
             Proyectos recientes que combinan diseño, tecnología y funcionalidad.
@@ -138,11 +137,10 @@ const Works = () => {
             <button
               key={item.filter}
               onClick={() => handleFilterClick(item.filter)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                activeFilter === item.filter
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === item.filter
                   ? 'bg-primary text-white shadow-lg shadow-primary/30'
                   : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-              }`}
+                }`}
             >
               {item.name}
             </button>
@@ -206,7 +204,7 @@ const Works = () => {
                   >
                     <UilTimes size={24} />
                   </button>
-                  
+
                   <div className="grid md:grid-cols-2 gap-8">
                     <div>
                       <img
@@ -215,7 +213,7 @@ const Works = () => {
                         className="w-full rounded-xl object-cover"
                       />
                     </div>
-                    
+
                     <div>
                       <div className="flex items-center gap-2 mb-4">
                         <span className="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">
@@ -225,10 +223,10 @@ const Works = () => {
                           {selectedWork.created}
                         </span>
                       </div>
-                      
+
                       <h3 className="text-2xl font-bold text-white mb-4">{selectedWork.title}</h3>
                       <p className="text-gray-300 mb-6">{selectedWork.description}</p>
-                      
+
                       <div className="mb-8">
                         <h4 className="text-sm font-semibold text-gray-400 mb-3">DETALLES TÉCNICOS</h4>
                         <div className="grid grid-cols-2 gap-4">
