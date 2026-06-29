@@ -30,15 +30,15 @@ const StratidentLanding = () => {
   const sendEmail = async (e) => {
     e.preventDefault();
     setIsSending(true);
-    
+
     const formData = new FormData(e.currentTarget);
     const from_name = formData.get('from_name')?.toString() || '';
     const clinic_name = formData.get('clinic_name')?.toString() || '';
     const from_email = formData.get('from_email')?.toString() || '';
     const phone = formData.get('phone')?.toString() || '';
-    
+
     const combinedMessage = `Clínica: ${clinic_name} | Doctor: ${from_name}`;
-    
+
     try {
       await emailjs.send(
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
@@ -55,7 +55,7 @@ const StratidentLanding = () => {
       e.currentTarget.reset();
       setTimeout(() => {
         setShowSuccess(false);
-        setIsModalOpen(false); 
+        setIsModalOpen(false);
       }, 3000);
     } catch (error) {
       console.error('Error al enviar el mensaje:', error?.text || error?.message || error);
@@ -342,7 +342,7 @@ const StratidentLanding = () => {
               </div>
               <ul className="space-y-4">
                 {[
-                  "Copiloto Dental IA (Gemini)",
+                  "Copiloto Dental IA",
                   "Dictado Clínico por Voz",
                   "Cronómetro Clínico de Sillón",
                   "Evolución y Presupuestos IA",
@@ -471,13 +471,13 @@ const StratidentLanding = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm">
           <div className="bg-white rounded-3xl shadow-2xl w-full max-w-xl relative overflow-hidden animate-in fade-in zoom-in duration-200">
             {/* Botón cerrar */}
-            <button 
+            <button
               onClick={() => setIsModalOpen(false)}
               className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors z-10"
             >
               <X className="w-6 h-6" />
             </button>
-            
+
             <form onSubmit={sendEmail} className="p-8 text-left relative">
               <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-400 to-blue-600"></div>
               <h3 className="text-xl font-bold text-gray-900 mb-6 text-center mt-2">Reserva tu acceso anticipado</h3>
