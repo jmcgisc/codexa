@@ -65,6 +65,17 @@ export default function Home() {
 
       <Navbar />
 
+      {/* BANNER PROMOCIONAL CRM */}
+      <section className="bg-gradient-to-r from-blue-700 to-blue-900 text-white py-3 text-center scroll-mt-28 mt-20 relative z-40 shadow-sm border-b border-blue-800">
+        <p className="font-medium text-sm sm:text-base flex items-center justify-center gap-2">
+          <span className="bg-blue-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Nuevo</span>
+          Conoce Stratident: El Sistema Operativo Inteligente para Clínicas Dentales. 
+          <a href="/stratident" className="underline font-bold ml-1 text-cyan-200 hover:text-white transition-colors">
+            Descúbrelo aquí &rarr;
+          </a>
+        </p>
+      </section>
+
       {/* HERO */}
       <section id="hero" className="scroll-mt-28">
         <Hero />

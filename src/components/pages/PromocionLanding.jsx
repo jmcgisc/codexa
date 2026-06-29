@@ -68,14 +68,35 @@ const StratidentLanding = () => {
   return (
     <div className="min-h-screen bg-white font-sans text-gray-800 selection:bg-cyan-100 selection:text-blue-900">
 
-      {/* 1. HERO SECTION */}
-      <section className="relative pt-24 pb-32 overflow-hidden">
-        {/* Background Gradients */}
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-50/50 via-white to-cyan-50/30 -z-10" />
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-cyan-100/40 rounded-full blur-3xl -z-10" />
-        <div className="absolute top-40 -left-20 w-72 h-72 bg-blue-100/40 rounded-full blur-3xl -z-10" />
+      {/* 0. HEADER PREMIUM (CUSTOM NAVBAR LANDING) */}
+      <header className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-xl border-b border-white/50 shadow-sm transition-all">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <img src="/images/logo.jpg" alt="Stratik Logo" className="h-10 w-auto object-contain mix-blend-multiply" />
+            <div className="hidden sm:flex flex-col text-left">
+              <span className="text-gray-900 font-black text-lg leading-none tracking-tight">Stratident</span>
+              <span className="text-blue-600 text-[10px] font-bold uppercase tracking-widest leading-none mt-1">By Stratik</span>
+            </div>
+          </div>
+          <button onClick={() => setIsModalOpen(true)} className="px-5 py-2.5 rounded-xl bg-gray-900 hover:bg-black text-white text-sm font-bold shadow-lg shadow-gray-200 transition-all active:scale-95 flex items-center gap-2 group">
+            Acceso Anticipado <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </button>
+        </div>
+      </header>
 
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+      {/* 1. HERO SECTION */}
+      <section className="relative pt-40 pb-32 overflow-hidden">
+        {/* Faint Logo Watermark */}
+        <div className="absolute inset-0 z-0 flex items-center justify-center opacity-5 pointer-events-none mix-blend-multiply select-none">
+          <img src="/images/logo.jpg" alt="" className="w-full max-w-4xl object-contain grayscale scale-110" />
+        </div>
+
+        {/* Background Gradients */}
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-50/50 via-white to-cyan-50/30 -z-20" />
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-cyan-100/40 rounded-full blur-3xl -z-20" />
+        <div className="absolute top-40 -left-20 w-72 h-72 bg-blue-100/40 rounded-full blur-3xl -z-20" />
+
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center flex flex-col items-center relative z-10">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-bold tracking-wide mb-8 shadow-sm">
             <Zap className="w-4 h-4 text-cyan-500" />
             SOFTWARE MÉDICO DE NUEVA GENERACIÓN

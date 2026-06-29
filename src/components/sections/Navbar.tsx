@@ -1,6 +1,6 @@
 'use client'
 
-import { Menu, X, ChevronDown, ArrowRight, Star, Calendar, Users, FileText, Globe, Search, Scale, Palette, BookOpen, Download, Video, Code } from 'lucide-react'
+import { Menu, X, ChevronDown, ArrowRight, Star, Calendar, Users, FileText, Globe, Search, Scale, Palette, BookOpen, Download, Video, Code, Activity } from 'lucide-react'
 import ThemeToggle from '../ThemeToggle'
 import useScrollSpy from '../../hooks/useScrollSpy'
 import Image from 'next/image'
@@ -80,6 +80,7 @@ const recursosDropdown = [
 ]
 
 const extraLinks = [
+  { id: 'crm', label: 'CRM Dental', icon: Activity, path: '/stratident' },
   { id: 'nosotros', label: 'Nosotros', icon: Users, path: '/nosotros' },
   { id: 'blog', label: 'Blog', icon: FileText, path: '/blog' },
   { id: 'portfolio', label: 'Proyectos', icon: Star, path: '/#portfolio' },
@@ -259,8 +260,8 @@ export default function PremiumNavbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
         className={`fixed w-full z-50 transition-all duration-500 ${scrolled
-            ? 'bg-white/95 dark:bg-neutral-950/95 shadow-lg border-b border-gray-200/20 backdrop-blur-xl'
-            : 'bg-white/90 dark:bg-neutral-950/90 backdrop-blur-md'
+          ? 'bg-white/95 dark:bg-neutral-950/95 shadow-lg border-b border-gray-200/20 backdrop-blur-xl'
+          : 'bg-white/90 dark:bg-neutral-950/90 backdrop-blur-md'
           }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -330,8 +331,8 @@ export default function PremiumNavbar() {
                     key={link.id}
                     onClick={() => handleNavigation(link.id, link.path)}
                     className={`px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium transition-all duration-300 group relative flex items-center gap-2 ${activeId === link.id
-                        ? 'text-blue-600 dark:text-blue-400'
-                        : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
+                      ? 'text-blue-600 dark:text-blue-400'
+                      : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
                       }`}
                   >
                     <IconComponent size={16} />
@@ -341,7 +342,7 @@ export default function PremiumNavbar() {
                 )
               })}
               {/* Toggle de tema y botón de contacto */}
-              <div className="flex items-center space-x-3 ml-4">
+              {/* <div className="flex items-center space-x-3 ml-4">
                 <ThemeToggle />
                 <motion.button
                   onClick={openContactModal}
@@ -352,7 +353,7 @@ export default function PremiumNavbar() {
                   <span>Cotizar ahora</span>
                   <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </motion.button>
-              </div>
+              </div> */}
             </div>
 
             {/* Mobile toggle */}
@@ -461,8 +462,8 @@ export default function PremiumNavbar() {
                       key={link.id}
                       onClick={() => handleNavigation(link.id, link.path)}
                       className={`w-full text-left px-4 py-3 rounded-lg font-medium transition-colors flex items-center gap-3 ${activeId === link.id
-                          ? 'text-blue-600 bg-blue-50 dark:bg-blue-900/20 dark:text-blue-400'
-                          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800'
+                        ? 'text-blue-600 bg-blue-50 dark:bg-blue-900/20 dark:text-blue-400'
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800'
                         }`}
                     >
                       <IconComponent size={18} />
@@ -517,20 +518,20 @@ export default function PremiumNavbar() {
                           key={service.id}
                           onMouseEnter={() => setActiveService(index)}
                           className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-300 flex items-center gap-3 group ${index === activeService
-                              ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 shadow-sm'
-                              : 'text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-neutral-800/50'
+                            ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 shadow-sm'
+                            : 'text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-neutral-800/50'
                             }`}
                         >
                           <div className={`h-10 w-10 rounded-lg flex items-center justify-center transition-colors ${index === activeService
-                              ? 'bg-blue-100 dark:bg-blue-900/30'
-                              : 'bg-gray-100 dark:bg-neutral-800 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/20'
+                            ? 'bg-blue-100 dark:bg-blue-900/30'
+                            : 'bg-gray-100 dark:bg-neutral-800 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/20'
                             }`}>
                             {ServiceIcon && (
                               <ServiceIcon
                                 size={20}
                                 className={`transition-colors ${index === activeService
-                                    ? 'text-blue-600'
-                                    : 'text-gray-500 group-hover:text-blue-500'
+                                  ? 'text-blue-600'
+                                  : 'text-gray-500 group-hover:text-blue-500'
                                   }`}
                               />
                             )}
@@ -624,20 +625,20 @@ export default function PremiumNavbar() {
                           key={resource.id}
                           onMouseEnter={() => setActiveResource(index)}
                           className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-300 flex items-center gap-3 group ${index === activeResource
-                              ? 'bg-green-50 dark:bg-green-950/40 text-green-600 dark:text-green-400 shadow-sm'
-                              : 'text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-neutral-800/50'
+                            ? 'bg-green-50 dark:bg-green-950/40 text-green-600 dark:text-green-400 shadow-sm'
+                            : 'text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-neutral-800/50'
                             }`}
                         >
                           <div className={`h-10 w-10 rounded-lg flex items-center justify-center transition-colors ${index === activeResource
-                              ? 'bg-green-100 dark:bg-green-900/30'
-                              : 'bg-gray-100 dark:bg-neutral-800 group-hover:bg-green-100 dark:group-hover:bg-green-900/20'
+                            ? 'bg-green-100 dark:bg-green-900/30'
+                            : 'bg-gray-100 dark:bg-neutral-800 group-hover:bg-green-100 dark:group-hover:bg-green-900/20'
                             }`}>
                             {ResourceIcon && (
                               <ResourceIcon
                                 size={20}
                                 className={`transition-colors ${index === activeResource
-                                    ? 'text-green-600'
-                                    : 'text-gray-500 group-hover:text-green-500'
+                                  ? 'text-green-600'
+                                  : 'text-gray-500 group-hover:text-green-500'
                                   }`}
                               />
                             )}
