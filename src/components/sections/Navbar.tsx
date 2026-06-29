@@ -80,7 +80,7 @@ const recursosDropdown = [
 ]
 
 const extraLinks = [
-  { id: 'crm', label: 'CRM Dental', icon: Activity, path: '/stratident' },
+  { id: 'crm', label: 'CRM Dental', icon: Activity, path: 'https://www.stratik.com.mx/stratident' },
   { id: 'nosotros', label: 'Nosotros', icon: Users, path: '/nosotros' },
   { id: 'blog', label: 'Blog', icon: FileText, path: '/blog' },
   { id: 'portfolio', label: 'Proyectos', icon: Star, path: '/#portfolio' },
@@ -171,6 +171,17 @@ export default function PremiumNavbar() {
     setMenuOpen(false)
     setShowServicesMenu(false)
     setShowResourcesMenu(false)
+
+    if (path) {
+      if (path.startsWith('http')) {
+        window.location.href = path;
+        return;
+      }
+      if (!path.includes('#')) {
+        router.push(path);
+        return;
+      }
+    }
 
     if (pathname === '/') {
       setTimeout(() => handleScrollTo(id), 100);
