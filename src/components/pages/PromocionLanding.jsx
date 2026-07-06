@@ -314,6 +314,7 @@ const StratidentLanding = () => {
                   "Directorio de Pacientes",
                   "Check-In QR en Recepción",
                   "Control de Laboratorio",
+                  "Dictado Clínico por Voz",
                   "Business Center",
                   "Contabilidad Fiscal SAT",
                   "Marketing CRM",
@@ -343,7 +344,6 @@ const StratidentLanding = () => {
               <ul className="space-y-4">
                 {[
                   "Copiloto Dental IA",
-                  "Dictado Clínico por Voz",
                   "Cronómetro Clínico de Sillón",
                   "Evolución y Presupuestos IA",
                   "Copiloto de Cierre (Ventas)",
@@ -401,6 +401,81 @@ const StratidentLanding = () => {
                 <Zap className="w-12 h-12 text-white mx-auto mb-2" />
                 <p className="font-black tracking-widest uppercase text-sm">Powered by Stratik</p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4.5 PLANES Y PRECIOS */}
+      <section className="py-24 bg-gray-50 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 border border-blue-200 text-blue-700 text-sm font-bold tracking-wide mb-6 shadow-sm">
+              <Activity className="w-4 h-4 text-blue-600" />
+              PLANES Y SUSCRIPCIONES
+            </div>
+            <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-6 tracking-tight">Escala tu clínica con la tecnología adecuada</h2>
+            <p className="text-lg text-gray-500">
+              Empieza con las herramientas esenciales de gestión o desbloquea todo el ecosistema de automatización e Inteligencia Artificial.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+            {/* Básico */}
+            <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 relative hover:shadow-xl transition-shadow duration-300">
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Básico</h3>
+              <p className="text-gray-500 text-sm mb-6 h-10">Ideal para consultorios independientes que buscan digitalizarse.</p>
+              <div className="mb-6">
+                <span className="text-4xl font-black text-gray-900">$499 mxn</span>
+                <span className="text-gray-500">/mes</span>
+              </div>
+              <ul className="space-y-4 mb-8">
+                {['Agenda Inteligente', 'Expediente Clínico Digital', 'Odontograma Básico', 'Recetas Médicas', 'Soporte vía Email'].map((feat, i) => (
+                  <li key={i} className="flex items-center gap-3 text-sm text-gray-600 font-medium">
+                    <CheckCircle2 className="w-5 h-5 text-gray-400 shrink-0" /> {feat}
+                  </li>
+                ))}
+              </ul>
+              <button onClick={() => setIsModalOpen(true)} className="w-full py-3 rounded-xl bg-blue-50 text-blue-700 font-bold hover:bg-blue-100 transition-colors">Empezar Básico</button>
+            </div>
+
+            {/* Avanzado (Destacado) */}
+            <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl p-8 shadow-2xl shadow-blue-200 border border-blue-500 relative transform md:-translate-y-4 hover:-translate-y-6 transition-transform duration-300">
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-cyan-400 text-gray-900 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-md">
+                Más Popular
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">Avanzado</h3>
+              <p className="text-blue-100 text-sm mb-6 h-10">Para clínicas en crecimiento que necesitan control administrativo.</p>
+              <div className="mb-6">
+                <span className="text-4xl font-black text-white">$999 mxn</span>
+                <span className="text-blue-200">/mes</span>
+              </div>
+              <ul className="space-y-4 mb-8">
+                {['Todo lo del Básico', 'Cálculo de Comisiones', 'Control de Laboratorio', 'Recordatorios por WhatsApp', 'Soporte Prioritario'].map((feat, i) => (
+                  <li key={i} className="flex items-center gap-3 text-sm text-blue-50 font-medium">
+                    <CheckCircle2 className="w-5 h-5 text-cyan-400 shrink-0" /> {feat}
+                  </li>
+                ))}
+              </ul>
+              <button onClick={() => setIsModalOpen(true)} className="w-full py-3 rounded-xl bg-white text-blue-600 font-bold hover:bg-gray-50 shadow-md transition-colors active:scale-95">Elegir Avanzado</button>
+            </div>
+
+            {/* Pro */}
+            <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 relative hover:shadow-xl transition-shadow duration-300">
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Pro (IA)</h3>
+              <p className="text-gray-500 text-sm mb-6 h-10">El ecosistema definitivo impulsado por Inteligencia Artificial.</p>
+              <div className="mb-6">
+                <span className="text-4xl font-black text-gray-900">$1,999 mxn</span>
+                <span className="text-gray-500">/mes</span>
+              </div>
+              <ul className="space-y-4 mb-8">
+                {['Todo lo del Avanzado', 'Copiloto IA (Gemini)', 'Dictado Clínico por Voz', 'WhatsApp Ilimitado', 'Multisede', 'Contralor IA (Auditoría)'].map((feat, i) => (
+                  <li key={i} className="flex items-center gap-3 text-sm text-gray-600 font-medium">
+                    <Zap className="w-5 h-5 text-purple-500 shrink-0" /> {feat}
+                  </li>
+                ))}
+              </ul>
+              <button onClick={() => setIsModalOpen(true)} className="w-full py-3 rounded-xl bg-gray-900 text-white font-bold hover:bg-black transition-colors">Obtener Pro</button>
             </div>
           </div>
         </div>
