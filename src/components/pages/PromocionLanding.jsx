@@ -632,7 +632,7 @@ const StratidentLanding = () => {
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">Soporte Técnico</h3>
             <p className="text-gray-500 mb-6 text-sm">Nuestro equipo de ingeniería de Stratik está listo para ayudarte con tu integración y acceso Early Bird.</p>
-            <a href="mailto:stratiksoftware@gmail.com" className="inline-block w-full py-3 rounded-xl bg-gray-900 hover:bg-black text-white font-bold transition-all">
+            <a href="mailto:stratident@gmail.com" className="inline-block w-full py-3 rounded-xl bg-gray-900 hover:bg-black text-white font-bold transition-all">
               Contactar a Soporte
             </a>
           </div>
