@@ -1,6 +1,5 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import emailjs from '@emailjs/browser';
 import {
   Activity,
   BrainCircuit,
@@ -23,10 +22,6 @@ const StratidentLanding = () => {
   const [isSending, setIsSending] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  useEffect(() => {
-    emailjs.init(process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY);
-  }, []);
-
   const sendEmail = async (e) => {
     e.preventDefault();
     setIsSending(true);
@@ -37,20 +32,26 @@ const StratidentLanding = () => {
     const from_email = formData.get('from_email')?.toString() || '';
     const phone = formData.get('phone')?.toString() || '';
 
-    const combinedMessage = `Clínica: ${clinic_name} | Doctor: ${from_name}`;
-
     try {
-      await emailjs.send(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
-        {
-          from_name: from_name,
-          phone: phone,
-          from_email: from_email,
-          message: combinedMessage,
+      const res = await fetch('https://formsubmit.co/ajax/stratident@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
-      );
+        body: JSON.stringify({
+          _subject: `🦷 ¡Nuevo registro Early Bird: ${from_name} - ${clinic_name}!`,
+          Doctor: from_name,
+          Clínica: clinic_name,
+          Email: from_email,
+          WhatsApp: phone,
+          _template: 'table',
+          _captcha: 'false'
+        })
+      });
+
+      if (!res.ok) throw new Error('Error al conectar con el servidor de correos');
+
       setShowSuccess(true);
       e.currentTarget.reset();
       setTimeout(() => {
@@ -58,7 +59,7 @@ const StratidentLanding = () => {
         setIsModalOpen(false);
       }, 3000);
     } catch (error) {
-      console.error('Error al enviar el mensaje:', error?.text || error?.message || error);
+      console.error('Error al enviar el mensaje:', error?.message || error);
       alert('Error al enviar el mensaje. Por favor, intenta nuevamente.');
     } finally {
       setIsSending(false);
